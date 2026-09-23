@@ -93,6 +93,7 @@ from research_core.workspace_store import (  # noqa: E402
 )
 from research_core.mission_owner import MissionOwnerError  # noqa: E402
 from research_attempt_adapter import ResearchAttemptAdapterError  # noqa: E402
+from scripts import research as installation  # noqa: E402
 
 
 TOOL_ID = "tool.mathematical_research.rh_mission"
@@ -370,6 +371,7 @@ def _usage_contract() -> dict[str, Any]:
                     "create one absent noncanonical Mission workspace from one "
                     "exact owner request"
                 ),
+                "bundled_examples": list(installation.BUNDLED_EXAMPLES),
             },
             {
                 "name": "owner-migrate-model-policy",
@@ -592,6 +594,8 @@ def _parser() -> argparse.ArgumentParser:
     subparsers.add_parser("capabilities")
     genesis = subparsers.add_parser("owner-genesis")
     genesis.add_argument("--request", required=True)
+    genesis.add_argument("--example", choices=tuple(installation.BUNDLED_EXAMPLES),
+                         help="select a bundled example from the exact installed release")
     migration = subparsers.add_parser("owner-migrate-model-policy")
     migration.add_argument("--request", required=True)
     scientific_binding = subparsers.add_parser("owner-bind-scientific-context")
@@ -815,8 +819,11 @@ def _run_owner_genesis(
     workspace_root, project_id, mission_id = _require_workspace_options(options)
     request = _read_request(arguments.request)
     request_keys = {"schema_version", "mission_id", "workspace_root", "source_commit"}
-    if set(request) != request_keys:
+    example = arguments.example
+    if set(request) != request_keys | ({"example"} if example is not None else set()):
         raise ValueError("owner genesis request has the wrong closed shape")
+    if request.get("example") != example:
+        raise ValueError("owner genesis request differs from the bundled example selector")
     if request["schema_version"] != MISSION_OWNER_GENESIS_REQUEST_SCHEMA_VERSION:
         raise ValueError("owner genesis request schema is not current")
     requested_mission_id = _require_exact_text(
@@ -840,6 +847,10 @@ def _run_owner_genesis(
         raise ValueError("request.source_commit must be one lowercase Git commit")
     if _read_owner_release_commit() != source_commit:
         raise ValueError("owner genesis source commit differs from the installed release")
+    if example is not None:
+        release = installation.installed_release(example=example)
+        if release["release_sha"] != source_commit:
+            raise ValueError("bundled example source differs from the installed release")
 
     canonical = load_canonical_snapshot(REPO_ROOT, source_commit=source_commit)
     if not canonical.ok or canonical.value is None:
@@ -848,7 +859,8 @@ def _run_owner_genesis(
     snapshot = canonical.value
 
     seed_raw = _read_file(
-        str(REPO_ROOT / MISSION_SEED_RELATIVE_PATH),
+        str(REPO_ROOT / (MISSION_SEED_RELATIVE_PATH if example is None
+                        else installation.mission_seed_relative_path(example))),
         label="owner Mission seed",
     )
     try:
@@ -879,6 +891,7 @@ def _run_owner_genesis(
         "mission_id": mission_id,
         "workspace_root": str(interface.workspace_root),
         "source_commit": source_commit,
+        **({"example": example} if example is not None else {}),
     }
 
 

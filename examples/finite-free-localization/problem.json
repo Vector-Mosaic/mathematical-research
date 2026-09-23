@@ -1,0 +1,35 @@
+{
+  "schema_version": "mathematical-research.example-problem.v1",
+  "id": "finite-free-localization",
+  "title": "Which assumptions localize the finite-free model's roots?",
+  "question": "Do the assumptions below imply that every root y of p_F satisfies |y-B| <= C_loc sqrt(Bd), for an absolute constant C_loc independent of d,A,B,C,D? Check the quantifiers, preserve any valid root properties, and state and justify a useful corrected claim if an assumption is missing.",
+  "definitions": {
+    "degree": "d is a positive integer; A,B,C,D are positive real numbers.",
+    "rising_factorial": "(x)_0=1; (x)_j=x(x+1)...(x+j-1) for j>=1.",
+    "polynomial": "p_F(y) = sum_{j=0}^d (-1)^j binom(d,j) (A)_j (C)_j D^j / [A^j C^j (B)_j (D)_j] y^j.",
+    "critical_point": "A real zero of the derivative p_F'; there are none for d=1."
+  },
+  "assumptions": [
+    "A >= 8 B",
+    "B >= 144 d",
+    "D >= 144 d",
+    "4 d <= C-D <= D/4"
+  ],
+  "references": [
+    {
+      "title": "Jonathan Holland, A new hyperbolicity wedge and a joint semicircle limit for Jensen polynomials of Riemann's xi-function, arXiv:2608.08682v1",
+      "url": "https://arxiv.org/html/2608.08682v1",
+      "scope": "Equation (69) defines the model. Compare the displayed conditions (57), Lemma 7.3 and its proof. This task considers the displayed conditions as a standalone hypothesis set."
+    },
+    {
+      "title": "Martinez-Finkelshtein, Morales and Perales, Real roots of hypergeometric polynomials via finite free convolution, arXiv:2309.10970v3",
+      "url": "https://arxiv.org/html/2309.10970v3",
+      "scope": "Finite-free nonnegative-root, interlacing and logarithmic-mesh preservation; Propositions 2.7, 2.11 and 2.17."
+    },
+    {
+      "title": "NIST Digital Library of Mathematical Functions, Jacobi polynomials",
+      "url": "https://dlmf.nist.gov/18.5#E7",
+      "scope": "Jacobi hypergeometric representation; recurrence coefficients are in section 18.9."
+    }
+  ]
+}

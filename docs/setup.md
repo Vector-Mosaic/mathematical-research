@@ -176,6 +176,12 @@ workspace and a non-secret `installation.json`. It does not authenticate a
 provider, launch a Goal, admit a mathematical result or authorize disclosure.
 An existing or partially initialized state root is never silently replaced.
 
+For the [finite-free localization example](../examples/finite-free-localization/README.md),
+add `--example finite-free-localization` to `init`. This selects the bundled
+opening Branch and Strategy for a fresh instance. The canonical source binding,
+research authority and runtime protections remain the same. The selector does
+not load a private research store or grant arbitrary seed-file access.
+
 The initial canonical state is the public source release's
 `projects/riemann_hypothesis/research_state.json`. It is bound to that release
 commit. It contains open research obligations, not an RH proof or a copy of any

@@ -27,6 +27,20 @@ CONFIG = "installation.json"
 PROJECT = "project.riemann_hypothesis"
 CATALOG = "services/rh-mission-host/assets/codex-model-catalog.0.153.4.json"
 ENTRY = "services/rh-mission-host/dist/main.js"
+BUNDLED_EXAMPLES = {
+    "finite-free-localization": Path("examples/finite-free-localization/mission.json"),
+}
+DEFAULT_MISSION_SEED = Path("contracts/rh_autonomous_mission_seed.v1.json")
+
+
+def mission_seed_relative_path(example: str | None = None) -> Path:
+    """Select release-owned inputs; never accept an arbitrary path or seed."""
+    if example is None:
+        return DEFAULT_MISSION_SEED
+    try:
+        return BUNDLED_EXAMPLES[example]
+    except (KeyError, TypeError) as error:
+        raise ValueError(f"unknown bundled example: {example}") from error
 
 
 def absolute(value: str) -> Path:
@@ -59,11 +73,16 @@ def run(argv: list[str], *, env: dict[str, str] | None = None) -> str:
     return completed.stdout.strip()
 
 
-def installed_release() -> dict:
-    for path, directory in ((ROOT, True), (ROOT / RECORD, False), (ROOT / ENTRY, False),
+def installed_release(*, example: str | None = None) -> dict:
+    source_paths = [(ROOT, True), (ROOT / RECORD, False), (ROOT / ENTRY, False),
                             (ROOT / "scripts/rh_mission.py", False),
                             (ROOT / ".mathematical-research-model-projection.json", False),
-                            (ROOT / CATALOG, False)):
+                            (ROOT / CATALOG, False)]
+    if example is not None:
+        seed_path = ROOT / mission_seed_relative_path(example)
+        source_paths.extend([(ROOT / "examples", True), (seed_path.parent, True),
+                             (seed_path, False), (seed_path.with_name("problem.json"), False)])
+    for path, directory in source_paths:
         details = ordinary(path, directory=directory)
         if details.st_uid != 0 or details.st_mode & 0o022:
             raise ValueError(f"installed source must be root-owned and not group/world writable: {path}")
@@ -173,7 +192,8 @@ def environment(config: dict) -> dict[str, str]:
 
 def initialize(args: argparse.Namespace) -> None:
     require_runtime_user()
-    record = installed_release()
+    seed_path = mission_seed_relative_path(args.example)
+    record = installed_release(example=args.example)
     state = absolute(args.state_root)
     codex_home = absolute(args.codex_home)
     owned_directory(codex_home)
@@ -183,7 +203,7 @@ def initialize(args: argparse.Namespace) -> None:
         raise ValueError("init requires an absent or empty state root; existing state is never replaced")
     state.mkdir(mode=0o700, parents=False, exist_ok=True)
     owned_directory(state)
-    seed = json.loads((ROOT / "contracts/rh_autonomous_mission_seed.v1.json").read_text(encoding="utf-8"))
+    seed = json.loads((ROOT / seed_path).read_text(encoding="utf-8"))
     config = {"schema_version": "mathematical_research.installation.v1", "owner_uid": os.getuid(),
               "release_root": str(ROOT), "release_sha": record["release_sha"],
               "project_id": seed["project_id"], "mission_id": seed["mission"]["mission_id"],
@@ -191,6 +211,8 @@ def initialize(args: argparse.Namespace) -> None:
               "runtime_dir": str(state / "runtime"), "lock_path": str(state / "runtime.lock"),
               "codex_home": str(codex_home), "python": str(absolute(args.python)),
               "node": str(absolute(args.node)), "codex": str(absolute(args.codex))}
+    if args.example is not None:
+        config["example"] = args.example
     for name in ("python", "node", "codex"):
         if not Path(config[name]).is_file() or not os.access(config[name], os.X_OK):
             raise ValueError(f"{name} must select an existing executable")
@@ -202,10 +224,12 @@ def initialize(args: argparse.Namespace) -> None:
     request = state / "genesis-request.json"
     exclusive_json(request, {"schema_version": "mathematical_research.mission_owner_genesis_request.v1",
                             "mission_id": config["mission_id"], "workspace_root": config["workspace_root"],
-                            "source_commit": record["release_sha"]})
+                            "source_commit": record["release_sha"],
+                            **({"example": args.example} if args.example is not None else {})})
     output = run([config["python"], str(ROOT / "scripts/rh_mission.py"), "owner-genesis", "--request", str(request),
                   "--workspace-root", config["workspace_root"], "--project-id", config["project_id"],
-                  "--mission-id", config["mission_id"], "--format", "json"], env=environment(config))
+                  "--mission-id", config["mission_id"], "--format", "json",
+                  *(["--example", args.example] if args.example is not None else [])], env=environment(config))
     print(output)
 
 
@@ -287,6 +311,8 @@ def main() -> int:
     init_parser = commands.add_parser("init", help="initialize a new local Mission without launching a model")
     for name in ("state-root", "codex-home", "python", "node", "codex"):
         init_parser.add_argument(f"--{name}", required=True)
+    init_parser.add_argument("--example", choices=tuple(BUNDLED_EXAMPLES),
+                             help="start a bundled research reproduction; omit for an open RH Mission")
     for name in ("start", "inspect", "stop", "env"):
         command = commands.add_parser(name)
         command.add_argument("--state-root", required=True)
