@@ -49,6 +49,8 @@ from research_core.mission_operation_contract import (  # noqa: E402
     validate_evidence_consequence_input,
     validate_historical_read_grant_request,
     validate_historical_read_request,
+    validate_research_read_grant_request,
+    validate_research_read_request,
     validate_semantic_request,
     validate_semantic_result,
 )
@@ -881,6 +883,7 @@ class MissionOperationContractTests(unittest.TestCase):
                 "schema_version",
                 "root_tool",
                 "historical_read_tool",
+                "research_read_tool",
                 "candidate_a1_review_tool",
             },
         )
@@ -941,6 +944,36 @@ class MissionOperationContractTests(unittest.TestCase):
             historical["model_projection"]["usage"]["index"]["tool"],
             "rh_mission_history",
         )
+        # Ordinary scientific assignments have their own read-only grant and
+        # retrieval plane; they do not inherit the root's mutation operations
+        # or the frozen historical-advice assignment contract.
+        research_read = projection["research_read_tool"]
+        self.assertEqual(set(research_read), {
+            "name", "grant_tool_name", "page_tool_name",
+            "grant_input_schema", "request_schema",
+        })
+        self.assertEqual(research_read["name"], "rh_mission_research_read")
+        self.assertEqual(research_read["grant_tool_name"], "rh_mission_research_read_grant")
+        self.assertEqual(research_read["page_tool_name"], "rh_mission_research_read_page")
+        self.assertFalse(research_read["grant_input_schema"]["additionalProperties"])
+        self.assertEqual(set(research_read["grant_input_schema"]["required"]), {
+            "child_thread_id", "assignment", "source_families", "raw_body_policy",
+        })
+        self.assertEqual({
+            branch["properties"]["mode"]["const"]
+            for branch in research_read["request_schema"]["oneOf"]
+        }, {"usage", "retrieve"})
+        ordinary_grant = {
+            "child_thread_id": "child:scientific-reader",
+            "assignment": "Inspect the selected research dependencies.",
+            "source_families": ["branches", "strategies"],
+            "raw_body_policy": "metadata_only",
+        }
+        self.assertEqual(deep_thaw(validate_research_read_grant_request(ordinary_grant)), ordinary_grant)
+        with self.assertRaises(MissionOperationContractError):
+            validate_research_read_grant_request({**ordinary_grant, "grant_id": "forbidden"})
+        with self.assertRaises(MissionOperationContractError):
+            validate_research_read_request({"mode": "record_strategy"})
         a1_review = projection["candidate_a1_review_tool"]
         self.assertEqual(
             set(a1_review),

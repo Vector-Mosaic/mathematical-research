@@ -124,7 +124,12 @@ class CanonicalAdmissionTests(unittest.TestCase):
         # depend on fields or ownership data in the public initialization.
         state["project"].update({
             "owners": ["Synthetic research owner"],
-            "source_artifact_ref": "fixture:canonical-admission-metadata",
+            "source_artifact_ref": "source.fixture.canonical-admission-metadata",
+        })
+        state["sources"].append({
+            "id": "source.fixture.canonical-admission-metadata",
+            "source_type": "synthetic_test_fixture",
+            "title": "Synthetic project metadata preservation fixture",
         })
         original = copy.deepcopy(state)
         prepared, result, replayed = prepare_admitted_research_state(

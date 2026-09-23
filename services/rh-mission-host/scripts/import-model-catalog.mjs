@@ -17,19 +17,23 @@ export function importModelCatalog(cache) {
   const levels = model.supported_reasoning_levels
   const ultra = Array.isArray(levels) ? levels.find((level) => level?.effort === EFFORT) : undefined
   if (!ultra || typeof ultra.description !== 'string') throw new Error('The supplied model does not advertise ultra reasoning')
-  const version = typeof model.minimal_client_version === 'string'
-    ? /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/.exec(model.minimal_client_version)?.slice(1).map(Number)
-    : undefined
-  const pinned = CLI_VERSION.split('.').map(Number)
-  const differing = version?.findIndex((part, index) => part !== pinned[index])
-  if (!version || !version.every(Number.isSafeInteger) || (differing !== -1 && version[differing] > pinned[differing])) {
-    throw new Error(`The supplied model metadata is incompatible with Codex ${CLI_VERSION}`)
+  // The provider can leave optional limits unspecified. Keep that distinction;
+  // the exact native CLI version remains independently pinned and handshaken.
+  if (model.minimal_client_version !== undefined && model.minimal_client_version !== null) {
+    const version = typeof model.minimal_client_version === 'string'
+      ? /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/.exec(model.minimal_client_version)?.slice(1).map(Number)
+      : undefined
+    const pinned = CLI_VERSION.split('.').map(Number)
+    const differing = version?.findIndex((part, index) => part !== pinned[index])
+    if (!version || !version.every(Number.isSafeInteger) || (differing !== -1 && version[differing] > pinned[differing])) {
+      throw new Error(`The supplied model metadata is incompatible with Codex ${CLI_VERSION}`)
+    }
   }
   if (typeof model.base_instructions !== 'string' || !model.base_instructions.trim() ||
       !Number.isSafeInteger(model.context_window) || model.context_window <= 0 ||
       !Number.isSafeInteger(model.effective_context_window_percent) ||
       model.effective_context_window_percent <= 0 || model.effective_context_window_percent > 100 ||
-      (model.auto_compact_token_limit !== undefined &&
+      (model.auto_compact_token_limit !== undefined && model.auto_compact_token_limit !== null &&
         (!Number.isSafeInteger(model.auto_compact_token_limit) || model.auto_compact_token_limit <= 0))) {
     throw new Error('The model cache is missing valid provider instructions or context accounting metadata')
   }

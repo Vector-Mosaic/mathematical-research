@@ -30,10 +30,30 @@ test('catalog import refuses unsupported model access or runtime metadata rather
     (cache) => { cache.models.push(structuredClone(cache.models[0])) },
     (cache) => { cache.models[0].supported_reasoning_levels = [{ effort: 'high' }] },
     (cache) => { cache.models[0].minimal_client_version = '0.154.0' },
+    (cache) => { cache.models[0].minimal_client_version = '0.153' },
+    (cache) => { cache.models[0].minimal_client_version = false },
+    (cache) => { cache.models[0].auto_compact_token_limit = 0 },
     (cache) => { cache.models[0].base_instructions = '' },
   ]) {
     const cache = structuredClone(fixture)
     mutate(cache)
     assert.throws(() => importModelCatalog(cache))
+  }
+})
+
+test('caller cache may leave minimum version and compaction threshold null or absent', () => {
+  for (const optional of [null, undefined]) {
+    const cache = structuredClone(fixture)
+    cache.models[0].minimal_client_version = optional
+    cache.models[0].auto_compact_token_limit = optional
+    const before = structuredClone(cache)
+    const model = JSON.parse(importModelCatalog(cache)).models[0]
+    assert.equal(model.minimal_client_version, optional)
+    assert.equal(model.auto_compact_token_limit, optional)
+    assert.equal(model.slug, 'gpt-6-astra')
+    assert.equal(model.default_reasoning_level, 'ultra')
+    assert.equal(model.context_window, 272000)
+    assert.equal(model.effective_context_window_percent, 95)
+    assert.deepEqual(cache, before)
   }
 })

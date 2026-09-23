@@ -9,6 +9,7 @@ import {
   PINNED_CODEX_CLI_VERSION,
   PINNED_MODEL_CATALOG_RELATIVE_PATH,
   acquireRuntimeLock,
+  loadPinnedCodexModelCatalog,
   readMissionHostConfig,
   readMissionHostConfigFromEnvironment,
   type MissionHostPathOverrides,
@@ -772,8 +773,8 @@ test('config rejects a catalog that requires a newer Codex client before launch'
   }
 })
 
-test('config requires an exact stable model minimum client version', () => {
-  for (const version of [undefined, null, '0.153', '0.153.0-alpha.1', '00.153.0', '0.153.0 ', '9007199254740992.0.0']) {
+test('config requires an exact stable model minimum client version when supplied', () => {
+  for (const version of [false, 153, '0.153', '0.153.0-alpha.1', '00.153.0', '0.153.0 ', '9007199254740992.0.0']) {
     const built = fixture()
     const catalog = JSON.parse(fs.readFileSync(built.modelCatalogPath, 'utf8'))
     catalog.models[0].minimal_client_version = version
@@ -782,6 +783,25 @@ test('config requires an exact stable model minimum client version', () => {
       () => readMissionHostConfig('mission.rh', built.overrides),
       /must declare a valid minimal_client_version/,
     )
+  }
+})
+
+test('config accepts unspecified provider limits without inventing a minimum or compaction threshold', () => {
+  for (const optional of [null, undefined]) {
+    const built = fixture()
+    const catalog = JSON.parse(fs.readFileSync(built.modelCatalogPath, 'utf8'))
+    catalog.models[0].minimal_client_version = optional
+    catalog.models[0].auto_compact_token_limit = optional
+    const bytes = JSON.stringify(catalog)
+    fs.writeFileSync(built.modelCatalogPath, bytes)
+    const config = readMissionHostConfig('mission.rh', built.overrides)
+    const policy = loadPinnedCodexModelCatalog(built.modelCatalogPath)
+    assert.equal(config.expectedCliVersion, PINNED_CODEX_CLI_VERSION)
+    assert.equal(config.expectedModel, 'gpt-6-astra')
+    assert.equal(config.reasoningEffort, 'ultra')
+    assert.equal(policy.configuredCompactionThresholdTokens, null)
+    assert.equal(policy.effectiveContextAllowanceTokens, 258400)
+    assert.equal(fs.readFileSync(built.modelCatalogPath, 'utf8'), bytes)
   }
 })
 

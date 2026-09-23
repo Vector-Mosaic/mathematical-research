@@ -5540,12 +5540,14 @@ async function cleanup(harness: Harness): Promise<void> {
 
 async function makeFixtureTreeWritable(root: string): Promise<void> {
   const details = await fs.promises.lstat(root)
-  if (details.isDirectory() && !details.isSymbolicLink()) {
+  // Only this fixture's real entries are disposable. Never chmod a symlink target.
+  if (details.isSymbolicLink()) return
+  await fs.promises.chmod(root, details.isDirectory() ? 0o700 : 0o600)
+  if (details.isDirectory()) {
     for (const entry of await fs.promises.readdir(root)) {
       await makeFixtureTreeWritable(path.join(root, entry))
     }
   }
-  await fs.promises.chmod(root, 0o700)
 }
 
 for (const openingKind of ['initial', 'failed_recovery', 'historical_pause', 'historical_closeout', 'canonical_closeout'] as const) {
@@ -7871,12 +7873,18 @@ test('failed formal execution does not block an explicit continue decision or it
   }
 })
 
-test('real TypeScript Host completes Python formal reconciliation before checkpoint continuation', async () => {
+test('real TypeScript Host completes Python formal reconciliation before checkpoint continuation', async (t) => {
   const harness = await createHarness([
     { kind: 'real_formal_lifecycle' },
     { kind: 'usage_limited' },
   ])
-  try {
+  // The adapter deliberately seals input stages read-only on Linux too. Register
+  // cleanup separately so a teardown error cannot replace a failed body assertion.
+  t.after(async () => {
+    await makeFixtureTreeWritable(harness.root)
+    await cleanup(harness)
+  })
+  {
     const pythonPath = resolvePythonExecutable()
     const modelCatalogRelative = path.join(
       'services',
@@ -7978,11 +7986,6 @@ test('real TypeScript Host completes Python formal reconciliation before checkpo
       (evidenceDeltas[0]?.current_reference as JsonObject).identity,
       'host-cross-language-formal',
     )
-  } finally {
-    if (process.platform === 'win32') {
-      await makeFixtureTreeWritable(harness.root)
-    }
-    await cleanup(harness)
   }
 })
 

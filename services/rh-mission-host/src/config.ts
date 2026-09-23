@@ -1105,16 +1105,19 @@ export function loadPinnedCodexModelCatalog(catalogPath: string): PinnedLaunchCo
     throw new Error('pinned Codex model catalog must contain exactly one complete model record')
   }
   const minimumClientVersion = models[0].minimal_client_version
-  const minimumVersionParts = typeof minimumClientVersion === 'string'
-    ? /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/.exec(minimumClientVersion)?.slice(1).map(Number)
-    : undefined
-  if (!minimumVersionParts || !minimumVersionParts.every(Number.isSafeInteger)) {
-    throw new Error('pinned Codex model catalog must declare a valid minimal_client_version')
-  }
-  const pinnedVersionParts = PINNED_CODEX_CLI_VERSION.split('.').map(Number)
-  const differingPart = minimumVersionParts.findIndex((part, index) => part !== pinnedVersionParts[index])
-  if (differingPart !== -1 && minimumVersionParts[differingPart]! > pinnedVersionParts[differingPart]!) {
-    throw new Error('pinned Codex version is below the model catalog minimal_client_version')
+  // Null/absent metadata advertises no minimum; it does not select a CLI version.
+  if (minimumClientVersion !== undefined && minimumClientVersion !== null) {
+    const minimumVersionParts = typeof minimumClientVersion === 'string'
+      ? /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/.exec(minimumClientVersion)?.slice(1).map(Number)
+      : undefined
+    if (!minimumVersionParts || !minimumVersionParts.every(Number.isSafeInteger)) {
+      throw new Error('pinned Codex model catalog must declare a valid minimal_client_version when supplied')
+    }
+    const pinnedVersionParts = PINNED_CODEX_CLI_VERSION.split('.').map(Number)
+    const differingPart = minimumVersionParts.findIndex((part, index) => part !== pinnedVersionParts[index])
+    if (differingPart !== -1 && minimumVersionParts[differingPart]! > pinnedVersionParts[differingPart]!) {
+      throw new Error('pinned Codex version is below the model catalog minimal_client_version')
+    }
   }
   const supported = models[0].supported_reasoning_levels
   if (
@@ -1140,7 +1143,7 @@ export function loadPinnedCodexModelCatalog(catalogPath: string): PinnedLaunchCo
     !isRecord(messages) || messages.instructions_template !== model.base_instructions ||
     !isRecord(messages.instructions_variables) ||
     Object.values(messages.instructions_variables).some((value) => value !== '') ||
-    (model.auto_compact_token_limit !== undefined &&
+    (model.auto_compact_token_limit !== undefined && model.auto_compact_token_limit !== null &&
       (!Number.isSafeInteger(model.auto_compact_token_limit) || (model.auto_compact_token_limit as number) <= 0))
   ) {
     throw new Error('pinned Codex launch context accounting is not established')
@@ -1155,7 +1158,7 @@ export function loadPinnedCodexModelCatalog(catalogPath: string): PinnedLaunchCo
     ),
     baseInstructions: model.base_instructions,
     baseInstructionsSource: 'model_messages.instructions_template_equals_base_instructions',
-    configuredCompactionThresholdTokens: model.auto_compact_token_limit as number | undefined ?? null,
+    configuredCompactionThresholdTokens: model.auto_compact_token_limit as number | null | undefined ?? null,
   }
 }
 

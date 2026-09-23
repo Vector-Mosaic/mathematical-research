@@ -141,11 +141,19 @@ Use a separate root-owned runtime Python virtual environment, created at its
 final path (for example `/opt/mathematical-research/python`) with Python 3.12 or
 newer. Set `PYTHON` below to that environment's `bin/python`. Do not move a venv
 or leave runtime editable-package links pointing into a disposable staging tree.
-The owner scripts load the exact installed source packages directly. Their
-runtime is standard-library based; `requirements-dev.txt` installs the local
-packages and pinned `jsonschema` dependency used by schema-parity tests in the
-separate development environment. The build environment is not the runtime
-account's environment and does not modify shared/global Python packages.
+The owner scripts load their exact installed source directly. Formal Attempt
+workers start as separate Python modules, so the administrator must also install
+the adapter into this runtime environment from the selected release:
+
+```bash
+"$PYTHON" -m pip install --no-deps \
+  /opt/mathematical-research/releases/REPLACE_WITH_EXACT_40_CHARACTER_COMMIT/packages/research-attempt-adapter
+```
+
+The adapter has no third-party runtime dependencies. `requirements-dev.txt`
+installs the local packages and pinned `jsonschema` used by schema-parity tests
+in the separate development environment. Neither environment modifies shared
+or global Python packages.
 
 ## Initialize fresh research state
 
