@@ -1,0 +1,161 @@
+{
+  "candidate_revisions": [
+    {
+      "genealogy": [],
+      "hypotheses": [
+        "Q_sharp, Dbin, Wbar and the frequency/variation constants retain the full definitions in mathematics.md; nontriangular samples require a separately justified affine-energy bound.",
+        "The bins partition the covered clip up to Lebesgue-null sets before pushforward. Their intersections may split a complementary atom across bins; all pieces remain charged.",
+        "The sample weights are the normalized triangular weights, the initial bin weights remain frozen in the phase comparison, and each set of moving bin weights is nonnegative with total mass at most 1/2.",
+        "The strict geometry t<V1<U1<...<Vs<Us, original B=V1<=2t, full prefixes, a in (0,1/2), clipped cells, positive integer N and K, and measures have exactly the definitions in mathematics.md."
+      ],
+      "id": "jensen-finite-mixing",
+      "non_inferences": [],
+      "revision": 1,
+      "standing": {
+        "basis": "Starting claim supplied for this authored reconstruction; no canonical admission is asserted.",
+        "status": "open"
+      },
+      "statement": "For the strict finite geometry, original full prefixes, clipped cells and bins that partition the covered clip before pushforward in mathematics.md, retain every complementary atom and define Q_sharp=NM/K+N*sum_I(M_I*d_CI)+C_K*T_(N,c)*sum_I(M_I*H_I). Then the triangular affine-phase energy is at most Q_sharp, and nonnegative moving weights of total at most 1/2 satisfy Mmix<=N*Wbar+(sqrt(Q_sharp)+2*pi*sqrt(Z_N*Dbin^2))^2. In particular, sum_I(M_I*d_CI)<=hbin*(1-a)/(2*(1+a))*d_C; no complementary atom, terminal cell, part of Q_sharp or Hilbert cross term is removed.",
+      "supporting_refs": []
+    },
+    {
+      "genealogy": [],
+      "hypotheses": [
+        "Q_sharp, Dbin, Wbar and the frequency/variation constants retain the full definitions in mathematics.md; nontriangular samples require a separately justified affine-energy bound.",
+        "The bins partition the covered clip up to Lebesgue-null sets before pushforward. Their intersections may split a complementary atom across bins; all pieces remain charged.",
+        "The sample weights are the normalized triangular weights, the initial bin weights remain frozen in the phase comparison, and each set of moving bin weights is nonnegative with total mass at most 1/2.",
+        "The strict geometry t<V1<U1<...<Vs<Us, original B=V1<=2t, full prefixes, a in (0,1/2), clipped cells, positive integer N and K, and measures have exactly the definitions in mathematics.md."
+      ],
+      "id": "jensen-finite-mixing",
+      "non_inferences": [
+        "A finite retained-mass inequality does not supply the actual theta-source motion estimates or the source-to-Jensen analytic consumer.",
+        "The bin-local improvement retains all complementary atoms and does not permit dropping the affine term or the Hilbert cross term.",
+        "The checker's finite examples are not actual source instances and do not establish a Jensen wedge or RH."
+      ],
+      "revision": 2,
+      "standing": {
+        "basis": "The complete finite argument in mathematics.md and bounded checker support this precise retained-mass and Hilbert statement. Open is the Candidate's non-admitted store status, not a claim that the finite proof or calculation failed.",
+        "status": "open"
+      },
+      "statement": "For the strict finite geometry, original full prefixes, clipped cells and bins that partition the covered clip before pushforward in mathematics.md, retain every complementary atom and define Q_sharp=NM/K+N*sum_I(M_I*d_CI)+C_K*T_(N,c)*sum_I(M_I*H_I). Then the triangular affine-phase energy is at most Q_sharp, and nonnegative moving weights of total at most 1/2 satisfy Mmix<=N*Wbar+(sqrt(Q_sharp)+2*pi*sqrt(Z_N*Dbin^2))^2. In particular, sum_I(M_I*d_CI)<=hbin*(1-a)/(2*(1+a))*d_C; no complementary atom, terminal cell, part of Q_sharp or Hilbert cross term is removed.",
+      "supporting_refs": [
+        {
+          "digest_sha256": "d05180ed6a295c35903a16fb63221a68d35eb903096d6a8a83e58cce3e5e7fca",
+          "id": "jensen-authored-mixing",
+          "kind": "evidence",
+          "revision": 1
+        }
+      ]
+    },
+    {
+      "genealogy": [],
+      "hypotheses": [
+        "All estimates needed for a composed conclusion must hold on the same source, predecessor and admissible block; unrelated pointwise estimates cannot be combined silently.",
+        "The actual-source definitions, frozen choices and uniformity requirements are those specified in mathematics.md."
+      ],
+      "id": "jensen-analytic-inputs",
+      "non_inferences": [],
+      "revision": 1,
+      "standing": {
+        "basis": "These actual-source estimates and the separate Jensen consumer are not proved by this bounded public package. They are named explicitly so that conditional budget support is not mistaken for an established source or Jensen theorem; this status does not characterize all later historical work.",
+        "status": "open"
+      },
+      "statement": "The actual-source system supplies the source geometry, complementary mass, frozen-prefix motion and transfer estimates assumed in mathematics.md, including Hcell=O(ell^-2), d_C=O(ell^-1) and (b0+T)*H=O(ell^-2*log(ell)) on a suitable fixed-order block, with the stated negligible weight/physical transfer terms. A conclusion about actual Jensen roots additionally requires the separate actual/proxy source transfer, integer selection, Gamma/comparator, support, contour/error and degree-transfer consumer identified there. This public package does not establish that chain.",
+      "supporting_refs": [
+        {
+          "digest_sha256": "d05180ed6a295c35903a16fb63221a68d35eb903096d6a8a83e58cce3e5e7fca",
+          "id": "jensen-authored-mixing",
+          "kind": "evidence",
+          "revision": 1
+        }
+      ]
+    },
+    {
+      "genealogy": [
+        {
+          "candidate_ref": {
+            "candidate_id": "jensen-finite-mixing",
+            "digest_sha256": "d757fe96ffc5f1c18bda2b84e6b8344d9d3fd9838ead48d19cf17d77a18d3e26",
+            "revision": 2
+          },
+          "relation": "derived_from"
+        }
+      ],
+      "hypotheses": [
+        "For the logarithmic endpoint, kappa is fixed before the sufficiently small positive prefactor c_R is selected.",
+        "The budget-input portion of candidate:jensen-analytic-inputs holds uniformly, with constants fixed independently of the large source parameter and all negligible transfer terms controlled as specified in mathematics.md.",
+        "The finite retained-mass and Hilbert result is exactly candidate:jensen-finite-mixing revision 2, with all affine and cross terms retained."
+      ],
+      "id": "jensen-conditional-budget",
+      "non_inferences": [
+        "No bare critical exponent endpoint, arbitrary prefactor at log power 1/19, effective onset, optimality or novelty is proved.",
+        "The 9/16 historical correction margin is relative to A0; any total-budget conclusion must include A0 and its full Hilbert cross term.",
+        "The supporting analytic-input reference records an open hypothesis, not established actual-source support.",
+        "Vanishing normalized costs do not complete actual-source-to-Jensen transfer or establish RH."
+      ],
+      "revision": 1,
+      "standing": {
+        "basis": "The exact scale and exponent identities, together with the finite mixing argument, support this conditional implication. The actual-source inputs remain open in this public package, and no canonical admission is requested.",
+        "status": "open"
+      },
+      "statement": "Assume the finite mixing statement at revision 2 and the actual-source budget inputs in mathematics.md. With the stated m,N,K,eta scales, the normalized nonbaseline geometry, retained mass and squared phase costs are O(eta^-7*ell^-2*log(ell)), O(eta^-4/ell) and O(eta^-19*ell^-4*log(ell)^2). For eta=ell^-q they vanish when 0<q<4/19, permitting 2A<q<4/19 for any fixed 0<A<2/19. For eta=kappa*R^-2, the endpoint R=c_R*ell^(2/19)*(log(ell))^(-1/19) leaves a phase bound O(kappa^-19*c_R^38), so a sufficiently small c_R can meet a fixed budget after kappa is fixed. With log power p>1/19 that phase bound vanishes for every fixed positive c_R. These are conditional budget conclusions, not a theorem about actual Jensen roots.",
+      "supporting_refs": [
+        {
+          "digest_sha256": "36206026aebf714bc3c378f578dd768a6c657848f91c4115d04f7877f044142a",
+          "id": "jensen-analytic-inputs",
+          "kind": "candidate",
+          "revision": 1
+        },
+        {
+          "digest_sha256": "d05180ed6a295c35903a16fb63221a68d35eb903096d6a8a83e58cce3e5e7fca",
+          "id": "jensen-authored-mixing",
+          "kind": "evidence",
+          "revision": 1
+        },
+        {
+          "digest_sha256": "d757fe96ffc5f1c18bda2b84e6b8344d9d3fd9838ead48d19cf17d77a18d3e26",
+          "id": "jensen-finite-mixing",
+          "kind": "candidate",
+          "revision": 2
+        }
+      ]
+    }
+  ],
+  "canonical_effect": "none",
+  "checker_output_sha256": "88a48f0f5200d920dc19e87efb3e7f2372ac3d3c18f050d826e4964109e9c4e2",
+  "checkpoint_commit": 11,
+  "demonstrates": "Exact supplied bytes, scoped judgments and their dependencies survive reopening.",
+  "does_not_demonstrate": "Autonomous discovery, a fresh model successor, historical execution, canonical admission or RH.",
+  "example": "jensen-program",
+  "mode": "authored-scripted-walkthrough-no-model",
+  "preparation": "Selected fields from the fresh-process inspection of the real store; machine paths and runtime bindings omitted. Judgments are authored fixture inputs.",
+  "reopened_store_checks": "passed",
+  "retained_raw_artifacts": [
+    {
+      "name": "problem.json",
+      "sha256": "5cbf620d6c231c33f688fc9f78df35378585bda77f57e6bdbcc1aa1a2d0e0f25"
+    },
+    {
+      "name": "mathematics.md",
+      "sha256": "1b2b26aef6123c002a44962ea3a39aa762e356aa178a60de07c3a5e762ca9c6d"
+    },
+    {
+      "name": "check.py",
+      "sha256": "0ef12223593129569b71ac5e9f7955c586c4927ca1d216b8265ca6065b587142"
+    },
+    {
+      "name": "walkthrough.json",
+      "sha256": "6c3f85432b3906dc2977d40a09e9a70e96d866d804ba7ffddfdb8b214e08a767"
+    },
+    {
+      "name": "requirements.txt",
+      "sha256": "6be76e6235548d1ae038bc33361fb4fcdc592243d89d8e4c84ca0a4574086053"
+    },
+    {
+      "name": "checker-output.json",
+      "sha256": "88a48f0f5200d920dc19e87efb3e7f2372ac3d3c18f050d826e4964109e9c4e2"
+    }
+  ],
+  "schema_version": "mathematical-research.authored-store-summary.v1",
+  "source_commit": "1232a53076f1188585241b0622cb35ea74932d62"
+}

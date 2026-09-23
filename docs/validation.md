@@ -84,3 +84,10 @@ The [Jacobi construction](../examples/jacobi-extension/validation.md) adds exact
 symbolic identities, a rational positive-root certificate and an authored
 real-store walkthrough that preserves conditional dependencies. Its validation
 does not certify the analytic target estimates or a larger Jensen theorem.
+
+The [bounded Jensen case study](../examples/jensen-program/validation.md) adds
+a finite retained-mass and phase-mixing argument, an interval/algebra checker,
+and a real-store walkthrough preserving its conditional analytic dependencies.
+Its evidence does not certify actual-source applicability or the larger Jensen
+program. The four examples remain selected cases, not a comparative evaluation
+or a measured autonomous-research success rate.

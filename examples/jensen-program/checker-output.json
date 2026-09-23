@@ -1,0 +1,298 @@
+{
+  "created_at": "2026-09-23T19:19:20.116433+00:00",
+  "dependencies": {
+    "arb_decimal_precision": 60,
+    "python": "3.12.3",
+    "python_flint": "0.8.0",
+    "sympy": "1.14.0",
+    "threads": 1
+  },
+  "elapsed_seconds": 0.110922,
+  "exact_identities": {
+    "boundary_ell_exponents": [
+      "-10/19",
+      "-3/19",
+      "0"
+    ],
+    "budget_exponents": true,
+    "degree_headroom": true,
+    "historical_margin": "increment beyond A0 <= 9/16 delta0; total <= 17/16 delta0",
+    "log_boundary": true,
+    "phase_log_exponent": "2 - 38*p",
+    "rolle_check_scope": "symbolic arbitrary coefficients at d=5,k=3; general proof in mathematics.md",
+    "rolle_identity": true,
+    "stronger_total_sufficient_margin": "corrections <= delta0/64 imply total < 47/64 delta0",
+    "triangular_moments": true
+  },
+  "example": "jensen-program",
+  "fejer_hilbert": {
+    "D_phase": {
+      "display": "[5.433413467768417538882e-8 +/- 8.10e-31]",
+      "lower_bound": {
+        "exponent2": -227,
+        "mantissa": "11718762984929163891549914387063042824078024809354894812641279"
+      },
+      "upper_bound": {
+        "exponent2": -227,
+        "mantissa": "11718762984929163891549914387063042824078024809354894812642645"
+      }
+    },
+    "N_Wbar": {
+      "display": "[0.004928954822029806740069 +/- 3.08e-25]",
+      "lower_bound": {
+        "exponent2": -210,
+        "mantissa": "8110617622480381050958205278816946124450610504208993616871695"
+      },
+      "upper_bound": {
+        "exponent2": -210,
+        "mantissa": "8110617622480381050958205278816946124450610504208993616872109"
+      }
+    },
+    "Q_bin": {
+      "display": "[0.5517802202576771244637 +/- 2.66e-23]",
+      "lower_bound": {
+        "exponent2": -203,
+        "mantissa": "7093413024013332525218721961805865297234612654116239062671871"
+      },
+      "upper_bound": {
+        "exponent2": -203,
+        "mantissa": "7093413024013332525218721961805865297234612654116239062672225"
+      }
+    },
+    "Z_N": 14,
+    "affine_energy": {
+      "display": "[0.006025252565769994797727 +/- 2.82e-26]",
+      "lower_bound": {
+        "exponent2": -210,
+        "mantissa": "9914580555985816183161078698075781571537067032176119712156697"
+      },
+      "upper_bound": {
+        "exponent2": -210,
+        "mantissa": "9914580555985816183161078698075781571537067032176119712157997"
+      }
+    },
+    "affine_energy_bound": true,
+    "affine_to_positive_pair_comparison": true,
+    "bin_normalization_divisor": null,
+    "complex_triangular_characteristic_exercised": true,
+    "cross_term": {
+      "display": "[0.0003462975645306381127194 +/- 4.20e-26]",
+      "lower_bound": {
+        "exponent2": -214,
+        "mantissa": "9117347529990391211333993509693119497301467631989359030092641"
+      },
+      "upper_bound": {
+        "exponent2": -214,
+        "mantissa": "9117347529990391211333993509693119497301467631989359030093403"
+      }
+    },
+    "cross_term_retained": true,
+    "frozen_nonlinear_energy": {
+      "display": "[0.006025249269992725933720 +/- 4.88e-26]",
+      "lower_bound": {
+        "exponent2": -210,
+        "mantissa": "9914575132769300351799901063916329076842214186775223979684215"
+      },
+      "upper_bound": {
+        "exponent2": -210,
+        "mantissa": "9914575132769300351799901063916329076842214186775223979685529"
+      }
+    },
+    "frozen_phase_bound": true,
+    "full_bound": {
+      "display": "[0.5570555269783722470006 +/- 3.75e-23]",
+      "lower_bound": {
+        "exponent2": -203,
+        "mantissa": "7161229752530293546587126201642253400027633148152540877908669"
+      },
+      "upper_bound": {
+        "exponent2": -203,
+        "mantissa": "7161229752530293546587126201642253400027633148152540877909033"
+      }
+    },
+    "full_mixing_bound": true,
+    "moving_energy": {
+      "display": "[0.006208512801907717524707 +/- 2.45e-26]",
+      "lower_bound": {
+        "exponent2": -210,
+        "mantissa": "10216136109726199305143405023636722249165649894064351653244215"
+      },
+      "upper_bound": {
+        "exponent2": -210,
+        "mantissa": "10216136109726199305143405023636722249165649894064351653245577"
+      }
+    },
+    "moving_weight_bound": true,
+    "mu2": "23/2",
+    "positive_pair_energy": {
+      "display": "[0.006082058715764496298836 +/- 1.98e-25]",
+      "lower_bound": {
+        "exponent2": -210,
+        "mantissa": "10008055334685640406789445464878936768159081955207394263630725"
+      },
+      "upper_bound": {
+        "exponent2": -210,
+        "mantissa": "10008055334685640406789445464878936768159081955207394263631457"
+      }
+    }
+  },
+  "finite_geometry": {
+    "cdf_bound_checked": true,
+    "cdf_check_scope": "finite rational probes; all-v result is proved in mathematics.md",
+    "cdf_probe_count": 49,
+    "coarse_mass_charge": {
+      "display": "[0.007875983546793172588959 +/- 7.24e-26]",
+      "lower_bound": {
+        "exponent2": -209,
+        "mantissa": "6479983409817500867381247565331767409237959397279015060766393"
+      },
+      "upper_bound": {
+        "exponent2": -209,
+        "mantissa": "6479983409817500867381247565331767409237959397279015060767141"
+      }
+    },
+    "complementary_mass": {
+      "display": "[0.07190556059098516447085 +/- 3.90e-24]",
+      "lower_bound": {
+        "exponent2": -206,
+        "mantissa": "7395057978075137611409328254603924074568217044108443421092055"
+      },
+      "upper_bound": {
+        "exponent2": -206,
+        "mantissa": "7395057978075137611409328254603924074568217044108443421092537"
+      }
+    },
+    "local_mass_cap": {
+      "display": "[0.002941591115085756728353 +/- 1.14e-25]",
+      "lower_bound": {
+        "exponent2": -211,
+        "mantissa": "9680803171298361964026756987845136970343847766832871387611415"
+      },
+      "upper_bound": {
+        "exponent2": -211,
+        "mantissa": "9680803171298361964026756987845136970343847766832871387612049"
+      }
+    },
+    "local_mass_charge": {
+      "display": "[0.001522114652823527390785 +/- 1.06e-25]",
+      "lower_bound": {
+        "exponent2": -211,
+        "mantissa": "5009293195972999323380788570049645552458075155055688559404201"
+      },
+      "upper_bound": {
+        "exponent2": -210,
+        "mantissa": "2504646597986499661690394285024822776229037577527844279702317"
+      }
+    },
+    "mass_conserved": true,
+    "shared_plateau_atom_retained": true,
+    "terminal_atom_bin_indices": [
+      0,
+      1,
+      2
+    ],
+    "terminal_mass": {
+      "display": "[0.01436159573973742611886 +/- 4.79e-24]",
+      "lower_bound": {
+        "exponent2": -209,
+        "mantissa": "11816035620071375994308902079394189990611142393451659521385715"
+      },
+      "upper_bound": {
+        "exponent2": -209,
+        "mantissa": "11816035620071375994308902079394189990611142393451659521387221"
+      }
+    },
+    "terminal_mass_retained": true,
+    "total_mass": {
+      "display": "[0.1095323293784401497793 +/- 1.80e-23]",
+      "lower_bound": {
+        "exponent2": -206,
+        "mantissa": "11264746697889418126330840665023536283959181255845824467877363"
+      },
+      "upper_bound": {
+        "exponent2": -206,
+        "mantissa": "11264746697889418126330840665023536283959181255845824467877927"
+      }
+    }
+  },
+  "input": {
+    "K": 4,
+    "N": 3,
+    "U": [
+      "15",
+      "22",
+      "36"
+    ],
+    "V": [
+      "12",
+      "18",
+      "28"
+    ],
+    "bins": [
+      [
+        "1/10",
+        "1/5"
+      ],
+      [
+        "1/5",
+        "3/10"
+      ],
+      [
+        "3/10",
+        "2/5"
+      ],
+      [
+        "2/5",
+        "1/2"
+      ],
+      [
+        "1/2",
+        "3/5"
+      ],
+      [
+        "3/5",
+        "7/10"
+      ],
+      [
+        "7/10",
+        "4/5"
+      ]
+    ],
+    "clip": [
+      "1/10",
+      "9/10"
+    ],
+    "full_prefixes": [
+      "3",
+      "7",
+      "15"
+    ],
+    "kind": "authored finite geometry; not actual theta data",
+    "t": "10"
+  },
+  "schema_version": "mathematical-research.jensen-finite-certificate.v1",
+  "scope": {
+    "conditional": [
+      "asymptotic budget uses separately stated source estimates"
+    ],
+    "not_established": [
+      "actual theta applicability",
+      "full Jensen candidate",
+      "RH",
+      "effective onset",
+      "optimality",
+      "novelty"
+    ],
+    "verified": [
+      "authored finite interval fixture",
+      "exact algebraic identities"
+    ]
+  },
+  "source_sha256": {
+    "check.py": "0ef12223593129569b71ac5e9f7955c586c4927ca1d216b8265ca6065b587142",
+    "mathematics.md": "1b2b26aef6123c002a44962ea3a39aa762e356aa178a60de07c3a5e762ca9c6d",
+    "problem.json": "5cbf620d6c231c33f688fc9f78df35378585bda77f57e6bdbcc1aa1a2d0e0f25",
+    "requirements.txt": "6be76e6235548d1ae038bc33361fb4fcdc592243d89d8e4c84ca0a4574086053"
+  },
+  "status": "certified"
+}
