@@ -1,0 +1,112 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "mathematical_research.mission_observation.v1",
+  "title": "Private operator Mission observation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "operation", "source_binding", "state", "reason", "completeness", "items", "next_cursor", "coverage"],
+  "properties": {
+    "schema_version": {"const": "mathematical_research.mission_observation.v1"},
+    "operation": {"enum": ["current_decision", "decision_history", "exact_record", "catalog"]},
+    "source_binding": {"$ref": "#/definitions/sourceBinding"},
+    "state": {"enum": ["present", "empty", "unavailable", "expired", "denied"]},
+    "reason": {"type": ["string", "null"]},
+    "completeness": {"enum": ["page", "exhausted"]},
+    "items": {"type": "array", "maxItems": 50, "items": {"oneOf": [{"$ref": "#/definitions/currentDecision"}, {"$ref": "#/definitions/strategyTransition"}, {"$ref": "#/definitions/checkpointTransition"}, {"$ref": "#/definitions/exactRecord"}, {"$ref": "#/definitions/catalogRow"}]}},
+    "next_cursor": {"type": ["string", "null"], "maxLength": 32768},
+    "coverage": {"oneOf": [{"type": "null"}, {"$ref": "#/definitions/coverage"}]}
+  },
+  "definitions": {
+    "request": {"oneOf": [{"$ref": "#/definitions/current_decisionRequest"}, {"$ref": "#/definitions/decision_historyRequest"}, {"$ref": "#/definitions/exact_recordRequest"}, {"$ref": "#/definitions/catalogRequest"}]},
+    "current_decisionRequest": {
+      "type": "object", "additionalProperties": false, "required": ["operation"],
+      "properties": {"operation": {"const": "current_decision"}, "source_binding": {"$ref": "#/definitions/sourceBinding"}}
+    },
+    "decision_historyRequest": {
+      "type": "object", "additionalProperties": false, "required": ["operation", "collection"],
+      "properties": {"operation": {"const": "decision_history"}, "collection": {"enum": ["strategies", "checkpoints"]}, "page_size": {"type": "integer", "minimum": 1, "maximum": 50}, "cursor": {"type": "string", "minLength": 1, "maxLength": 32768}, "source_binding": {"$ref": "#/definitions/sourceBinding"}},
+      "dependencies": {"cursor": ["source_binding"]}
+    },
+    "exact_recordRequest": {
+      "type": "object", "additionalProperties": false, "required": ["operation", "handle", "source_binding"],
+      "properties": {"operation": {"const": "exact_record"}, "handle": {"type": "string", "minLength": 1, "maxLength": 2048}, "source_binding": {"$ref": "#/definitions/sourceBinding"}, "source_evidence": {"type": "string", "minLength": 1, "maxLength": 2048}, "source_ordinal": {"type": "integer", "minimum": 0}, "offset_bytes": {"type": "integer", "minimum": 0}, "max_bytes": {"type": "integer", "minimum": 1, "maximum": 65536}},
+      "dependencies": {"source_evidence": ["source_ordinal"], "source_ordinal": ["source_evidence"]}
+    },
+    "catalogRequest": {
+      "type": "object", "additionalProperties": false, "required": ["operation", "collection"],
+      "properties": {"operation": {"const": "catalog"}, "collection": {"enum": ["frontier", "owner_records", "open_candidates", "latest_outputs", "relationship_hooks"]}, "page_size": {"type": "integer", "minimum": 1, "maximum": 50}, "cursor": {"type": "string", "minLength": 1, "maxLength": 32768}, "source_binding": {"$ref": "#/definitions/sourceBinding"}},
+      "dependencies": {"cursor": ["source_binding"]}
+    },
+    "digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "sourceBinding": {
+      "type": "object", "additionalProperties": false,
+      "required": ["project_id", "mission_id", "root_identity", "project_commit", "root_digest", "transition_head_digest", "canonical_authority_digest"],
+      "properties": {
+        "project_id": {"type": "string", "minLength": 1}, "mission_id": {"type": "string", "minLength": 1}, "root_identity": {"type": "string", "minLength": 1},
+        "project_commit": {"type": "integer", "minimum": 0}, "root_digest": {"$ref": "#/definitions/digest"},
+        "transition_head_digest": {"oneOf": [{"type": "null"}, {"$ref": "#/definitions/digest"}]}, "canonical_authority_digest": {"$ref": "#/definitions/digest"}
+      }
+    },
+    "ownerReference": {
+      "type": "object", "additionalProperties": false, "required": ["kind", "identity", "revision", "payload_sha256"],
+      "properties": {"kind": {"enum": ["mission", "strategy", "branch", "context", "candidate", "evidence", "session"]}, "identity": {"type": "string", "minLength": 1}, "revision": {"type": "integer", "minimum": 1}, "payload_sha256": {"$ref": "#/definitions/digest"}}
+    },
+    "checkpointReference": {
+      "type": "object", "additionalProperties": false, "required": ["checkpoint_id", "payload_sha256"],
+      "properties": {"checkpoint_id": {"type": "string", "minLength": 1}, "payload_sha256": {"$ref": "#/definitions/digest"}}
+    },
+    "checkpointAnchor": {
+      "type": "object", "additionalProperties": false,
+      "required": ["handle", "checkpoint_id", "payload_sha256", "project_commit", "mission_reference", "strategy_reference", "predecessor_checkpoint"],
+      "properties": {
+        "handle": {"type": "string", "pattern": "^checkpoint:.+"}, "checkpoint_id": {"type": "string", "minLength": 1}, "payload_sha256": {"$ref": "#/definitions/digest"},
+        "project_commit": {"type": "integer", "minimum": 0}, "mission_reference": {"$ref": "#/definitions/ownerReference"}, "strategy_reference": {"$ref": "#/definitions/ownerReference"},
+        "predecessor_checkpoint": {"oneOf": [{"type": "null"}, {"$ref": "#/definitions/checkpointReference"}]}
+      }
+    },
+    "semanticOwner": {
+      "type": "object", "additionalProperties": false, "required": ["reference", "handle", "semantic"],
+      "properties": {"reference": {"$ref": "#/definitions/ownerReference"}, "handle": {"type": "string", "minLength": 1}, "semantic": {"type": "object"}}
+    },
+    "currentDecision": {
+      "type": "object", "additionalProperties": false, "required": ["kind", "mission", "strategy", "checkpoint"],
+      "properties": {"kind": {"const": "current_decision"}, "mission": {"$ref": "#/definitions/semanticOwner"}, "strategy": {"$ref": "#/definitions/semanticOwner"}, "checkpoint": {"oneOf": [{"type": "null"}, {"$ref": "#/definitions/checkpointAnchor"}]}}
+    },
+    "strategyTransition": {
+      "type": "object", "additionalProperties": false, "required": ["kind", "project_commit", "temporal_status", "before", "after", "handle"],
+      "properties": {"kind": {"const": "strategy_transition"}, "project_commit": {"type": "integer", "minimum": 0}, "temporal_status": {"enum": ["current_at_cut", "historical_at_cut"]}, "before": {"oneOf": [{"type": "null"}, {"$ref": "#/definitions/ownerReference"}]}, "after": {"$ref": "#/definitions/ownerReference"}, "handle": {"type": "string", "minLength": 1}}
+    },
+    "checkpointTransition": {
+      "type": "object", "additionalProperties": false, "required": ["kind", "project_commit", "temporal_status", "before", "after"],
+      "properties": {"kind": {"const": "checkpoint_transition"}, "project_commit": {"type": "integer", "minimum": 0}, "temporal_status": {"enum": ["current_at_cut", "historical_at_cut"]}, "before": {"oneOf": [{"type": "null"}, {"$ref": "#/definitions/checkpointAnchor"}]}, "after": {"$ref": "#/definitions/checkpointAnchor"}}
+    },
+    "artifactReference": {
+      "type": "object", "additionalProperties": false, "required": ["capture_id", "artifact_ordinal", "blob_sha256"],
+      "properties": {"capture_id": {"type": "string", "minLength": 1}, "artifact_ordinal": {"type": "integer", "minimum": 0}, "blob_sha256": {"$ref": "#/definitions/digest"}}
+    },
+    "sourceRelation": {
+      "type": "object", "additionalProperties": false, "required": ["evidence_reference", "source_ordinal", "exact_scope"],
+      "properties": {"evidence_reference": {"$ref": "#/definitions/ownerReference"}, "source_ordinal": {"type": "integer", "minimum": 0}, "exact_scope": {"type": "object"}}
+    },
+    "exactRecord": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "handle", "reference", "source_relation", "trust_class", "media_type", "encoding", "sha256", "total_bytes", "offset_bytes", "returned_bytes", "page_sha256", "content_base64", "next_offset_bytes"],
+      "properties": {
+        "kind": {"const": "exact_record"}, "handle": {"type": "string", "minLength": 1},
+        "reference": {"oneOf": [{"$ref": "#/definitions/ownerReference"}, {"$ref": "#/definitions/checkpointAnchor"}, {"$ref": "#/definitions/artifactReference"}]},
+        "source_relation": {"oneOf": [{"type": "null"}, {"$ref": "#/definitions/sourceRelation"}]},
+        "trust_class": {"enum": ["semantic_owner_projection", "untrusted_raw_material", "custody_descriptor"]}, "media_type": {"type": "string"}, "encoding": {"const": "base64"}, "sha256": {"$ref": "#/definitions/digest"},
+        "total_bytes": {"type": "integer", "minimum": 0}, "offset_bytes": {"type": "integer", "minimum": 0}, "returned_bytes": {"type": "integer", "minimum": 0, "maximum": 65536},
+        "page_sha256": {"$ref": "#/definitions/digest"}, "content_base64": {"type": "string", "maxLength": 87384}, "next_offset_bytes": {"type": ["integer", "null"], "minimum": 1}
+      }
+    },
+    "catalogRow": {
+      "type": "object", "additionalProperties": false, "required": ["source_field", "source_index", "relationship_class", "value"],
+      "properties": {"source_field": {"enum": ["mission", "current_strategy", "scientific_context", "strategy_ground", "strategy_connections", "open_candidate_a1_refs", "raw_captures"]}, "source_index": {"type": "integer", "minimum": 0}, "relationship_class": {"type": ["string", "null"]}, "value": {"type": "object"}}
+    },
+    "coverage": {
+      "type": "object", "additionalProperties": false, "required": ["collection", "scope", "ordering", "source_inventory_count", "record_bodies"],
+      "properties": {"collection": {"enum": ["strategies", "checkpoints", "frontier", "owner_records", "open_candidates", "latest_outputs", "relationship_hooks"]}, "scope": {"enum": ["selected_mission_science", "selected_epoch_captured_outputs", "live_open_a1_references", "retained_owner_transitions", "mission_binding_and_strategy_references"]}, "ordering": {"enum": ["authored_order", "ascending_capture_identity", "owner_order", "owner_identity_revision", "reverse_checkpoint_chain"]}, "source_inventory_count": {"type": ["integer", "null"], "minimum": 0}, "record_bodies": {"const": "not_exposed_by_catalog"}}
+    }
+  }
+}

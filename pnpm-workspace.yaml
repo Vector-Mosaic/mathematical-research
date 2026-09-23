@@ -1,0 +1,4 @@
+packages:
+  - packages/codex-remote-core
+  - packages/codex-thread-core
+  - services/rh-mission-host

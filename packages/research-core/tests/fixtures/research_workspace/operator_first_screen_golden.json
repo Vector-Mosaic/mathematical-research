@@ -1,0 +1,30 @@
+{
+  "scenario_id": "a1_claimed_complete_chain_remains_proof_neutral",
+  "questions": [
+    {
+      "question_id": "what_happened",
+      "answer_path": ["now", "payload", "meaningful_change", "record_id"],
+      "expected": "change:alert:A1:claimed-chain"
+    },
+    {
+      "question_id": "is_rh_accepted_as_proved_or_disproved",
+      "answer_path": ["now", "payload", "proof_status", "status_literal"],
+      "expected": "rh_proof_incomplete"
+    },
+    {
+      "question_id": "what_stopped_or_continues",
+      "answer_path": ["now", "payload", "mission", "status"],
+      "expected": "held"
+    },
+    {
+      "question_id": "what_must_i_do",
+      "answer_path": ["attention", "payload", "urgent", 0, "summary_code"],
+      "expected": "candidate_review_required"
+    },
+    {
+      "question_id": "where_is_the_exact_evidence",
+      "answer_path": ["attention", "payload", "urgent", 0, "closure_digest"],
+      "expected": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    }
+  ]
+}

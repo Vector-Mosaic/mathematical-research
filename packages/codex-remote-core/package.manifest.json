@@ -1,0 +1,19 @@
+{
+  "kind": "package",
+  "version": 1,
+  "id": "pkg.workstation_control.remote_core",
+  "name": "codex-remote-core",
+  "description": "Shared Codex thread types, reducers, path normalization, content/log redaction, and RH observation schema.",
+  "language": "typescript",
+  "import_path": "@workstation-control/remote-core",
+  "commands": {
+    "build": {
+      "cmd": "pnpm run build",
+      "cwd": "packages/codex-remote-core"
+    },
+    "test": {
+      "cmd": "pnpm run test",
+      "cwd": "packages/codex-remote-core"
+    }
+  }
+}

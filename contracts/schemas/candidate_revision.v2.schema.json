@@ -1,0 +1,238 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://vector-mosaic.invalid/mathematical-research/candidate-revision.v2.schema.json",
+  "title": "Mathematical Research Candidate Revision v2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "kind",
+    "contract_schema_sha256",
+    "candidate_id",
+    "mission_id",
+    "proposal_kind",
+    "exact_statement",
+    "standing",
+    "provenance",
+    "authority_class",
+    "canonical_effect"
+  ],
+  "properties": {
+    "schema_version": {"const": 2},
+    "kind": {"const": "candidate_revision"},
+    "contract_schema_sha256": {"$ref": "#/$defs/sha256"},
+    "candidate_id": {"$ref": "#/$defs/stableId"},
+    "mission_id": {"$ref": "#/$defs/stableId"},
+    "proposal_kind": {
+      "enum": [
+        "mathematical_statement",
+        "lemma",
+        "mechanism",
+        "construction",
+        "proof_architecture"
+      ]
+    },
+    "exact_statement": {"$ref": "#/$defs/nonemptyString"},
+    "mechanism": {"$ref": "#/$defs/nonemptyString"},
+    "scope_and_reach": {"$ref": "#/$defs/nonemptyString"},
+    "objects": {"$ref": "#/$defs/nonemptyUniqueStrings"},
+    "hypotheses": {"$ref": "#/$defs/nonemptyUniqueStrings"},
+    "domain": {"$ref": "#/$defs/nonemptyString"},
+    "quantifiers": {"$ref": "#/$defs/nonemptyUniqueStrings"},
+    "normalization": {"$ref": "#/$defs/nonemptyUniqueStrings"},
+    "argument_edges": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/argumentEdge"}
+    },
+    "supporting_refs": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/ownerReference"}
+    },
+    "obligations": {"$ref": "#/$defs/nonemptyUniqueStrings"},
+    "gaps": {"$ref": "#/$defs/nonemptyUniqueStrings"},
+    "objections": {"$ref": "#/$defs/nonemptyUniqueStrings"},
+    "circularity_risks": {"$ref": "#/$defs/nonemptyUniqueStrings"},
+    "falsifiers": {"$ref": "#/$defs/nonemptyUniqueStrings"},
+    "discriminators": {"$ref": "#/$defs/nonemptyUniqueStrings"},
+    "limitations": {"$ref": "#/$defs/nonemptyUniqueStrings"},
+    "non_inferences": {"$ref": "#/$defs/nonemptyUniqueStrings"},
+    "genealogy": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/genealogyEdge"}
+    },
+    "standing": {"$ref": "#/$defs/standing"},
+    "provenance": {"$ref": "#/$defs/provenance"},
+    "authority_class": {"const": "candidate_only"},
+    "canonical_effect": {"const": "none"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "stableId": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9._:-]{2,159}$"
+    },
+    "nonemptyString": {"type": "string", "minLength": 1},
+    "nonemptyUniqueStrings": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/nonemptyString"}
+    },
+    "ownerReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "id", "revision", "digest_sha256"],
+      "properties": {
+        "kind": {"enum": ["evidence", "context", "branch", "candidate"]},
+        "id": {"$ref": "#/$defs/stableId"},
+        "revision": {"type": "integer", "minimum": 1},
+        "digest_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "candidateOnlyAuthority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["class"],
+      "properties": {
+        "class": {"const": "candidate_only"}
+      }
+    },
+    "referencedAuthority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["class", "refs"],
+      "properties": {
+        "class": {
+          "enum": [
+            "evidence_interpretation",
+            "canonical_mathematics",
+            "formal_verification"
+          ]
+        },
+        "refs": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/ownerReference"}
+        }
+      }
+    },
+    "edgeAuthority": {
+      "oneOf": [
+        {"$ref": "#/$defs/candidateOnlyAuthority"},
+        {"$ref": "#/$defs/referencedAuthority"}
+      ]
+    },
+    "argumentEdge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "edge_id",
+        "edge_kind",
+        "premises",
+        "conclusion",
+        "authority"
+      ],
+      "properties": {
+        "edge_id": {"$ref": "#/$defs/stableId"},
+        "edge_kind": {"enum": ["argument", "composition"]},
+        "premises": {"$ref": "#/$defs/nonemptyUniqueStrings"},
+        "conclusion": {"$ref": "#/$defs/nonemptyString"},
+        "authority": {"$ref": "#/$defs/edgeAuthority"}
+      }
+    },
+    "candidateReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidate_id", "revision", "digest_sha256"],
+      "properties": {
+        "candidate_id": {"$ref": "#/$defs/stableId"},
+        "revision": {"type": "integer", "minimum": 1},
+        "digest_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "genealogyEdge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["relation", "candidate_ref"],
+      "properties": {
+        "relation": {
+          "enum": [
+            "successor_of",
+            "alternative_to",
+            "recombines",
+            "split_from",
+            "repair_of",
+            "derived_from"
+          ]
+        },
+        "candidate_ref": {"$ref": "#/$defs/candidateReference"}
+      }
+    },
+    "standing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "basis"],
+      "properties": {
+        "status": {"enum": ["open", "withdrawn", "failed", "refuted_at_scope"]},
+        "basis": {"$ref": "#/$defs/nonemptyString"},
+        "scope": {"$ref": "#/$defs/nonemptyString"}
+      }
+    },
+    "nativeProvenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "executive_epoch_id",
+        "executive_epoch_authority_sha256"
+      ],
+      "properties": {
+        "kind": {"const": "native_executive_epoch"},
+        "executive_epoch_id": {"$ref": "#/$defs/stableId"},
+        "executive_epoch_authority_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "sessionReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["session_id", "revision", "digest_sha256"],
+      "properties": {
+        "session_id": {"$ref": "#/$defs/stableId"},
+        "revision": {"type": "integer", "minimum": 1},
+        "digest_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "attemptReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["attempt_id", "digest_sha256"],
+      "properties": {
+        "attempt_id": {"$ref": "#/$defs/stableId"},
+        "digest_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "formalProvenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "session_ref", "attempt_ref"],
+      "properties": {
+        "kind": {"const": "formal_attempt"},
+        "session_ref": {"$ref": "#/$defs/sessionReference"},
+        "attempt_ref": {"$ref": "#/$defs/attemptReference"}
+      }
+    },
+    "provenance": {
+      "oneOf": [
+        {"$ref": "#/$defs/nativeProvenance"},
+        {"$ref": "#/$defs/formalProvenance"}
+      ]
+    }
+  }
+}

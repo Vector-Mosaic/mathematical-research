@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://vectormosaic.local/schemas/mathematical_research/research_attempt_result_envelope.schema.json",
+  "title": "Workstation-Owned Mathematical Research Attempt Result Envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "kind",
+    "attempt_owner",
+    "attempt_id",
+    "attempt_chain_id",
+    "attempt_sequence",
+    "execution_intent_id",
+    "session_id",
+    "provider_attempt_ref",
+    "lifecycle",
+    "terminal",
+    "late",
+    "unknown_effect",
+    "input_artifact_sha256",
+    "output_artifact_sha256",
+    "receipt_sha256",
+    "raw_measurement_refs",
+    "semantic_intent_sha256",
+    "retry_of_attempt_id",
+    "started_at",
+    "finished_at",
+    "settlement_state",
+    "mathematical_effect",
+    "strategy_effect"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "kind": {"const": "research_attempt_result_envelope"},
+    "attempt_owner": {"const": "workstation_control"},
+    "attempt_id": {"$ref": "#/$defs/id"},
+    "attempt_chain_id": {"$ref": "#/$defs/id"},
+    "attempt_sequence": {"type": "integer", "minimum": 1},
+    "execution_intent_id": {"$ref": "#/$defs/id"},
+    "session_id": {"$ref": "#/$defs/id"},
+    "provider_attempt_ref": {"$ref": "#/$defs/nonEmptyString"},
+    "lifecycle": {"enum": ["planned", "leased", "running", "succeeded", "failed", "cancelled", "unknown"]},
+    "terminal": {"type": "boolean"},
+    "late": {"type": "boolean"},
+    "unknown_effect": {"type": "boolean"},
+    "input_artifact_sha256": {"$ref": "#/$defs/sha256"},
+    "output_artifact_sha256": {"$ref": "#/$defs/nullableSha256"},
+    "receipt_sha256": {"$ref": "#/$defs/nullableSha256"},
+    "raw_measurement_refs": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/rawMeasurementRef"}
+    },
+    "semantic_intent_sha256": {"$ref": "#/$defs/sha256"},
+    "retry_of_attempt_id": {"$ref": "#/$defs/nullableId"},
+    "started_at": {"$ref": "#/$defs/nullableTimestamp"},
+    "finished_at": {"$ref": "#/$defs/nullableTimestamp"},
+    "settlement_state": {"enum": ["reserved", "eligible", "evidence_only"]},
+    "mathematical_effect": {"const": "none"},
+    "strategy_effect": {"const": "none"}
+  },
+  "$defs": {
+    "nonEmptyString": {"type": "string", "minLength": 1},
+    "id": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9._:-]*$"},
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "nullableSha256": {
+      "oneOf": [
+        {"$ref": "#/$defs/sha256"},
+        {"type": "null"}
+      ]
+    },
+    "nullableId": {
+      "oneOf": [
+        {"$ref": "#/$defs/id"},
+        {"type": "null"}
+      ]
+    },
+    "nullableTimestamp": {
+      "oneOf": [
+        {"type": "string", "format": "date-time"},
+        {"type": "null"}
+      ]
+    },
+    "rawMeasurementRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "uri", "sha256"],
+      "properties": {
+        "kind": {"enum": ["telemetry", "stdout", "stderr", "metrics", "receipt"]},
+        "uri": {"type": "string", "pattern": "^[a-z][a-z0-9+.-]*://[^\\s]+$"},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    }
+  }
+}

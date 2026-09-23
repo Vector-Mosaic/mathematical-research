@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://vectormosaic.local/schemas/mathematical_research/research_attempt_result_envelope.v3.schema.json",
+  "title": "Workstation-Owned Mathematical Research Attempt Result Envelope v3",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "kind", "attempt_owner", "attempt_id", "attempt_chain_id",
+    "attempt_sequence", "retry_of_attempt_id", "execution_intent_id", "project_id",
+    "mission_id", "branch_id", "strategy_id", "context_id", "session_id",
+    "semantic_work_unit_id", "configuration_id", "coordination_id",
+    "coordination_digest", "authorization_id", "authorization_digest",
+    "provider_fence_id", "provider_fence_digest", "provider_id",
+    "provider_attempt_ref", "lifecycle", "terminal", "late", "unknown_effect",
+    "provider_effect", "input_artifact_sha256", "output_artifact_sha256",
+    "receipt_sha256", "raw_measurement_refs", "sealed_artifacts",
+    "lifecycle_evidence_sha256", "execution_policy_requirements_sha256",
+    "semantic_intent_sha256", "started_at", "finished_at", "settlement_state",
+    "canonical_effect", "mathematical_effect", "strategy_effect"
+  ],
+  "properties": {
+    "schema_version": {"const": 3},
+    "kind": {"const": "research_attempt_result_envelope"},
+    "attempt_owner": {"const": "workstation_control"},
+    "attempt_id": {"$ref": "#/$defs/id"},
+    "attempt_chain_id": {"$ref": "#/$defs/id"},
+    "attempt_sequence": {"type": "integer", "minimum": 1},
+    "retry_of_attempt_id": {"$ref": "#/$defs/nullableId"},
+    "execution_intent_id": {"$ref": "#/$defs/id"},
+    "project_id": {"$ref": "#/$defs/id"},
+    "mission_id": {"$ref": "#/$defs/id"},
+    "branch_id": {"$ref": "#/$defs/id"},
+    "strategy_id": {"$ref": "#/$defs/id"},
+    "context_id": {"$ref": "#/$defs/id"},
+    "session_id": {"$ref": "#/$defs/id"},
+    "semantic_work_unit_id": {"$ref": "#/$defs/id"},
+    "configuration_id": {"$ref": "#/$defs/id"},
+    "coordination_id": {"$ref": "#/$defs/id"},
+    "coordination_digest": {"$ref": "#/$defs/sha256"},
+    "authorization_id": {"$ref": "#/$defs/id"},
+    "authorization_digest": {"$ref": "#/$defs/sha256"},
+    "provider_fence_id": {"$ref": "#/$defs/id"},
+    "provider_fence_digest": {"$ref": "#/$defs/sha256"},
+    "provider_id": {"$ref": "#/$defs/id"},
+    "provider_attempt_ref": {"$ref": "#/$defs/nullableString"},
+    "lifecycle": {"enum": ["prepared", "launch_requested", "running", "cancel_requested", "succeeded", "failed", "cancelled", "unknown", "fenced"]},
+    "terminal": {"type": "boolean"},
+    "late": {"type": "boolean"},
+    "unknown_effect": {"type": "boolean"},
+    "provider_effect": {"enum": ["none", "known_terminal", "unknown"]},
+    "input_artifact_sha256": {"$ref": "#/$defs/sha256"},
+    "output_artifact_sha256": {"$ref": "#/$defs/nullableSha256"},
+    "receipt_sha256": {"$ref": "#/$defs/nullableSha256"},
+    "raw_measurement_refs": {
+      "type": "array", "uniqueItems": true,
+      "items": {"$ref": "#/$defs/rawMeasurementRef"}
+    },
+    "sealed_artifacts": {
+      "type": "array", "uniqueItems": true,
+      "items": {"$ref": "#/$defs/sealedArtifact"}
+    },
+    "lifecycle_evidence_sha256": {"$ref": "#/$defs/sha256"},
+    "execution_policy_requirements_sha256": {"$ref": "#/$defs/sha256"},
+    "semantic_intent_sha256": {"$ref": "#/$defs/sha256"},
+    "started_at": {"$ref": "#/$defs/nullableTimestamp"},
+    "finished_at": {"$ref": "#/$defs/nullableTimestamp"},
+    "settlement_state": {"enum": ["reserved", "eligible", "evidence_only", "blocked_unknown"]},
+    "canonical_effect": {"const": "none"},
+    "mathematical_effect": {"const": "none"},
+    "strategy_effect": {"const": "none"}
+  },
+  "$defs": {
+    "nonEmptyString": {"type": "string", "minLength": 1},
+    "id": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9._:-]*$"},
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "nullableSha256": {"oneOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]},
+    "nullableId": {"oneOf": [{"$ref": "#/$defs/id"}, {"type": "null"}]},
+    "nullableString": {"oneOf": [{"$ref": "#/$defs/nonEmptyString"}, {"type": "null"}]},
+    "nullableTimestamp": {"oneOf": [{"type": "string", "format": "date-time"}, {"type": "null"}]},
+    "rawMeasurementRef": {
+      "type": "object", "additionalProperties": false,
+      "required": ["kind", "uri", "sha256", "byte_length"],
+      "properties": {
+        "kind": {"enum": ["events", "stdout", "stderr", "final_output", "metrics", "receipt", "process_control"]},
+        "uri": {"type": "string", "pattern": "^[a-z][a-z0-9+.-]*://[^\\s]+$"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "byte_length": {"type": "integer", "minimum": 0}
+      }
+    },
+    "sealedArtifact": {
+      "type": "object", "additionalProperties": false,
+      "required": ["name", "path", "sha256", "size_bytes"],
+      "properties": {
+        "name": {"$ref": "#/$defs/nonEmptyString"},
+        "path": {"$ref": "#/$defs/nonEmptyString"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "size_bytes": {"type": "integer", "minimum": 0}
+      }
+    }
+  }
+}

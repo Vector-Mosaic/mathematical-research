@@ -1,0 +1,69 @@
+{
+  "corpus_version": 1,
+  "source_class": "independently_authored_synthetic_test_mathematics",
+  "access": "fixture_preparation_and_post_freeze_evaluation_only_not_candidate_tuning",
+  "cases": {
+    "J2": {
+      "initial": {
+        "parent_question": "Construct two positive physical gaps g1,g2 with g1+g2=3n/4, for every real n>0 and L>3, in the comparison representation.",
+        "current_strategy": "Use the two-scale proposed alternative whose junction displacement is -3/4.",
+        "scientific_context": "The parent matching requirement is g1+g2=3n/4. A previously used narrow representation is unavailable, but other representations have not been excluded. Positivity of actual gaps, not the sign of a junction coordinate, is the physical condition.",
+        "new_contribution": "The proposed alternative has g1=n/4-3n/(4L), g2=n/2+3n/(4L). The downstream consumer has now been qualified: each physical gap must be at least n/3, not merely positive.",
+        "assignment": "Determine what survives this qualification and whether the proposed alternative serves the parent interface. Continue with a justified mathematical decision; do not assume the new qualification invalidates the parent problem."
+      },
+      "archive": [],
+      "initial_source_aliases": []
+    },
+    "L2": {
+      "initial": {
+        "parent_question": "Replace a continuous averaging functional by small positive finite evaluations, retaining exact polynomial information.",
+        "current_strategy": "Find a four-evaluation formula.",
+        "scientific_context": "The functional is I(f)=(1/pi) integral_0^pi f(7/2+(3/2)cos(theta)) dtheta. Existing formulas give I(f)=f(7/2) for deg f<=1; and I(f)=[f(7/2-3sqrt(2)/4)+f(7/2+3sqrt(2)/4)]/2 for deg f<=3. These are exact on their stated degree ranges, not arbitrary-function identities.",
+        "new_contribution": "A third exact formula is [f(7/2-3sqrt(3)/4)+f(7/2)+f(7/2+3sqrt(3)/4)]/3 for deg f<=5. All nodes lie in (2,5) and all weights are positive.",
+        "assignment": "Derive a four-evaluation formula of the greatest exactness you can justify. Preserve any unexpected reusable structure with its proof and limitations, even if it goes beyond the requested instance."
+      },
+      "archive": [],
+      "initial_source_aliases": []
+    },
+    "R3": {
+      "initial": {
+        "parent_question": "Compose the new quantitative endpoint estimate with a retained forcing theorem.",
+        "current_strategy": "Transfer the scalar smallness estimate to the forcing theorem.",
+        "scientific_context": "Two scalar conventions occur in the retained work. Their names do not establish equality. Exact normalization is required for a quantitative composition.",
+        "new_contribution": "For positive B,C,D with D>C>=B, the new result supplies eta_can=B(1/C-1/D)<=1/1024. No upper bound for D/C is exported.",
+        "assignment": "Read the literal consumer convention and determine the strongest compatible consequence. Preserve the new theorem even if a particular transfer does not follow."
+      },
+      "archive": [
+        {"alias": "r3.consumer", "kind": "evidence", "title": "Single-junction multiplier convention", "body": "The sufficient forcing condition in this theorem is delta-1<=1/512, where delta=D/C. The theorem uses this literal multiplicative ratio, not a parameter inferred by the same informal name in another record. All other hypotheses remain independent.", "links": []}
+      ],
+      "initial_source_aliases": ["r3.consumer"]
+    },
+    "R4": {
+      "initial": {
+        "parent_question": "Determine a justified growing-order positive-definite range.",
+        "current_strategy": "Extend a fixed-order limiting construction to a specified finite-parameter range.",
+        "scientific_context": "For integers r,n>=1, H_(r,n) is diagonal with entries 1-j^2/n, 1<=j<=r. For every fixed r, H_(r,n) tends to the identity as n tends to infinity and is eventually positive definite. Fixed-order limiting rank is already established.",
+        "new_contribution": "A proposed composition asserts that the limiting statement proves positive definiteness simultaneously for every 1<=r<=floor(n^(2/3)), once n is sufficiently large.",
+        "assignment": "Determine the exact reach of the proposal and any useful alternative conclusion. Preserve valid limiting information while keeping its quantifiers separate from a finite uniform assertion."
+      },
+      "archive": [],
+      "initial_source_aliases": []
+    },
+    "U2": {
+      "initial": {
+        "parent_question": "Determine what exact information the new scalar representation makes available to retained finite-dimensional constructions.",
+        "current_strategy": "Bound a scalar derivative on the positive half-line.",
+        "scientific_context": "The scalar derivative problem is selected. No assertion about all finite interpolation tables has been established for the current representation.",
+        "new_contribution": "For every z>0, F(z)=1/z+2/(z+1)+1/(z+3). This exact representation is valid on the whole positive half-line. It is not a large-z expansion.",
+        "assignment": "Investigate the consequences of this representation for the Mission's mathematical questions, including a qualified consequential use if available. Read exact backing and do not infer a quantitative condition number from qualitative positivity."
+      },
+      "archive": [
+        {"alias": "u2.a", "kind": "evidence", "title": "Sample-energy table", "body": "For positive weights w_l and real sample functions v_i(t_l), the table G_ij=sum_l w_l v_i(t_l)v_j(t_l) obeys c^T G c=sum_l w_l(sum_i c_i v_i(t_l))^2>=0. It is positive definite exactly when the sample row vectors are linearly independent. Rank is at most the number of samples. For positive-definite G, the energy (1/2)c^T G c-b^T c has a unique minimizer G^-1 b for every real b. No condition-number estimate follows from these statements alone.", "links": []},
+        {"alias": "u2.b", "kind": "branch", "title": "Secant interpolation energy", "body": "For distinct positive sites z_1,...,z_k and a differentiable scalar function g, this consumer forms D_ij=(g(z_i)-g(z_j))/(z_j-z_i) for i!=j and D_ii=-g'(z_i). The unresolved use is a unique minimizer of (1/2)c^T D c-b^T c for arbitrary b. A negative derivative on its own does not establish that property.", "links": []},
+        {"alias": "u2.c", "kind": "evidence", "title": "Positive resolvent slope shortcut", "body": "The diagonal signs -g'(z_i)>0 alone do not make the secant table positive definite. For example the symmetric matrix with diagonal 1 and off-diagonal 2 is indefinite. This is an obstruction to the diagonal-only shortcut, not to every representation.", "links": []},
+        {"alias": "u2.d", "kind": "evidence", "title": "Rational function expansion", "body": "A finite large-z expansion of a rational function does not identify its values or divided differences at all positive sites. A truncated expansion is not an exact interpolation certificate.", "links": []}
+      ],
+      "initial_source_aliases": []
+    }
+  }
+}

@@ -1,0 +1,339 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://vectormosaic.local/schemas/mathematical_research/research_context_manifest.v1.schema.json",
+  "title": "Mathematical Research Executive-Authored Context Manifest v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "kind",
+    "contract_schema_sha256",
+    "context_id",
+    "revision",
+    "profile",
+    "source_sha256",
+    "catalog_sha256",
+    "assignment_sha256",
+    "selection_policy_sha256",
+    "authored_selection_sha256",
+    "selection_authored_at",
+    "executive_epoch_id",
+    "executive_epoch_authority_sha256",
+    "execution_policy_sha256",
+    "semantic_contract_sha256",
+    "canonical_baseline_sha256",
+    "projection_bundle_sha256",
+    "mission_bundle_sha256",
+    "project_id",
+    "mission_id",
+    "mission_revision",
+    "assignment_kind",
+    "assignment_id",
+    "assignment_revision",
+    "assignment_function",
+    "session_id",
+    "session_revision",
+    "topology",
+    "session_function",
+    "role",
+    "exact_question",
+    "input_references",
+    "resolution_requirement_ref",
+    "policy_exclusions_present",
+    "inclusions",
+    "omissions",
+    "catalog_universe",
+    "required_control_references",
+    "catalog_partition_attestation",
+    "retrieval_permissions",
+    "expansion_history",
+    "permitted_heuristics",
+    "prohibited_circular_inputs",
+    "trust_authority",
+    "write_authority",
+    "invalidation_conditions",
+    "budgets",
+    "canonical_effect",
+    "mathematical_effect"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "kind": {"const": "research_context_manifest"},
+    "contract_schema_sha256": {"$ref": "#/$defs/sha256"},
+    "context_id": {"$ref": "#/$defs/nonEmptyString"},
+    "revision": {"type": "integer", "minimum": 1},
+    "profile": {"const": "executive_authored_complete_partition"},
+    "source_sha256": {"$ref": "#/$defs/sha256"},
+    "catalog_sha256": {"$ref": "#/$defs/sha256"},
+    "assignment_sha256": {"$ref": "#/$defs/sha256"},
+    "selection_policy_sha256": {"$ref": "#/$defs/sha256"},
+    "authored_selection_sha256": {"$ref": "#/$defs/sha256"},
+    "selection_authored_at": {"$ref": "#/$defs/nonEmptyString"},
+    "executive_epoch_id": {"$ref": "#/$defs/nonEmptyString"},
+    "executive_epoch_authority_sha256": {"$ref": "#/$defs/sha256"},
+    "execution_policy_sha256": {"$ref": "#/$defs/sha256"},
+    "semantic_contract_sha256": {"$ref": "#/$defs/sha256"},
+    "canonical_baseline_sha256": {"$ref": "#/$defs/sha256"},
+    "projection_bundle_sha256": {"$ref": "#/$defs/sha256"},
+    "mission_bundle_sha256": {"$ref": "#/$defs/sha256"},
+    "project_id": {"$ref": "#/$defs/nonEmptyString"},
+    "mission_id": {"$ref": "#/$defs/nonEmptyString"},
+    "mission_revision": {"type": "integer", "minimum": 1},
+    "assignment_kind": {"enum": ["native_delegation", "formal_session"]},
+    "assignment_id": {"$ref": "#/$defs/nonEmptyString"},
+    "assignment_revision": {"type": "integer", "minimum": 1},
+    "assignment_function": {"$ref": "#/$defs/nonEmptyString"},
+    "session_id": {
+      "oneOf": [{"$ref": "#/$defs/nonEmptyString"}, {"type": "null"}]
+    },
+    "session_revision": {
+      "oneOf": [{"type": "integer", "minimum": 1}, {"type": "null"}]
+    },
+    "topology": {
+      "oneOf": [
+        {"enum": ["branch_work", "mission_support"]},
+        {"type": "null"}
+      ]
+    },
+    "session_function": {
+      "oneOf": [{"$ref": "#/$defs/nonEmptyString"}, {"type": "null"}]
+    },
+    "role": {"$ref": "#/$defs/nonEmptyString"},
+    "exact_question": {"$ref": "#/$defs/nonEmptyString"},
+    "input_references": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/inputReference"}
+    },
+    "resolution_requirement_ref": {
+      "oneOf": [
+        {"$ref": "#/$defs/resolutionRequirementReference"},
+        {"type": "null"}
+      ]
+    },
+    "policy_exclusions_present": {"type": "boolean"},
+    "inclusions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/selection"}
+    },
+    "omissions": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/selection"}
+    },
+    "catalog_universe": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/reference"}
+    },
+    "required_control_references": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/reference"}
+    },
+    "catalog_partition_attestation": {"$ref": "#/$defs/sha256"},
+    "retrieval_permissions": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/retrievalPermission"}
+    },
+    "expansion_history": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/expansionRecord"}
+    },
+    "permitted_heuristics": {"$ref": "#/$defs/uniqueStrings"},
+    "prohibited_circular_inputs": {"$ref": "#/$defs/uniqueStrings"},
+    "trust_authority": {"$ref": "#/$defs/trustAuthority"},
+    "write_authority": {"const": "none"},
+    "invalidation_conditions": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 10,
+      "items": {"$ref": "#/$defs/invalidationCondition"}
+    },
+    "budgets": {"$ref": "#/$defs/budgets"},
+    "canonical_effect": {"const": "none"},
+    "mathematical_effect": {"const": "none"}
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {"assignment_kind": {"const": "formal_session"}}
+      },
+      "then": {
+        "properties": {
+          "session_id": {"$ref": "#/$defs/nonEmptyString"},
+          "session_revision": {"type": "integer", "minimum": 1},
+          "topology": {"enum": ["branch_work", "mission_support"]},
+          "session_function": {"$ref": "#/$defs/nonEmptyString"}
+        }
+      },
+      "else": {
+        "properties": {
+          "session_id": {"type": "null"},
+          "session_revision": {"type": "null"},
+          "topology": {"type": "null"},
+          "session_function": {"type": "null"}
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "nonEmptyString": {"type": "string", "minLength": 1},
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "uniqueStrings": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/nonEmptyString"}
+    },
+    "reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "identity", "revision", "payload_sha256"],
+      "properties": {
+        "kind": {"$ref": "#/$defs/nonEmptyString"},
+        "identity": {"$ref": "#/$defs/nonEmptyString"},
+        "revision": {"type": "integer", "minimum": 1},
+        "payload_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "ordinaryInputReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "identity", "revision"],
+      "properties": {
+        "kind": {"enum": ["program", "branch", "candidate"]},
+        "identity": {"$ref": "#/$defs/nonEmptyString"},
+        "revision": {"type": "integer", "minimum": 1}
+      }
+    },
+    "evidenceInputReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "identity",
+        "revision",
+        "digest_sha256",
+        "closure_id",
+        "closure_digest",
+        "blob_sha256",
+        "blob_byte_length"
+      ],
+      "properties": {
+        "kind": {"const": "evidence"},
+        "identity": {"$ref": "#/$defs/nonEmptyString"},
+        "revision": {"type": "integer", "minimum": 1},
+        "digest_sha256": {"$ref": "#/$defs/sha256"},
+        "closure_id": {"$ref": "#/$defs/nonEmptyString"},
+        "closure_digest": {"$ref": "#/$defs/sha256"},
+        "blob_sha256": {"$ref": "#/$defs/sha256"},
+        "blob_byte_length": {"type": "integer", "minimum": 0}
+      }
+    },
+    "inputReference": {
+      "oneOf": [
+        {"$ref": "#/$defs/ordinaryInputReference"},
+        {"$ref": "#/$defs/evidenceInputReference"}
+      ]
+    },
+    "resolutionRequirementReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "relation_id",
+        "requirement_evidence_id",
+        "requirement_revision",
+        "requirement_kind"
+      ],
+      "properties": {
+        "relation_id": {"$ref": "#/$defs/nonEmptyString"},
+        "requirement_evidence_id": {"$ref": "#/$defs/nonEmptyString"},
+        "requirement_revision": {"type": "integer", "minimum": 1},
+        "requirement_kind": {"$ref": "#/$defs/nonEmptyString"}
+      }
+    },
+    "selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reference", "reason"],
+      "properties": {
+        "reference": {"$ref": "#/$defs/reference"},
+        "reason": {"$ref": "#/$defs/nonEmptyString"}
+      }
+    },
+    "retrievalPermission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_class", "scope", "reason", "grants_operational_authority"],
+      "properties": {
+        "source_class": {
+          "enum": ["canonical_state", "workspace", "project_history", "formal_artifact", "external_source"]
+        },
+        "scope": {"$ref": "#/$defs/nonEmptyString"},
+        "reason": {"$ref": "#/$defs/nonEmptyString"},
+        "grants_operational_authority": {"const": false}
+      }
+    },
+    "expansionRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["expansion_id", "need", "source", "provenance_sha256", "resource_effect", "knowledge_delta"],
+      "properties": {
+        "expansion_id": {"$ref": "#/$defs/nonEmptyString"},
+        "need": {"$ref": "#/$defs/nonEmptyString"},
+        "source": {"$ref": "#/$defs/reference"},
+        "provenance_sha256": {"$ref": "#/$defs/sha256"},
+        "resource_effect": {"$ref": "#/$defs/nonEmptyString"},
+        "knowledge_delta": {"$ref": "#/$defs/nonEmptyString"}
+      }
+    },
+    "trustAuthority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["canonical_references", "workspace_references", "heuristics"],
+      "properties": {
+        "canonical_references": {"const": "canonical_only"},
+        "workspace_references": {"const": "non_authoritative"},
+        "heuristics": {"const": "explicit_only"}
+      }
+    },
+    "invalidationCondition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "expected_sha256", "reason"],
+      "properties": {
+        "kind": {
+          "enum": [
+            "canonical_baseline_changed",
+            "projection_bundle_changed",
+            "mission_bundle_changed",
+            "catalog_changed",
+            "assignment_changed",
+            "selection_policy_changed",
+            "authored_selection_changed",
+            "executive_epoch_authority_changed",
+            "execution_policy_changed",
+            "semantic_contract_changed"
+          ]
+        },
+        "expected_sha256": {"$ref": "#/$defs/sha256"},
+        "reason": {"$ref": "#/$defs/nonEmptyString"}
+      }
+    },
+    "budgets": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "max_utf8_bytes",
+        "max_selected_references",
+        "max_attachment_count",
+        "max_attachment_bytes"
+      ],
+      "properties": {
+        "max_utf8_bytes": {"type": "integer", "minimum": 1},
+        "max_selected_references": {"type": "integer", "minimum": 1},
+        "max_attachment_count": {"type": "integer", "minimum": 0},
+        "max_attachment_bytes": {"type": "integer", "minimum": 0}
+      }
+    }
+  }
+}

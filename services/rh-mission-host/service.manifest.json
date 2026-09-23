@@ -1,0 +1,56 @@
+{
+  "kind": "service",
+  "version": 1,
+  "id": "svc.workstation_control.rh_mission_host",
+  "name": "rh-mission-host",
+  "type": "node_worker",
+  "description": "Headless Linux lifecycle supervisor for one persistent RH Mission executive, the exact nine-operation Mathematical Research semantic console, an exact-child same-owner historical-read alias with a root-only operational grant action, a separate explicit formal-Attempt operational action, and an optional credentialless Agent Communications outbox producer with durable restart reconciliation and no repository research ceilings.",
+  "commands": {
+    "build": {
+      "cmd": "pnpm run build",
+      "cwd": "services/rh-mission-host"
+    },
+    "start": {
+      "cmd": "pnpm run start",
+      "cwd": "services/rh-mission-host"
+    },
+    "test": {
+      "cmd": "pnpm run test",
+      "cwd": "services/rh-mission-host"
+    }
+  },
+  "dependencies": {
+    "package_ids": [
+      "pkg.workstation_control.codex_thread_core",
+      "pkg.workstation_control.research_attempt_adapter",
+      "pkg.mathematical_research.research_core"
+    ]
+  },
+  "runtime": {
+    "language": "typescript",
+    "process_model": "single_foreground_process_with_runtime_lock",
+    "network_listener": "no_public_listener; protected_ipv4_loopback_proxy_and_command_bridge_only",
+    "mission_writer": "scripts/rh_mission.py host-bridge",
+    "mission_workspace_access": "bridge_only",
+    "goal_workspace_model": "fresh_empty_direct_child_per_epoch",
+    "codex_boundary": "@workstation-control/codex-thread-core",
+    "codex_boundary_process_model": "fresh_app_server_per_epoch",
+    "mission_semantic_surface": "exact_nine_operations",
+    "historical_advisory_surface": "root_grant_action_plus_exact_child_usage_orient_retrieve_alias",
+    "formal_attempt_surface": "separate_explicit_nonsemantic_host_action",
+    "formal_attempt_recovery": "reconcile_exact_durable_attempt_without_relaunch",
+    "formal_attempt_unknown": "factual_nonsettlement",
+    "operator_control": "graceful_cancel_or_explicit_force_stop_without_hidden_deadline",
+    "operator_checkpoint_stop": "v1_explicit_one_shot_after_durable_checkpoint_before_successor",
+    "operator_single_epoch_canary": "v1_explicit_one_shot_after_terminal_executive_epoch_before_successor",
+    "stopped_epoch_reconciliation": "wc.rh_mission_stopped_epoch_reconciliation.v1",
+    "host_state_readable_schemas": [
+      "workstation_control.rh_mission_host_state.v4",
+      "workstation_control.rh_mission_host_state.v5",
+      "workstation_control.rh_mission_host_state.v6",
+      "workstation_control.rh_mission_host_state.v7"
+    ],
+    "host_state_write_schema": "workstation_control.rh_mission_host_state.v7",
+    "owner_attention": "optional_credentialless_atomic_agent_communications_outbox; dormant_without_provisioned_ingress"
+  }
+}

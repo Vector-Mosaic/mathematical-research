@@ -1,0 +1,146 @@
+{
+  "corpus_version": 1,
+  "access": "evaluator_only_never_model_visible_or_candidate_tuning_input",
+  "status": "authored_oracles_not_observed_behavior",
+  "evaluation": "Judge exact mathematical claims and consequential decisions, allowing valid alternative constructions and proofs. A retrieval hit, matching title, empty broad-awareness language, or simply preserving a saved question does not establish discovery. Static arithmetic checks verify only the named finite oracle facts, not the agent behavior.",
+  "cases": {
+    "J2": {
+      "expected": "The proposed gaps are positive for L>3 and sum correctly, but g1<n/4<n/3, so the newly qualified consumer rejects this alternative. The parent remains feasible: g1=g2=3n/8 meets the sum and both lower margins. Either derive that alternative or a comparably explicit valid construction.",
+      "derivation": "For n>0,L>3, g1=n(L-3)/(4L)>0 and g2=n(2L+3)/(4L)>0. Their sum is 3n/4. Since the correction in g1 is negative, g1<n/4, so it can never meet n/3. Choosing equal gaps gives 3n/8>=n/3 with surplus n/24. No unsupported coefficient constraint may be invented beyond the stated parent sum.",
+      "failures": [
+        "accepting mere positivity as the new n/3 margin",
+        "rejecting every construction",
+        "calling the -3/4 junction coefficient itself a negative actual gap"
+      ],
+      "exact_checks": {
+        "n": "24",
+        "L": "6",
+        "proposed_gaps": [
+          "3",
+          "15"
+        ],
+        "alternative_gaps": [
+          "9",
+          "9"
+        ],
+        "required_gap": "8"
+      }
+    },
+    "L2": {
+      "expected": "Find four positive equal-weight nodes x_j=7/2+(3/2)cos((2j-1)pi/8), j=1..4, and prove exactness through degree 7, or an equally strong exact construction. A substantive generalization is x_j=7/2+(3/2)cos((2j-1)pi/(2m)) with weight 1/m, exact through degree 2m-1 for every fixed integer m>=1.",
+      "derivation": "Write y=(x-7/2)/(3/2). Every polynomial of degree d in y expands in cos(k theta), 0<=k<=d, via the polynomial recurrence T_0=1,T_1=y,T_(k+1)=2yT_k-T_(k-1). The continuous mean of cos(k theta) on [0,pi] is zero for k>=1. At theta_j=(2j-1)pi/(2m), the real finite geometric sum gives (1/m)sum cos(k theta_j)=0 for 1<=k<=2m-1. Thus all those polynomial moments match. At k=2m, every cosine is -1, while its continuous mean is zero, so the same rule is not degree-2m exact. Nodes are distinct interior points and weights are strictly positive. The moment map's node Vandermonde has full rank for distinct nodes; this is not a uniform perturbation/inverse bound as m grows.",
+      "failures": [
+        "four-node numerics without exactness proof",
+        "claim of arbitrary-function equality",
+        "claim of degree-8 exactness for this four-node rule",
+        "uniform finite-parameter conditioning inferred from fixed-m distinct nodes"
+      ],
+      "exact_checks": {
+        "center": "7/2",
+        "scale": "3/2",
+        "centered_second_moment": "9/8",
+        "centered_fourth_moment": "243/128",
+        "three_node_centered_sixth_error": "-729/2048"
+      }
+    },
+    "R2": {
+      "expected": "Keep the gap theorem; its lower margins alone do not establish the recurrence's small upper mismatch. Exhibit a legal counterexample to that implication or derive an equally precise failed premise. Retain the recurrence as a conditional consumer, not a disproved theorem.",
+      "derivation": "Take b=1,V1=B=10,U1=C=20,V2=D=40,U2=A=80. The physical gaps are 9,10,20,40, all >=5, and A>=4B. But eta=10(40-20)/(20*40)=1/4>1/512. Thus the exported lower gaps cannot imply the sufficient recurrence condition. This witness does not prove the actual unknown construction violates it or that the downstream theorem is false.",
+      "failures": [
+        "deducing an upper bound from lower gaps",
+        "abandoning the valid local endpoint theorem",
+        "mislabeling insufficient information as a counterexample to every exact construction"
+      ]
+    },
+    "R3": {
+      "expected": "Read delta=D/C literally and reject the unproved identification with eta_can. Preserve the actual eta_can theorem and specify that additional upper ratio/control is needed for this consumer, unless another correct consequence is independently derived.",
+      "derivation": "Exactly eta_can=B(D-C)/(CD)=(B/D)(delta-1), hence delta-1=(D/B)eta_can. A bound on eta_can without an upper bound on D/B does not imply the consumer's condition. For B=1,C=1024,D=2048, eta_can=1/2048<=1/1024 but delta-1=1>1/512. The two normalizations are not equal.",
+      "failures": [
+        "guessing normalization equality",
+        "using D/B>=1 as though it were an upper bound",
+        "silently changing the consumer's literal parameter",
+        "discarding the true local bound"
+      ]
+    },
+    "R4": {
+      "expected": "Reject the specified uniform n^(2/3) range, retain fixed-r limiting positive definiteness, and allow a justified slower diagonal such as r<=floor(n^(1/4)) for n>1. State each quantifier separately.",
+      "derivation": "Positive definiteness of this diagonal matrix is exactly r^2<n. At n=k^3 and r=k^2, which lies in the proposed range, the last diagonal is 1-k<0 for every integer k>=2. This supplies arbitrarily large counterexamples, not only one finite failure. For r<=floor(n^(1/4)), every diagonal is >=1-n^(-1/2)>0 for n>1. For fixed r, the matrix tends to identity as originally stated. The finite rule r^2<n is sharper if derived.",
+      "failures": [
+        "pointwise limit promoted to the specified uniform range",
+        "one fixed-n failure treated as proof against eventual assertion without an unbounded family",
+        "blanket rejection of every increasing-order argument"
+      ]
+    },
+    "U1": {
+      "expected": "Discover and read the unlinked energy certificate and/or a mathematically equivalent consequential archive use. Push mu forward by x=exp(t), establish exact a_j moments on [1/2,3], then derive finite Hankel and shifted-Hankel positivity for all required orders. Use the result to change a warranted mathematical decision. Do not claim strict positivity without a support-rank premise.",
+      "derivation": "For nu=(exp)_*mu, integral x^j dnu=integral exp(jt)dmu=A(j)=a_j. The pushforward stays positive and supported in [1/2,3]. Polynomial-square and x-times-square forms give the two PSD tables; the two-column determinant follows by the same Gram identity. If mu is a single atom then both tables have rank one, so higher strict determinants need additional support. No unbounded degree uniform eigenvalue or RH result follows.",
+      "discovery_requirement": "The useful old owner is not in initial_source_aliases, Strategy, scientific Context or any seeded links. Its useful mathematical description is searchable. A title hit without exact read and compatibility derivation fails; saved-question recovery cannot substitute.",
+      "failures": [
+        "signed measure treated as positive",
+        "missing pushforward identity",
+        "strict positivity without support hypothesis",
+        "only a search hit or suggested connection",
+        "uniform quantitative bound invented"
+      ]
+    },
+    "U2": {
+      "expected": "Discover the old secant-energy consumer and energy certificate without seeded links or names. Derive D as the Gram table at samples t=0,1,3 with weights 1,2,1 and sample functions 1/(z_i+t). For distinct positive sites it is positive definite for k<=3, so the consumer has a unique minimizer for every b in those dimensions; for k>=4 it is rank at most 3 and does not have a unique minimizer for arbitrary b. This qualified change in consumer reach, or an equally consequential rigorously proved alternate use, passes.",
+      "derivation": "For i!=j, [(z_i+t)^(-1)-(z_j+t)^(-1)]/(z_j-z_i)=1/[(z_i+t)(z_j+t)]; the diagonal is -d/dz (z+t)^(-1)=1/(z+t)^2. Summing positive weights gives D_ij=sum_t w_t/[(z_i+t)(z_j+t)]. If k<=3 and sum_i c_i/(z_i+t) vanishes at all three distinct sample t's, multiply by product_i(z_i+t). The resulting polynomial has degree <=k-1 and at least three distinct zeros, so it vanishes identically; evaluation at t=-z_i gives c_i=0 because z_i are distinct. Thus the rows are independent and D is positive definite. For k>=4 the three-column sample matrix has rank <=3, hence singular. Its positive weights and distinct three-sample Cauchy matrix actually give rank 3 for k>=3. Positive definiteness closes the exact energy-minimizer interface only for k<=3, with no uniform condition-number claim.",
+      "discovery_requirement": "No u2 archive alias, the sample-energy table, or the secant consumer is exposed or linked in the initial case. The model must identify relevant archived content from mathematical inquiry and perform the divided-difference bridge; detecting an already-present continuation does not count.",
+      "failures": [
+        "negative derivative alone treated as positive definiteness",
+        "reversing the divided-difference sign",
+        "claim of full rank at k=4",
+        "claim of a uniform condition number",
+        "name/title matching without actual use"
+      ],
+      "exact_checks": {
+        "weights": [
+          "1",
+          "2",
+          "1"
+        ],
+        "support": [
+          "0",
+          "1",
+          "3"
+        ],
+        "sites": [
+          "1",
+          "2",
+          "4"
+        ],
+        "extra_site": "5"
+      }
+    },
+    "U3": {
+      "expected": "Find the useful positive-measure archive theorem but reject its application to the given signed representation. The supplied sequence itself also fails the first nontrivial Hankel test. Retain valid representation facts and unrelated parent questions; no global research failure follows.",
+      "derivation": "a0=1, a1=0, a2=-2, so det[[a0,a1],[a1,a2]]=-2. Any positive representing measure would give a nonnegative polynomial-square quadratic form and a2>=0. Thus no positive measure can represent even these three moments, not merely that the displayed signed representation is inconvenient.",
+      "failures": [
+        "inventing positive weights",
+        "compact support used as positivity",
+        "applying the archive theorem despite its failed premise",
+        "claiming the entire parent program is impossible"
+      ]
+    },
+    "C1": {
+      "expected": "After successful publication and unrelated B/checkpoint/successors, the exact unresolved increasing-order question remains automatically intelligible with its source and tolerance. It can be solved or preserved without compulsory Strategy selection. The stronger s=2 bound survives any generalization.",
+      "derivation": "The general bound licenses 2^s<=n/8, equivalently integer s<=floor(log2(n/8)) when that set is nonempty. At s=2 the general estimate requires n>=32, but the separately proved 1/n bound suffices already for n>=8. Replacing that special estimate by the general theorem would lose genuine mathematical reach. Before successful group commit only raw source custody is durable; after commit exact retry must preserve the original result and question without recomputation.",
+      "failures": [
+        "checkpoint treated as global integration watermark",
+        "unrelated treatment replacement erases the question",
+        "Strategy deselection treated as scientific resolution",
+        "stronger special constant discarded",
+        "uncommitted thought announced as durable",
+        "continuity counted as unlinked discovery"
+      ],
+      "exact_checks": {
+        "n": "16",
+        "s": 2,
+        "general_bound": "1/4",
+        "special_bound": "1/16",
+        "consumer_tolerance": "1/8"
+      }
+    }
+  }
+}

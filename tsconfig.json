@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "@workstation-control/remote-core": ["packages/codex-remote-core/src/index.ts"],
+      "@workstation-control/codex-thread-core": ["packages/codex-thread-core/src/index.ts"]
+    }
+  }
+}

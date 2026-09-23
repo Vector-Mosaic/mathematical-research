@@ -1,0 +1,26 @@
+{
+  "name": "@workstation-control/codex-thread-core",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "pnpm --workspace-root --filter @workstation-control/remote-core build && tsc -b --force",
+    "typecheck": "pnpm --workspace-root --filter @workstation-control/remote-core build && tsc -b --force",
+    "test": "pnpm run build && node --test --test-concurrency=1 dist"
+  },
+  "dependencies": {
+    "@workstation-control/remote-core": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "typescript": "~5.8.3"
+  }
+}

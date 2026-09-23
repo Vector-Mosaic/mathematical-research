@@ -1,0 +1,64 @@
+{
+  "corpus_version": 1,
+  "source_class": "independently_authored_synthetic_test_mathematics",
+  "cases": {
+    "R2": {
+      "initial": {
+        "parent_question": "Which endpoint constructions satisfy the retained finite-order comparison interfaces?",
+        "current_strategy": "Establish strict physical separation of the alternating endpoint cells.",
+        "scientific_context": "Physical order is b < V1 < U1 < V2 < U2. Strict gaps support the positive-root construction; recurrence forcing is a separate interface. All claims in this fixture concern this finite-dimensional model, not RH.",
+        "new_contribution": "A new construction has b=1 and guarantees that V1-b, U1-V1, V2-U1 and U2-V2 are each at least 5. Its actual coordinates are not otherwise bounded by this contribution.",
+        "assignment": "Determine the contribution's consequences for the parent construction and the retained consumer. Derive the strongest warranted conclusion and preserve any useful surviving work."
+      },
+      "archive": [
+        {"alias": "r2.consumer", "kind": "evidence", "title": "Finite recurrence estimate", "body": "Write B=V1, C=U1, D=V2 and A=U2. For ordered endpoints with A>=4B, this method additionally requires eta=B(D-C)/(CD)<=1/512. Under its other stated independent hypotheses it proves the comparison estimate. Failure of this sufficient smallness bound does not refute the comparison estimate itself.", "links": []}
+      ],
+      "initial_source_aliases": ["r2.consumer"]
+    },
+    "U1": {
+      "initial": {
+        "parent_question": "Determine which finite-array inequalities the generated sequence actually supports.",
+        "current_strategy": "Improve an upper estimate for the sequence's adjacent ratio.",
+        "scientific_context": "The adjacent-ratio estimate remains open. Existing work includes other questions about generated arrays. No general sign claim has been established for this sequence.",
+        "new_contribution": "For every real z, A(z)=integral exp(t z) dmu(t), where mu is a nonzero finite positive measure supported on [-log(2),log(3)]. The sequence is a_j=A(j) for every integer j>=0. This is an exact representation, not an asymptotic approximation; the number of support points is unspecified.",
+        "assignment": "Assess what this new representation changes for the Mission's mathematical questions. Establish any consequential qualified use with exact definitions and backing; current Strategy need not determine the entire inquiry."
+      },
+      "archive": [
+        {"alias": "u1.a", "kind": "evidence", "title": "Two-column energy certificate", "body": "Let nu be a finite positive measure on [a,b], 0<a<b. Put m_j=integral x^j dnu(x). For every k>=0, the tables (m_(i+j))_(i,j=0..k) and (m_(i+j+1))_(i,j=0..k) are positive semidefinite: their quadratic forms are integral (sum c_i x^i)^2 dnu and integral x(sum c_i x^i)^2 dnu. They are positive definite if the support contains at least k+1 distinct points. With q support points their rank is at most q. In particular m_j*m_(j+2)-m_(j+1)^2>=0 for j>=0. No uniform positive lower eigenvalue follows without quantitative support/weight margins.", "links": []},
+        {"alias": "u1.b", "kind": "branch", "title": "Adjacent-row certificate", "body": "An old unresolved construction needs all finite Hankel and shifted Hankel tables of its supplied sequence to be positive semidefinite. The dependency is a positive measure with support on the positive half-line, together with an exact moment identity for every required index. A title, three checked minors, or a limiting approximation cannot close this interface.", "links": []},
+        {"alias": "u1.c", "kind": "evidence", "title": "Exponential average ratio shortcut", "body": "For a signed exponential mixture, convexity and moment-table positivity are NOT automatic. The expression exp(tz) and compact support alone do not supply a positive measure. This result is only an exclusion of the unsigned-to-signed shortcut.", "links": []},
+        {"alias": "u1.d", "kind": "evidence", "title": "Positive exponential average diagonal", "body": "If A(z)=exp(cz) for one real c, the associated moment table has rank one. This singleton-support lemma does not establish strict positivity of larger determinants for a general average.", "links": []}
+      ],
+      "initial_source_aliases": []
+    },
+    "U3": {
+      "initial": {
+        "parent_question": "Determine which finite-array inequalities the generated sequence actually supports.",
+        "current_strategy": "Improve an upper estimate for the sequence's adjacent ratio.",
+        "scientific_context": "The adjacent-ratio estimate remains open. No general sign claim has been established for this sequence.",
+        "new_contribution": "For every real z, A(z)=2-exp(z log(2)), and a_j=A(j) for integers j>=0. This exact exponential representation uses the signed weights 2 at t=0 and -1 at t=log(2).",
+        "assignment": "Assess what the representation changes for retained mathematical questions. Establish only consequences whose actual premises hold; a failed application should be localized."
+      },
+      "archive": [
+        {"alias": "u3.a", "kind": "evidence", "title": "Two-column energy certificate", "body": "For a finite positive measure nu on a positive compact interval and m_j=integral x^j dnu, the Hankel and shifted Hankel tables are positive semidefinite by their polynomial-square quadratic forms. The positivity of nu is indispensable. This theorem says nothing about signed measures.", "links": []},
+        {"alias": "u3.b", "kind": "branch", "title": "Adjacent-row certificate", "body": "The consumer requires all finite Hankel tables of its supplied sequence to be positive semidefinite. An exact moment identity and positive representing measure would suffice. Failure of one proposed representation's positivity leaves other research questions available; it does not establish RH or a global no-go theorem.", "links": []},
+        {"alias": "u3.c", "kind": "evidence", "title": "Exponential compact-support sign", "body": "A finite signed exponential sum has an exact compactly supported signed representation. Compactness does not imply positive weights or convexity.", "links": []}
+      ],
+      "initial_source_aliases": []
+    },
+    "C1": {
+      "initial": {
+        "parent_question": "Obtain a useful certified range of orders for a comparison construction.",
+        "current_strategy": "Investigate an unrelated integral representation B.",
+        "scientific_context": "A fixed-order estimate survives. The larger order-range problem remains unresolved, independently of which investigation is selected.",
+        "new_contribution": "For every integer s>=1 and integer n>=1 the remainder obeys |r_(s,n)|<=2^s/n. Separately, the s=2 instance has the stronger bound |r_(2,n)|<=1/n. The intended consumer requires |r_(s,n)|<=1/8.",
+        "assignment": "Preserve the exact contribution and its known unfinished consequence: determine an admissible increasing-order range without discarding the stronger s=2 bound. Continue useful work under the current Strategy; the unresolved relationship is not a mandatory next task."
+      },
+      "archive": [
+        {"alias": "c1.consumer", "kind": "branch", "title": "Order-range comparison", "body": "The comparison is licensed only when the exact bound |r_(s,n)|<=1/8 is available, alongside independently retained hypotheses. This branch asks for an increasing-order range, not merely fixed-order eventual convergence.", "links": []},
+        {"alias": "c1.instance", "kind": "evidence", "title": "Order-two bound", "body": "For s=2 and all integers n>=1, |r_(2,n)|<=1/n. This quantitative estimate is stronger than the general 2^s/n bound at s=2 and remains separately useful.", "links": []}
+      ],
+      "initial_source_aliases": ["c1.consumer", "c1.instance"]
+    }
+  }
+}

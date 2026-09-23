@@ -1,0 +1,201 @@
+{
+  "corpus_version": 1,
+  "source_class": "synthetic_public_fixture",
+  "status": "Static fixture integrity checks; no model behavior claim.",
+  "authority": {
+    "fixture_preparation": "authored_synthetic_public_test_data",
+    "structural_verification": "deterministic_fixture_integrity_checks",
+    "model_bearing_execution": "not_authorized",
+    "production_effect": "none",
+    "canonical_mathematical_effect": "none"
+  },
+  "owners": {
+    "fixture_directory": "packages/research-core/tests/fixtures/research_workspace"
+  },
+  "files": {
+    "development_inputs": "cumulative_visible_cases.json",
+    "heldout_inputs": "cumulative_heldout_cases.json",
+    "withheld_rubrics": "cumulative_withheld_rubrics.json"
+  },
+  "freeze_and_execution": {
+    "freeze_before_tuning": "Commit exact input, rubric and loader bytes before model-bearing candidate tuning; bind the resulting Git commit and per-file SHA256 hashes in the existing result-artifact owner. A subsequently changed case is a new frozen input, not a repeated trial of the old case.",
+    "heldout_boundary": "Fixture authors and static-test reviewers may inspect held-out mathematics. Candidate-tuning runs must not receive heldout inputs or any rubric. This is a procedural test-data boundary, not an independent clean-room or secret-custody claim.",
+    "provider_visibility": "Load only one case through the fixture loader. Deliver initial and incoming materials only at their specified stage. Install only that case's archive via supported existing Store owner writes, translating synthetic aliases to returned exact references. Provider/children must have no filesystem, tool, or retrieval path to this repository's fixture directory, manifest, held-out sibling cases, evaluator rubric, or complete retained cut. Never mount the source repository as a behavioral research workspace.",
+    "source_binding_required": [
+      "exact_control_release_sha",
+      "exact_candidate_release_sha",
+      "model_and_provider_version",
+      "reasoning_effort",
+      "approved_resource_envelope",
+      "navigation_interface_release_and_contract",
+      "fresh_case_workspace_identity",
+      "frozen_fixture_commit_and_file_hashes"
+    ],
+    "blocking_preconditions": [
+      "Separate explicit model-bearing qualification authorization is absent.",
+      "Exact comparison releases, provider settings and resource envelope must be bound at future execution, not guessed now.",
+      "The separately owned Evidence-to-source route must provide equivalent exact navigation in both arms wherever a case consumes raw derivations; fixture setup must not introduce a parallel source adapter.",
+      "Prove that the case provider and descendants cannot read withheld files or later historical material before any behavioral execution."
+    ],
+    "steps": [
+      {
+        "id": "prepare",
+        "action": "Resolve one frozen case with load_visible_case. Record its exact initial, archive and incoming material hashes. The loader performs no Store or provider effects."
+      },
+      {
+        "id": "seed",
+        "action": "Use existing supported Store owner/fixture APIs to create a fresh isolated case state at an exact source cut. Seed all case archive records without giving the model hidden record names or pointers unless initial_source_aliases explicitly names them. Historical capture handles in the packet are provenance, not invented live-Store references; if a trial uses semantic navigation, ingest verified original text through existing custody and use its returned exact live references while preserving original handle/digest provenance. Delivery of source text in an initial packet is not navigation-interface qualification. No production Store import, parallel Evidence-to-source adapter or raw SQLite fabrication."
+      },
+      {
+        "id": "match",
+        "action": "Verify both arms have the identical mathematical corpus, exact navigable source material, indexed access and assigned resource limits. Control retains current-contract exposure/integration/advisory behavior; candidate changes only the accepted scientific exposure/integration behavior. This is not an untouched-deployed-versus-candidate comparison."
+      },
+      {
+        "id": "open",
+        "action": "Construct the real initial request through the owning Mission Host path. Preserve model-visible bytes and prove that neither archive-only aliases nor rubric contents entered it. For unlinked cases, verify the useful old owner is absent from Strategy, scientific Context and all seeded outgoing links."
+      },
+      {
+        "id": "contribute",
+        "action": "Deliver only the case's authored incoming contribution through the same existing source-custody path in both arms. Preserve native root/child inputs, tool results, source reads, outputs and scientific decisions under existing artifact/custody ownership."
+      },
+      {
+        "id": "continue",
+        "action": "Exercise ordinary succession and the C1 interleavings as specified; do not change epoch sizes or silently add worker attention to one arm. Publication fault injection is deterministic structural work; model responses to the resulting successor state require behavioral authorization."
+      },
+      {
+        "id": "evaluate",
+        "action": "An evaluator, with no capacity to inject the rubric into the research run, reads exact anonymized outcomes against the separate withheld rubric. Check mathematical content and consequences, accepting valid alternative proofs or appropriately narrowed outcomes. Missing material is a recorded gap, not a pass."
+      },
+      {
+        "id": "account",
+        "action": "Record every run including failures, actual preparation/traversal/maintenance/child/succession costs and source limits. Do not deploy or alter the live Mission after qualification."
+      }
+    ]
+  },
+  "comparison": {
+    "arms": [
+      "matched_navigation_control",
+      "candidate"
+    ],
+    "replicas_per_case_per_arm": 3,
+    "initial_future_executions": 54,
+    "order": "Alternate arm order by case ordinal plus replica ordinal; each cell has independent restored state and no cross-cell memory.",
+    "primary_cases": {
+      "representation_change": "J2",
+      "generalization": "L2",
+      "unlinked_discovery": "U2",
+      "continuity": "C1"
+    },
+    "decision_rule": [
+      "Every material structural custody, authority, role-reference, locality, replay and independent-sibling property must pass separately; one scientific success cannot compensate for a lost Candidate/A1.",
+      "Each positive principal behavior case must succeed in at least two of three replicas, including held-out unlinked discovery; negative controls must retain warranted boundaries. These are bounded practical decisions, not universal reliability estimates or production rules.",
+      "Invented premises, ignored qualifications, guessed normalization or unsupported theorem reach fail the affected run and block an unqualified safety claim until its concrete defect is resolved and retested.",
+      "No systematic loss of a behavior reliably demonstrated by matched control is acceptable. Report comparable outcomes honestly when both arms succeed.",
+      "A better-awareness claim additionally needs consequential gains on at least two held-out positive cases from different families: candidate succeeds in at least two replicas, control in at most one, with no corresponding family regression or material overclaim. Lower construction cost alone does not establish improved awareness.",
+      "Fixed-science growth must satisfy measured access/exposure bounds; growing science must retain qualifications. A smaller root with a panorama-reading child fails the cost claim."
+    ]
+  },
+  "cases": [
+    {
+      "case_id": "J2",
+      "held_out": true,
+      "family": "representation_change",
+      "input_kind": "synthetic",
+      "input_file": "heldout_inputs"
+    },
+    {
+      "case_id": "L2",
+      "held_out": true,
+      "family": "generalization",
+      "input_kind": "synthetic",
+      "input_file": "heldout_inputs"
+    },
+    {
+      "case_id": "R2",
+      "held_out": false,
+      "family": "recomposition_negative_gap",
+      "input_kind": "synthetic",
+      "input_file": "development_inputs"
+    },
+    {
+      "case_id": "R3",
+      "held_out": true,
+      "family": "recomposition_negative_normalization",
+      "input_kind": "synthetic",
+      "input_file": "heldout_inputs"
+    },
+    {
+      "case_id": "R4",
+      "held_out": true,
+      "family": "recomposition_negative_quantifier",
+      "input_kind": "synthetic",
+      "input_file": "heldout_inputs"
+    },
+    {
+      "case_id": "U1",
+      "held_out": false,
+      "family": "unlinked_discovery",
+      "input_kind": "synthetic",
+      "input_file": "development_inputs"
+    },
+    {
+      "case_id": "U2",
+      "held_out": true,
+      "family": "unlinked_discovery",
+      "input_kind": "synthetic",
+      "input_file": "heldout_inputs"
+    },
+    {
+      "case_id": "U3",
+      "held_out": false,
+      "family": "unlinked_negative",
+      "input_kind": "synthetic",
+      "input_file": "development_inputs"
+    },
+    {
+      "case_id": "C1",
+      "held_out": false,
+      "family": "continuity",
+      "input_kind": "synthetic",
+      "input_file": "development_inputs"
+    }
+  ],
+  "continuity_interleavings": [
+    "Publish the contribution plus the explicitly authored unfinished order-range question and necessary exposure in the narrow D1 group; update unrelated B in the same Context; checkpoint; take three ordinary successors with B still selected.",
+    "Interrupt before D1 commit: source custody survives, but no new interpreted Evidence/question is represented as committed. A successor cannot recover uncommitted private cognition by implication.",
+    "Interrupt after D1 commit before reply: exact publication replay returns original references with no duplicate Evidence/question and no worker recomputation.",
+    "Reject a stale Context member while preserving independently committed Evidence siblings and immediate complete-target Candidate/A1 material. Rejected group meaning must not be announced as successful.",
+    "A successor may solve, narrow or preserve the unfinished question using actual mathematics. Reading it, changing Strategy, or making a checkpoint cannot clear it as resolved."
+  ],
+  "growth_measurements": {
+    "history_counts": [
+      100,
+      1000,
+      10000
+    ],
+    "axes": [
+      "irrelevant_history_fixed_science",
+      "genuinely_distinct_science",
+      "one_treatment_change_growing_containing_context",
+      "query_selectivity_across_all_pages",
+      "growing_required_checkpoint_output"
+    ],
+    "observables": [
+      "source_bodies_opened",
+      "decoded_bytes",
+      "canonicalized_bytes",
+      "hashed_bytes",
+      "written_bytes",
+      "cas_bytes",
+      "sqlite_plans_and_vm_steps",
+      "authenticated_node_reads_and_path_copies",
+      "postings_touched",
+      "response_and_initial_request_bytes_and_tokens",
+      "root_and_descendant_calls",
+      "source_validation_work",
+      "maintenance_and_successor_cost",
+      "one_time_bootstrap_separately"
+    ],
+    "oracle": "Fixed scientific meaning must not gain owner-count-driven exposure or corpus-body scans. Tree-path and matching-output growth remain visible. Full affected-Context read/hash/write cost is O(its payload), not falsely Delta-local. Several correction/generalization/exception/recomposition cycles retain the stronger C1 order-two constant and exact qualifications without an append-only opening."
+  }
+}

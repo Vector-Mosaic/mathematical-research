@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://vectormosaic.local/schemas/mathematical_research/research_strategy_decision.v1.schema.json",
+  "title": "Proof-Neutral Autonomous Strategy Decision v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "kind", "decision_id",
+    "project_id", "mission_id", "mission_revision", "session_id",
+    "session_revision", "context_id", "context_revision",
+    "output_contract_sha256", "target_branch_id",
+    "target_branch_revision", "target_strategy_id", "target_strategy_revision",
+    "attention_state", "decision_capsule", "non_inferences",
+    "canonical_effect", "mathematical_effect"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "kind": {"const": "research_strategy_decision"},
+    "decision_id": {"$ref": "#/$defs/id"},
+    "project_id": {"$ref": "#/$defs/id"},
+    "mission_id": {"$ref": "#/$defs/id"},
+    "mission_revision": {"type": "integer", "minimum": 1},
+    "session_id": {"$ref": "#/$defs/id"},
+    "session_revision": {"type": "integer", "minimum": 1},
+    "context_id": {"$ref": "#/$defs/id"},
+    "context_revision": {"type": "integer", "minimum": 1},
+    "output_contract_sha256": {"$ref": "#/$defs/sha256"},
+    "target_branch_id": {"$ref": "#/$defs/id"},
+    "target_branch_revision": {"type": "integer", "minimum": 1},
+    "target_strategy_id": {"$ref": "#/$defs/id"},
+    "target_strategy_revision": {"type": "integer", "minimum": 1},
+    "attention_state": {"enum": ["active", "ready_unallocated", "dormant"]},
+    "decision_capsule": {"$ref": "#/$defs/decisionCapsule"},
+    "non_inferences": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/nonEmptyString"}
+    },
+    "canonical_effect": {"const": "none"},
+    "mathematical_effect": {"const": "none"}
+  },
+  "$defs": {
+    "nonEmptyString": {"type": "string", "minLength": 1},
+    "id": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9._:-]*$"},
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "resolutionRequirement": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["relation_id", "requirement_evidence_id", "requirement_revision", "requirement_kind"],
+          "properties": {
+            "relation_id": {"$ref": "#/$defs/id"},
+            "requirement_evidence_id": {"$ref": "#/$defs/id"},
+            "requirement_revision": {"type": "integer", "minimum": 1},
+            "requirement_kind": {"enum": ["normalization", "collision", "source", "review", "synthesis", "strategy"]}
+          }
+        },
+        {"type": "null"}
+      ]
+    },
+    "readyUnit": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["unit_kind", "exact_reference", "question", "decisive_discriminator", "expected_decision_consequence", "stop_or_reconsideration_condition", "output_contract_sha256", "resolution_requirement_ref"],
+          "properties": {
+            "unit_kind": {"enum": ["branch_generation", "construction", "falsification", "normalization", "collision", "source_work", "review", "recombination", "synthesis", "calibration"]},
+            "exact_reference": {"$ref": "#/$defs/nonEmptyString"},
+            "question": {"$ref": "#/$defs/nonEmptyString"},
+            "decisive_discriminator": {"$ref": "#/$defs/nonEmptyString"},
+            "expected_decision_consequence": {"$ref": "#/$defs/nonEmptyString"},
+            "stop_or_reconsideration_condition": {"$ref": "#/$defs/nonEmptyString"},
+            "output_contract_sha256": {"$ref": "#/$defs/sha256"},
+            "resolution_requirement_ref": {"$ref": "#/$defs/resolutionRequirement"}
+          }
+        },
+        {"type": "null"}
+      ]
+    },
+    "eligibilityItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["unit_kind", "exact_reference", "status", "basis"],
+      "properties": {
+        "unit_kind": {"enum": ["branch_generation", "construction", "falsification", "normalization", "collision", "source_work", "review", "recombination", "synthesis", "calibration"]},
+        "exact_reference": {"$ref": "#/$defs/id"},
+        "status": {"$ref": "#/$defs/nonEmptyString"},
+        "basis": {"$ref": "#/$defs/nonEmptyString"}
+      }
+    },
+    "successorMapping": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["successor_target", "changed_leverage"],
+          "properties": {
+            "successor_target": {"$ref": "#/$defs/nonEmptyString"},
+            "changed_leverage": {"$ref": "#/$defs/nonEmptyString"}
+          }
+        },
+        {"type": "null"}
+      ]
+    },
+    "decisionCapsule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decision_class", "attention_transition", "selected_action", "selected_ready_unit", "exact_no_unit_reason", "concise_rationale", "evidence_basis", "eligibility_frontier", "successor_mapping"],
+      "properties": {
+        "decision_class": {"enum": ["ordinary_continuation", "no_unit", "validation", "rebalance", "contested", "cursor_change"]},
+        "attention_transition": {"enum": ["continue", "pause", "revive", "supersede", "unchanged"]},
+        "selected_action": {"$ref": "#/$defs/nonEmptyString"},
+        "selected_ready_unit": {"$ref": "#/$defs/readyUnit"},
+        "exact_no_unit_reason": {
+          "oneOf": [{"$ref": "#/$defs/nonEmptyString"}, {"type": "null"}]
+        },
+        "concise_rationale": {"$ref": "#/$defs/nonEmptyString"},
+        "evidence_basis": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/nonEmptyString"}
+        },
+        "eligibility_frontier": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/eligibilityItem"}
+        },
+        "successor_mapping": {"$ref": "#/$defs/successorMapping"}
+      }
+    }
+  }
+}

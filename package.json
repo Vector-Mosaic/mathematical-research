@@ -1,0 +1,20 @@
+{
+  "name": "mathematical-research",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Durable AI-assisted mathematical research with explicit evidence, candidate and execution boundaries.",
+  "license": "MIT",
+  "type": "module",
+  "packageManager": "pnpm@10.14.0",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "build": "tsc -b packages/codex-remote-core packages/codex-thread-core services/rh-mission-host && node services/rh-mission-host/scripts/generate-agent-roles.mjs",
+    "test:remote-core": "node scripts/run-node-tests.mjs run packages/codex-remote-core/dist",
+    "test:thread-core": "node scripts/run-node-tests.mjs run packages/codex-thread-core/dist",
+    "test:host": "node scripts/run-node-tests.mjs run services/rh-mission-host/dist"
+  },
+  "devDependencies": {
+    "@types/node": "24.3.0",
+    "typescript": "5.8.3"
+  }
+}

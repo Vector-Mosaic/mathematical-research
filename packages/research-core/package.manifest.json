@@ -1,0 +1,9 @@
+{
+  "kind": "package",
+  "version": 1,
+  "id": "pkg.mathematical_research.research_core",
+  "name": "research-core",
+  "description": "Proof-neutral Mathematical Research owners for autonomous Mission state, deterministic formal Sessions, exact Context staging, explicit nonsemantic Workstation Attempt execution, raw factual capture, restart-safe reconciliation without relaunch, UNKNOWN nonsettlement, and idempotent verified terminal binding without repository research ceilings.",
+  "language": "python",
+  "import_path": "research_core"
+}

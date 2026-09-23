@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mathematical-research-core"
+version = "0.1.0"
+description = "Durable research state, evidence, semantic operations and recovery"
+requires-python = ">=3.12"
+license = {text = "MIT"}
+dependencies = ["research-attempt-adapter==0.1.0"]
+
+[tool.setuptools]
+packages = ["research_core"]
+
+[tool.setuptools.package-data]
+research_core = ["migrations/*.sql"]

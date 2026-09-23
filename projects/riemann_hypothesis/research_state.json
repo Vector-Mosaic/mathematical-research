@@ -1,0 +1,94 @@
+{
+  "schema_version": 2,
+  "kind": "mathematical_research_state",
+  "project": {
+    "id": "project.riemann_hypothesis",
+    "title": "Riemann Hypothesis research",
+    "conjecture": "Every nontrivial zero of the Riemann zeta function has real part 1/2.",
+    "lifecycle_status": "active",
+    "proof_status": "incomplete",
+    "as_of": "2026-09-23",
+    "active_target": "claim.public.moment_program",
+    "epistemic_rule": "This is a fresh public initialization with no admitted mathematical results. A research obligation, computed example, model assertion, or successful software check is not a proof. The inherited moment-program profile does not constrain every possible RH approach."
+  },
+  "status_model": {
+    "audit_verdicts": ["verified", "verified_with_conditions", "unproved_gap", "false", "duplicate_downstream_only", "not_audited"],
+    "claim_types": ["known_theorem", "exact_identity", "proved_project_lemma", "candidate_bridge", "finite_certificate", "numerical_observation", "scoped_method_counterexample", "paused_branch"],
+    "dag_roles": ["certified_chain", "first_dependency_gap", "immediate_target", "supporting", "diagnostic", "excluded"],
+    "lifecycle_statuses": ["active", "paused", "superseded", "archived"],
+    "rh_chain_statuses": ["usable", "conditional_only", "diagnostic", "excluded"],
+    "counterexample_record_kinds": ["exact_counterexample", "mechanism_exclusion", "historical_non_gate"],
+    "route_effects": ["exclude_within_scope", "no_inference"],
+    "route_decisions": ["continue", "pause", "exclude", "supersede"],
+    "receipt_kinds": ["audit", "target_refinement", "campaign_wave", "campaign_closeout", "process_audit"],
+    "prohibited_inputs": ["riemann_hypothesis", "zeta_zero_expansion", "equivalent_target_conclusion"]
+  },
+  "canonical_objects": [
+    {
+      "id": "object.public.moments",
+      "symbol": "m_n",
+      "definition": "Uninstantiated notation for a real sequence to be defined by a future proposed moment program. This document supplies no moment formula and asserts no connection between such a sequence and RH.",
+      "domain": "n is a nonnegative integer; every m_n must be real once a sequence is actually defined."
+    }
+  ],
+  "obligations": [
+    {
+      "id": "obligation.B0",
+      "label": "Unshifted Hankel positivity",
+      "statement": "For a rigorously defined sequence m_n in a proposed moment program, establish sum over 0 <= i,j <= N of c_i c_j m_(i+j) >= 0 for every N >= 0 and every real vector c. No sequence or all-order positivity proof is supplied by this initialization.",
+      "proof_status": "unproved",
+      "lifecycle_status": "active",
+      "requires": []
+    },
+    {
+      "id": "obligation.B1",
+      "label": "Shifted Hankel positivity",
+      "statement": "For the same rigorously defined sequence m_n, establish sum over 0 <= i,j <= N of c_i c_j m_(i+j+1) >= 0 for every N >= 0 and every real vector c. No sequence or all-order positivity proof is supplied by this initialization.",
+      "proof_status": "unproved",
+      "lifecycle_status": "active",
+      "requires": []
+    }
+  ],
+  "dag": {
+    "nodes": [
+      {"id": "node.public.prerequisites", "label": "Define a proposed RH-relevant sequence and its exact hypotheses", "status": "unproved"},
+      {"id": "node.public.target", "label": "Establish both positivity channels and an exact RH connection", "status": "unproved"}
+    ],
+    "edges": [
+      {
+        "id": "edge.public.initial_gap",
+        "from": "node.public.prerequisites",
+        "to": "node.public.target",
+        "relation": "An open program obligation; no implication or RH equivalence is established here.",
+        "status": "unproved_gap",
+        "claim_ref": "claim.public.moment_program",
+        "blocks_rh_chain": true
+      }
+    ],
+    "first_dependency_gap": "edge.public.initial_gap",
+    "immediate_target": "claim.public.moment_program"
+  },
+  "claims": [
+    {
+      "id": "claim.public.moment_program",
+      "title": "Open moment-program construction obligation",
+      "statement": "Research target: define an RH-relevant real sequence, prove the all-order B0 and B1 obligations for that sequence, and establish the exact implication to RH without assuming RH or an equivalent target. This is an unproved program objective, not an asserted theorem or an existing proof candidate.",
+      "hypotheses": ["A concrete sequence and its exact mathematical hypotheses still need to be supplied."],
+      "status": "active",
+      "claim_type": "candidate_bridge",
+      "audit_verdict": "unproved_gap",
+      "dag_role": "immediate_target",
+      "rh_chain_status": "conditional_only",
+      "depends_on": [],
+      "implies": ["obligation.B0", "obligation.B1"],
+      "citation_refs": [],
+      "evidence_refs": [],
+      "dag_node_refs": ["node.public.prerequisites", "node.public.target"],
+      "dag_edge_refs": ["edge.public.initial_gap"],
+      "proof_restrictions": ["riemann_hypothesis", "zeta_zero_expansion", "equivalent_target_conclusion", "all_order_exclusion"]
+    }
+  ],
+  "counterexamples": [],
+  "sources": [],
+  "audit_receipts": []
+}

@@ -1,0 +1,868 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "contracts/schemas/rh_remote_execution_qualification_receipt.schema.json",
+  "title": "RH Remote Execution Qualification Receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "kind",
+    "profile_id",
+    "job_id",
+    "attempt_id",
+    "qualification_replica",
+    "attempt",
+    "retry_of",
+    "purpose",
+    "outcome",
+    "source_binding",
+    "environment",
+    "host",
+    "operational_evidence",
+    "execution",
+    "steps",
+    "semantic_comparison",
+    "state_integrity",
+    "failure",
+    "proof_boundary"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "kind": {
+      "const": "rh_remote_execution_qualification_receipt"
+    },
+    "profile_id": {
+      "const": "rh.remote_execution.qualification.v1"
+    },
+    "job_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]{2,127}$"
+    },
+    "attempt_id": {
+      "type": "string",
+      "pattern": "^rca-[0-9a-f]{20}$"
+    },
+    "qualification_replica": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 3
+    },
+    "attempt": {
+      "const": 1
+    },
+    "retry_of": {
+      "const": null
+    },
+    "purpose": {
+      "const": "qualification"
+    },
+    "outcome": {
+      "enum": [
+        "qualified",
+        "verification_failed",
+        "timed_out",
+        "infrastructure_error",
+        "environment_error",
+        "preflight_rejected",
+        "diagnostic_regression",
+        "cancelled"
+      ]
+    },
+    "source_binding": {
+      "$ref": "#/$defs/sourceBinding"
+    },
+    "environment": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/environment"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "host": {
+      "$ref": "#/$defs/host"
+    },
+    "operational_evidence": {
+      "$ref": "#/$defs/operationalEvidence"
+    },
+    "execution": {
+      "$ref": "#/$defs/execution"
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/step"
+      },
+      "maxItems": 4
+    },
+    "semantic_comparison": {
+      "$ref": "#/$defs/semanticComparison"
+    },
+    "state_integrity": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/stateIntegrity"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "failure": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/failureEvidence"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "proof_boundary": {
+      "$ref": "#/$defs/proofBoundary"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "outcome": {
+            "enum": [
+              "infrastructure_error",
+              "environment_error",
+              "preflight_rejected"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "failure": {
+            "$ref": "#/$defs/failureEvidence"
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "environment": {
+            "$ref": "#/$defs/environment"
+          },
+          "state_integrity": {
+            "$ref": "#/$defs/stateIntegrity"
+          },
+          "failure": {
+            "type": "null"
+          },
+          "source_binding": {
+            "properties": {
+              "source_manifest_verified_before": {
+                "const": true
+              },
+              "observed_sha256": {
+                "$ref": "#/$defs/hashMap"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "outcome": {
+            "const": "infrastructure_error"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "failure": {
+            "properties": {
+              "category": {
+                "const": "infrastructure_error"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "outcome": {
+            "const": "environment_error"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "failure": {
+            "properties": {
+              "category": {
+                "const": "environment_error"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "outcome": {
+            "const": "preflight_rejected"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "failure": {
+            "properties": {
+              "category": {
+                "const": "preflight_rejected"
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^(?!0{64}$)[0-9a-f]{64}$"
+    },
+    "gitSha1": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "stringArray": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      },
+      "uniqueItems": true
+    },
+    "hashMap": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/sha256"
+      },
+      "minProperties": 1
+    },
+    "sourceBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "requested_commit_sha",
+        "pushed_commit_sha",
+        "checked_out_commit_sha",
+        "commit_was_pushed",
+        "source_delivery",
+        "controller_worktree_included",
+        "source_manifest_verified_before",
+        "expected_sha256",
+        "observed_sha256"
+      ],
+      "properties": {
+        "requested_commit_sha": {
+          "$ref": "#/$defs/gitSha1"
+        },
+        "pushed_commit_sha": {
+          "$ref": "#/$defs/gitSha1"
+        },
+        "checked_out_commit_sha": {
+          "$ref": "#/$defs/gitSha1"
+        },
+        "commit_was_pushed": {
+          "const": true
+        },
+        "source_delivery": {
+          "const": "exact_pushed_commit_archive"
+        },
+        "controller_worktree_included": {
+          "const": false
+        },
+        "source_manifest_verified_before": {
+          "oneOf": [
+            {
+              "const": true
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expected_sha256": {
+          "$ref": "#/$defs/hashMap"
+        },
+        "observed_sha256": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/hashMap"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "environment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "os_name",
+        "os_version",
+        "kernel",
+        "architecture",
+        "python_executable",
+        "python_version",
+        "isolated_virtual_environment",
+        "package_versions",
+        "installed_packages_sha256"
+      ],
+      "properties": {
+        "os_name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "os_version": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "kernel": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "architecture": {
+          "const": "x86_64"
+        },
+        "python_executable": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "python_version": {
+          "type": "string",
+          "pattern": "^3\\.12\\.[0-9]+$"
+        },
+        "isolated_virtual_environment": {
+          "const": true
+        },
+        "package_versions": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "attrs",
+            "jsonschema",
+            "jsonschema-specifications",
+            "mpmath",
+            "numpy",
+            "python-flint",
+            "referencing",
+            "rpds-py",
+            "sympy",
+            "typing-extensions"
+          ],
+          "properties": {
+            "attrs": {
+              "const": "25.4.0"
+            },
+            "jsonschema": {
+              "const": "4.26.0"
+            },
+            "jsonschema-specifications": {
+              "const": "2025.9.1"
+            },
+            "mpmath": {
+              "const": "1.3.0"
+            },
+            "numpy": {
+              "const": "2.2.6"
+            },
+            "python-flint": {
+              "const": "0.8.0"
+            },
+            "referencing": {
+              "const": "0.37.0"
+            },
+            "rpds-py": {
+              "const": "2026.6.3"
+            },
+            "sympy": {
+              "const": "1.14.0"
+            },
+            "typing-extensions": {
+              "const": "4.15.0"
+            }
+          }
+        },
+        "installed_packages_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "failureEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "category",
+        "code",
+        "stage",
+        "message",
+        "retry_supported"
+      ],
+      "properties": {
+        "category": {
+          "enum": [
+            "infrastructure_error",
+            "environment_error",
+            "preflight_rejected"
+          ]
+        },
+        "code": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]{2,63}$"
+        },
+        "stage": {
+          "enum": [
+            "request_validation",
+            "source_preflight",
+            "environment_preflight",
+            "isolation_preflight",
+            "execution",
+            "postflight",
+            "result_archive"
+          ]
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 512
+        },
+        "retry_supported": {
+          "const": false
+        }
+      }
+    },
+    "host": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "vcpu_count",
+        "memory_total_bytes",
+        "disk_total_bytes"
+      ],
+      "properties": {
+        "vcpu_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "memory_total_bytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "disk_total_bytes": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "attemptReceiptReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "job_id",
+        "attempt_id",
+        "qualification_replica",
+        "attempt",
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "job_id": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "attempt_id": {
+          "type": "string",
+          "pattern": "^rca-[0-9a-f]{20}$"
+        },
+        "qualification_replica": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3
+        },
+        "attempt": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "path": {
+          "type": "string",
+          "pattern": "^artifacts/workstation_control/remote_compute/collected/rca-[0-9a-f]{20}/receipt\\.json$"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "operationalEvidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "owner",
+        "aggregate_role",
+        "attempt_receipts"
+      ],
+      "properties": {
+        "owner": {
+          "const": "workstation_control"
+        },
+        "aggregate_role": {
+          "const": "mathematical_qualification_summary"
+        },
+        "attempt_receipts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/attemptReceiptReference"
+          },
+          "minItems": 1,
+          "maxItems": 1
+        }
+      }
+    },
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sharded",
+        "shard_count",
+        "qualification_complete"
+      ],
+      "properties": {
+        "sharded": {
+          "const": false
+        },
+        "shard_count": {
+          "const": 1
+        },
+        "qualification_complete": {
+          "type": "boolean"
+        }
+      }
+    },
+    "telemetry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "wall_seconds",
+        "user_cpu_seconds",
+        "system_cpu_seconds",
+        "peak_rss_bytes",
+        "swap_in_bytes",
+        "swap_out_bytes",
+        "io_read_bytes",
+        "io_write_bytes",
+        "oom_killed"
+      ],
+      "properties": {
+        "wall_seconds": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "user_cpu_seconds": {
+          "type": "number",
+          "minimum": 0
+        },
+        "system_cpu_seconds": {
+          "type": "number",
+          "minimum": 0
+        },
+        "peak_rss_bytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "swap_in_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "swap_out_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "io_read_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "io_write_bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "oom_killed": {
+          "type": "boolean"
+        }
+      }
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256",
+        "size_bytes"
+      ],
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "size_bytes": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "artifactMap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stdout",
+        "stderr",
+        "combined",
+        "summary",
+        "telemetry"
+      ],
+      "properties": {
+        "stdout": {
+          "$ref": "#/$defs/artifact"
+        },
+        "stderr": {
+          "$ref": "#/$defs/artifact"
+        },
+        "combined": {
+          "$ref": "#/$defs/artifact"
+        },
+        "summary": {
+          "$ref": "#/$defs/artifact"
+        },
+        "telemetry": {
+          "$ref": "#/$defs/artifact"
+        }
+      }
+    },
+    "step": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "step_id",
+        "argv",
+        "timeout_seconds",
+        "outcome",
+        "exit_code",
+        "timed_out",
+        "started_at",
+        "ended_at",
+        "semantic_output_sha256",
+        "telemetry",
+        "artifacts"
+      ],
+      "properties": {
+        "step_id": {
+          "enum": [
+            "sys_ci",
+            "numerical_diagnostics",
+            "direct_exact",
+            "sys_full"
+          ]
+        },
+        "argv": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/nonEmptyString"
+          },
+          "minItems": 2
+        },
+        "timeout_seconds": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "outcome": {
+          "enum": [
+            "passed",
+            "verification_failed",
+            "timed_out",
+            "infrastructure_error",
+            "environment_error",
+            "diagnostic_regression",
+            "cancelled"
+          ]
+        },
+        "exit_code": {
+          "type": "integer"
+        },
+        "timed_out": {
+          "type": "boolean"
+        },
+        "started_at": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "ended_at": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "semantic_output_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "telemetry": {
+          "$ref": "#/$defs/telemetry"
+        },
+        "artifacts": {
+          "$ref": "#/$defs/artifactMap"
+        }
+      }
+    },
+    "semanticComparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "performed",
+        "normalization",
+        "first_step_id",
+        "second_step_id",
+        "first_sha256",
+        "second_sha256",
+        "matched"
+      ],
+      "properties": {
+        "performed": {
+          "type": "boolean"
+        },
+        "normalization": {
+          "const": "ordered_exact_checker_outcomes_v1"
+        },
+        "first_step_id": {
+          "const": "direct_exact"
+        },
+        "second_step_id": {
+          "const": "sys_full"
+        },
+        "first_sha256": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/sha256"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "second_sha256": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/sha256"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "matched": {
+          "type": "boolean"
+        }
+      }
+    },
+    "protectedPathHash": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "before_sha256",
+        "after_sha256"
+      ],
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "before_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "after_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "stateIntegrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "proof_state_writes",
+        "changed_tracked_paths",
+        "source_manifest_verified_after",
+        "protected_path_hashes"
+      ],
+      "properties": {
+        "proof_state_writes": {
+          "const": false
+        },
+        "changed_tracked_paths": {
+          "$ref": "#/$defs/stringArray"
+        },
+        "source_manifest_verified_after": {
+          "const": true
+        },
+        "protected_path_hashes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/protectedPathHash"
+          },
+          "minItems": 2,
+          "maxItems": 2
+        }
+      }
+    },
+    "proofBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evidence_class",
+        "may_change_audit_verdict",
+        "may_change_rh_chain_status",
+        "establishes_unproved_convergence",
+        "establishes_all_order_hankel_positivity",
+        "establishes_infinite_dimensional_contraction",
+        "establishes_stieltjes_moment_property",
+        "establishes_riemann_hypothesis"
+      ],
+      "properties": {
+        "evidence_class": {
+          "const": "software_and_finite_calculations_only"
+        },
+        "may_change_audit_verdict": {
+          "const": false
+        },
+        "may_change_rh_chain_status": {
+          "const": false
+        },
+        "establishes_unproved_convergence": {
+          "const": false
+        },
+        "establishes_all_order_hankel_positivity": {
+          "const": false
+        },
+        "establishes_infinite_dimensional_contraction": {
+          "const": false
+        },
+        "establishes_stieltjes_moment_property": {
+          "const": false
+        },
+        "establishes_riemann_hypothesis": {
+          "const": false
+        }
+      }
+    }
+  }
+}

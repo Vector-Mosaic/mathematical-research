@@ -1,0 +1,379 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "contracts/schemas/rh_remote_execution_qualification_set_receipt.schema.json",
+  "title": "RH Remote Execution Qualification Set Receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "kind",
+    "set_id",
+    "profile_id",
+    "status",
+    "qualification_complete",
+    "replicas",
+    "common_binding",
+    "state_integrity",
+    "proof_boundary"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "kind": {
+      "const": "rh_remote_execution_qualification_set_receipt"
+    },
+    "set_id": {
+      "type": "string",
+      "pattern": "^rqs-[0-9a-f]{20}$"
+    },
+    "profile_id": {
+      "const": "rh.remote_execution.qualification.v1"
+    },
+    "status": {
+      "const": "qualified"
+    },
+    "qualification_complete": {
+      "const": true
+    },
+    "replicas": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/replicaReference"
+            },
+            {
+              "properties": {
+                "qualification_replica": {
+                  "const": 1
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/replicaReference"
+            },
+            {
+              "properties": {
+                "qualification_replica": {
+                  "const": 2
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/replicaReference"
+            },
+            {
+              "properties": {
+                "qualification_replica": {
+                  "const": 3
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "items": false,
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "common_binding": {
+      "$ref": "#/$defs/commonBinding"
+    },
+    "state_integrity": {
+      "$ref": "#/$defs/stateIntegrity"
+    },
+    "proof_boundary": {
+      "$ref": "#/$defs/proofBoundary"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^(?!0{64}$)[0-9a-f]{64}$"
+    },
+    "gitSha1": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "artifactReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "replicaReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "qualification_replica",
+        "job_id",
+        "attempt_id",
+        "attempt",
+        "retry_of",
+        "aggregate_receipt",
+        "operational_receipt",
+        "bootstrap_receipt",
+        "bootstrap_host_key_fingerprint"
+      ],
+      "properties": {
+        "qualification_replica": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3
+        },
+        "job_id": {
+          "type": "string",
+          "pattern": "^rcj-[0-9a-f]{20}$"
+        },
+        "attempt_id": {
+          "type": "string",
+          "pattern": "^rca-[0-9a-f]{20}$"
+        },
+        "attempt": {
+          "const": 1
+        },
+        "retry_of": {
+          "const": null
+        },
+        "aggregate_receipt": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/artifactReference"
+            },
+            {
+              "properties": {
+                "path": {
+                  "pattern": "^artifacts/mathematical_research/remote_compute/aggregates/replica-[123]/rca-[0-9a-f]{20}/qualification-receipt\\.json$"
+                }
+              }
+            }
+          ]
+        },
+        "operational_receipt": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/artifactReference"
+            },
+            {
+              "properties": {
+                "path": {
+                  "pattern": "^artifacts/workstation_control/remote_compute/collected/rca-[0-9a-f]{20}/receipt\\.json$"
+                }
+              }
+            }
+          ]
+        },
+        "bootstrap_receipt": {
+          "allOf": [
+            {
+              "$ref": "#/$defs/artifactReference"
+            },
+            {
+              "properties": {
+                "path": {
+                  "pattern": "^artifacts/workstation_control/remote_compute/bootstrap/receipts/[0-9a-f]{20}/bootstrap-receipt\\.json$"
+                }
+              }
+            }
+          ]
+        },
+        "bootstrap_host_key_fingerprint": {
+          "type": "string",
+          "pattern": "^SHA256:[A-Za-z0-9+/]{43}$"
+        }
+      }
+    },
+    "authorityHashes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_tree",
+        "qualification_profile",
+        "receipt_schema",
+        "verification_manifest",
+        "requirements_lock",
+        "verification_runner",
+        "exact_runner",
+        "numerical_runner",
+        "output_discipline_runner"
+      ],
+      "properties": {
+        "source_tree": {
+          "$ref": "#/$defs/sha256"
+        },
+        "qualification_profile": {
+          "$ref": "#/$defs/sha256"
+        },
+        "receipt_schema": {
+          "$ref": "#/$defs/sha256"
+        },
+        "verification_manifest": {
+          "$ref": "#/$defs/sha256"
+        },
+        "requirements_lock": {
+          "$ref": "#/$defs/sha256"
+        },
+        "verification_runner": {
+          "$ref": "#/$defs/sha256"
+        },
+        "exact_runner": {
+          "$ref": "#/$defs/sha256"
+        },
+        "numerical_runner": {
+          "$ref": "#/$defs/sha256"
+        },
+        "output_discipline_runner": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "commonBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_commit",
+        "authority_hashes",
+        "qualification_profile_sha256",
+        "qualification_receipt_schema_sha256",
+        "workstation_profile_id",
+        "workstation_profile_sha256",
+        "bootstrap_receipt_path",
+        "bootstrap_receipt_sha256",
+        "bootstrap_host_key_fingerprint",
+        "environment_sha256",
+        "host_sha256",
+        "isolation_sha256",
+        "proof_boundary_sha256",
+        "semantic_normalization",
+        "exact_semantic_sha256"
+      ],
+      "properties": {
+        "source_commit": {
+          "$ref": "#/$defs/gitSha1"
+        },
+        "authority_hashes": {
+          "$ref": "#/$defs/authorityHashes"
+        },
+        "qualification_profile_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "qualification_receipt_schema_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "workstation_profile_id": {
+          "const": "wc.remote_compute_profile.rh_linux"
+        },
+        "workstation_profile_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "bootstrap_receipt_path": {
+          "type": "string",
+          "pattern": "^artifacts/workstation_control/remote_compute/bootstrap/receipts/[0-9a-f]{20}/bootstrap-receipt\\.json$"
+        },
+        "bootstrap_receipt_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "bootstrap_host_key_fingerprint": {
+          "type": "string",
+          "pattern": "^SHA256:[A-Za-z0-9+/]{43}$"
+        },
+        "environment_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "host_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "isolation_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "proof_boundary_sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "semantic_normalization": {
+          "const": "ordered_exact_checker_outcomes_v1"
+        },
+        "exact_semantic_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "stateIntegrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "proof_state_writes",
+        "changed_tracked_paths"
+      ],
+      "properties": {
+        "proof_state_writes": {
+          "const": false
+        },
+        "changed_tracked_paths": {
+          "type": "array",
+          "maxItems": 0
+        }
+      }
+    },
+    "proofBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evidence_class",
+        "may_change_audit_verdict",
+        "may_change_rh_chain_status",
+        "establishes_unproved_convergence",
+        "establishes_all_order_hankel_positivity",
+        "establishes_infinite_dimensional_contraction",
+        "establishes_stieltjes_moment_property",
+        "establishes_riemann_hypothesis"
+      ],
+      "properties": {
+        "evidence_class": {
+          "const": "software_and_finite_calculations_only"
+        },
+        "may_change_audit_verdict": {
+          "const": false
+        },
+        "may_change_rh_chain_status": {
+          "const": false
+        },
+        "establishes_unproved_convergence": {
+          "const": false
+        },
+        "establishes_all_order_hankel_positivity": {
+          "const": false
+        },
+        "establishes_infinite_dimensional_contraction": {
+          "const": false
+        },
+        "establishes_stieltjes_moment_property": {
+          "const": false
+        },
+        "establishes_riemann_hypothesis": {
+          "const": false
+        }
+      }
+    }
+  }
+}

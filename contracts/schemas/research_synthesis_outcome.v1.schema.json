@@ -1,0 +1,237 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://vectormosaic.local/schemas/mathematical_research/research_synthesis_outcome.v1.schema.json",
+  "title": "Proof-Neutral Research Synthesis Outcome v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "kind", "output_id",
+    "project_id", "mission_id", "mission_revision", "session_id",
+    "session_revision", "context_id", "context_revision",
+    "output_contract_sha256", "disposition",
+    "summary", "claims", "candidate", "refutation", "open_questions",
+    "no_result_reason", "proposed_ready_units", "non_inferences",
+    "canonical_effect", "mathematical_effect"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "kind": {"const": "research_synthesis_outcome"},
+    "output_id": {"$ref": "#/$defs/id"},
+    "project_id": {"$ref": "#/$defs/id"},
+    "mission_id": {"$ref": "#/$defs/id"},
+    "mission_revision": {"type": "integer", "minimum": 1},
+    "session_id": {"$ref": "#/$defs/id"},
+    "session_revision": {"type": "integer", "minimum": 1},
+    "context_id": {"$ref": "#/$defs/id"},
+    "context_revision": {"type": "integer", "minimum": 1},
+    "output_contract_sha256": {"$ref": "#/$defs/sha256"},
+    "disposition": {"enum": ["candidate_update", "refutation", "open_question", "no_result"]},
+    "summary": {"$ref": "#/$defs/nonEmptyString"},
+    "claims": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/claim"}
+    },
+    "candidate": {
+      "description": "Proof-neutral semantic proposal from which the Candidate owner may issue an Evidence-bound CandidateRevision.",
+      "oneOf": [{"$ref": "#/$defs/candidateProposal"}, {"type": "null"}]
+    },
+    "refutation": {
+      "oneOf": [{"$ref": "#/$defs/refutation"}, {"type": "null"}]
+    },
+    "open_questions": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/openQuestion"}
+    },
+    "no_result_reason": {
+      "oneOf": [{"$ref": "#/$defs/nonEmptyString"}, {"type": "null"}]
+    },
+    "proposed_ready_units": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/readyUnit"}
+    },
+    "non_inferences": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/nonEmptyString"}
+    },
+    "canonical_effect": {"const": "none"},
+    "mathematical_effect": {"const": "none"}
+  },
+  "$defs": {
+    "nonEmptyString": {"type": "string", "minLength": 1},
+    "id": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9._:-]*$"},
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "nullableRevision": {
+      "oneOf": [{"type": "integer", "minimum": 1}, {"type": "null"}]
+    },
+    "nullableSha256": {
+      "oneOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]
+    },
+    "reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "identity", "revision", "digest_sha256"],
+      "properties": {
+        "kind": {"$ref": "#/$defs/id"},
+        "identity": {"$ref": "#/$defs/id"},
+        "revision": {"$ref": "#/$defs/nullableRevision"},
+        "digest_sha256": {"$ref": "#/$defs/nullableSha256"}
+      }
+    },
+    "claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["claim_id", "statement", "status", "support_refs", "limitations"],
+      "properties": {
+        "claim_id": {"$ref": "#/$defs/id"},
+        "statement": {"$ref": "#/$defs/nonEmptyString"},
+        "status": {"enum": ["proposed", "derived", "refuted", "unresolved"]},
+        "support_refs": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/reference"}
+        },
+        "limitations": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/nonEmptyString"}
+        }
+      }
+    },
+    "argumentStep": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["step_id", "statement", "justification", "premise_refs", "evidence_refs"],
+      "properties": {
+        "step_id": {"$ref": "#/$defs/id"},
+        "statement": {"$ref": "#/$defs/nonEmptyString"},
+        "justification": {"$ref": "#/$defs/nonEmptyString"},
+        "premise_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/id"}
+        },
+        "evidence_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"$ref": "#/$defs/versionedReference"}
+        }
+      }
+    },
+    "versionedReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "id", "revision", "digest_sha256"],
+      "properties": {
+        "kind": {"$ref": "#/$defs/nonEmptyString"},
+        "id": {"$ref": "#/$defs/id"},
+        "revision": {"type": "integer", "minimum": 1},
+        "digest_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "candidateReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidate_id", "revision", "digest_sha256"],
+      "properties": {
+        "candidate_id": {"$ref": "#/$defs/id"},
+        "revision": {"type": "integer", "minimum": 1},
+        "digest_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "candidateProposal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind", "candidate_id", "revision", "previous_revision", "branch_id",
+        "proposed_lifecycle", "exact_statement", "claimed_scope", "domain",
+        "objects", "hypotheses", "normalizations", "argument_steps",
+        "dependencies", "component_evidence_refs", "objections", "gaps",
+        "circularity_risks", "smallest_falsifier", "genealogy",
+        "non_inferences", "full_rh_case"
+      ],
+      "properties": {
+        "kind": {"const": "candidate_proposal"},
+        "candidate_id": {"$ref": "#/$defs/id"},
+        "revision": {"type": "integer", "minimum": 1},
+        "previous_revision": {"oneOf": [{"type": "integer", "minimum": 1}, {"type": "null"}]},
+        "branch_id": {"$ref": "#/$defs/id"},
+        "proposed_lifecycle": {"enum": ["draft", "testing", "ready_for_independent_review", "falsified", "withdrawn"]},
+        "exact_statement": {"$ref": "#/$defs/nonEmptyString"},
+        "claimed_scope": {"$ref": "#/$defs/nonEmptyString"},
+        "domain": {"$ref": "#/$defs/nonEmptyString"},
+        "objects": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/nonEmptyString"}},
+        "hypotheses": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/nonEmptyString"}},
+        "normalizations": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "#/$defs/nonEmptyString"}},
+        "argument_steps": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/argumentStep"}},
+        "dependencies": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/versionedReference"}},
+        "component_evidence_refs": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/versionedReference"}},
+        "objections": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/nonEmptyString"}},
+        "gaps": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/nonEmptyString"}},
+        "circularity_risks": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/nonEmptyString"}},
+        "smallest_falsifier": {"$ref": "#/$defs/nonEmptyString"},
+        "genealogy": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/candidateReference"}},
+        "non_inferences": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/nonEmptyString"}},
+        "full_rh_case": {"type": "boolean"}
+      }
+    },
+    "refutation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["target_ref", "exact_statement", "method", "scope", "evidence_basis"],
+      "properties": {
+        "target_ref": {"$ref": "#/$defs/reference"},
+        "exact_statement": {"$ref": "#/$defs/nonEmptyString"},
+        "method": {"$ref": "#/$defs/nonEmptyString"},
+        "scope": {"$ref": "#/$defs/nonEmptyString"},
+        "evidence_basis": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/reference"}
+        }
+      }
+    },
+    "openQuestion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["question_id", "question", "decisive_discriminator", "expected_decision_consequence", "stop_or_reconsideration_condition"],
+      "properties": {
+        "question_id": {"$ref": "#/$defs/id"},
+        "question": {"$ref": "#/$defs/nonEmptyString"},
+        "decisive_discriminator": {"$ref": "#/$defs/nonEmptyString"},
+        "expected_decision_consequence": {"$ref": "#/$defs/nonEmptyString"},
+        "stop_or_reconsideration_condition": {"$ref": "#/$defs/nonEmptyString"}
+      }
+    },
+    "resolutionRequirement": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["relation_id", "requirement_evidence_id", "requirement_revision", "requirement_kind"],
+          "properties": {
+            "relation_id": {"$ref": "#/$defs/id"},
+            "requirement_evidence_id": {"$ref": "#/$defs/id"},
+            "requirement_revision": {"type": "integer", "minimum": 1},
+            "requirement_kind": {"enum": ["normalization", "collision", "source", "review", "synthesis", "strategy"]}
+          }
+        },
+        {"type": "null"}
+      ]
+    },
+    "readyUnit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["unit_kind", "exact_reference", "question", "decisive_discriminator", "expected_decision_consequence", "stop_or_reconsideration_condition", "output_contract_sha256", "resolution_requirement_ref"],
+      "properties": {
+        "unit_kind": {"enum": ["branch_generation", "construction", "falsification", "normalization", "collision", "source_work", "review", "recombination", "synthesis", "calibration"]},
+        "exact_reference": {"$ref": "#/$defs/nonEmptyString"},
+        "question": {"$ref": "#/$defs/nonEmptyString"},
+        "decisive_discriminator": {"$ref": "#/$defs/nonEmptyString"},
+        "expected_decision_consequence": {"$ref": "#/$defs/nonEmptyString"},
+        "stop_or_reconsideration_condition": {"$ref": "#/$defs/nonEmptyString"},
+        "output_contract_sha256": {"$ref": "#/$defs/sha256"},
+        "resolution_requirement_ref": {"$ref": "#/$defs/resolutionRequirement"}
+      }
+    }
+  }
+}

@@ -1,0 +1,411 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "contracts/schemas/research_state.schema.json",
+  "title": "Mathematical Research State",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "kind",
+    "project",
+    "status_model",
+    "canonical_objects",
+    "obligations",
+    "dag",
+    "claims",
+    "counterexamples",
+    "sources",
+    "audit_receipts"
+  ],
+  "properties": {
+    "schema_version": { "const": 2 },
+    "kind": { "const": "mathematical_research_state" },
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "lifecycle_status", "proof_status", "as_of"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "title": { "type": "string", "minLength": 1 },
+        "conjecture": { "type": "string", "minLength": 1 },
+        "lifecycle_status": { "type": "string" },
+        "proof_status": { "enum": ["incomplete", "proved", "disproved"] },
+        "as_of": { "type": "string", "format": "date" },
+        "owners": { "$ref": "#/$defs/nonEmptyStringArray" },
+        "active_target": { "type": "string", "minLength": 1 },
+        "admitted_result": { "$ref": "#/$defs/admittedResult" },
+        "source_artifact_ref": { "type": "string", "minLength": 1 },
+        "epistemic_rule": { "type": "string", "minLength": 1 }
+      },
+      "oneOf": [
+        {
+          "required": ["active_target"],
+          "properties": { "proof_status": { "const": "incomplete" } },
+          "not": { "required": ["admitted_result"] }
+        },
+        {
+          "required": ["admitted_result"],
+          "properties": {
+            "proof_status": { "const": "proved" },
+            "admitted_result": {
+              "properties": { "disposition": { "const": "proved" } }
+            }
+          },
+          "not": { "required": ["active_target"] }
+        },
+        {
+          "required": ["admitted_result"],
+          "properties": {
+            "proof_status": { "const": "disproved" },
+            "admitted_result": {
+              "properties": { "disposition": { "const": "disproved" } }
+            }
+          },
+          "not": { "required": ["active_target"] }
+        }
+      ]
+    },
+    "status_model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "audit_verdicts",
+        "claim_types",
+        "dag_roles",
+        "lifecycle_statuses",
+        "rh_chain_statuses",
+        "counterexample_record_kinds",
+        "route_effects",
+        "route_decisions",
+        "receipt_kinds",
+        "prohibited_inputs"
+      ],
+      "properties": {
+        "audit_verdicts": { "const": ["verified", "verified_with_conditions", "unproved_gap", "false", "duplicate_downstream_only", "not_audited"] },
+        "claim_types": { "const": ["known_theorem", "exact_identity", "proved_project_lemma", "candidate_bridge", "finite_certificate", "numerical_observation", "scoped_method_counterexample", "paused_branch"] },
+        "dag_roles": { "const": ["certified_chain", "first_dependency_gap", "immediate_target", "supporting", "diagnostic", "excluded"] },
+        "lifecycle_statuses": { "const": ["active", "paused", "superseded", "archived"] },
+        "rh_chain_statuses": { "const": ["usable", "conditional_only", "diagnostic", "excluded"] },
+        "counterexample_record_kinds": { "const": ["exact_counterexample", "mechanism_exclusion", "historical_non_gate"] },
+        "route_effects": { "const": ["exclude_within_scope", "no_inference"] },
+        "route_decisions": { "const": ["continue", "pause", "exclude", "supersede"] },
+        "receipt_kinds": { "const": ["audit", "target_refinement", "campaign_wave", "campaign_closeout", "process_audit"] },
+        "prohibited_inputs": { "const": ["riemann_hypothesis", "zeta_zero_expansion", "equivalent_target_conclusion"] }
+      }
+    },
+    "canonical_objects": { "type": "array", "items": { "$ref": "#/$defs/canonicalObject" } },
+    "obligations": { "type": "array", "items": { "$ref": "#/$defs/obligation" } },
+    "dag": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["nodes", "edges", "first_dependency_gap", "immediate_target"],
+      "properties": {
+        "nodes": { "type": "array", "items": { "$ref": "#/$defs/dagNode" } },
+        "edges": { "type": "array", "items": { "$ref": "#/$defs/dagEdge" } },
+        "first_dependency_gap": { "type": "string" },
+        "immediate_target": { "type": "string" }
+      }
+    },
+    "claims": { "type": "array", "items": { "$ref": "#/$defs/claim" } },
+    "counterexamples": { "type": "array", "items": { "$ref": "#/$defs/counterexample" } },
+    "sources": { "type": "array", "items": { "$ref": "#/$defs/source" } },
+    "audit_receipts": { "type": "array", "items": { "$ref": "#/$defs/auditReceipt" } }
+  },
+  "$defs": {
+    "stringArray": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    },
+    "nonEmptyStringArray": {
+      "allOf": [{ "$ref": "#/$defs/stringArray" }],
+      "minItems": 1
+    },
+    "stableId": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9._:-]*$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "candidateReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mission_id", "candidate_id", "revision", "digest_sha256"],
+      "properties": {
+        "mission_id": { "$ref": "#/$defs/stableId" },
+        "candidate_id": { "$ref": "#/$defs/stableId" },
+        "revision": { "type": "integer", "minimum": 1 },
+        "digest_sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "admissionDecisionReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decision_id", "digest_sha256"],
+      "properties": {
+        "decision_id": { "$ref": "#/$defs/stableId" },
+        "digest_sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "admittedResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target",
+        "disposition",
+        "theorem_or_counterexample_claim",
+        "candidate_ref",
+        "admission_decision_ref"
+      ],
+      "properties": {
+        "target": { "const": "riemann_hypothesis" },
+        "disposition": { "enum": ["proved", "disproved"] },
+        "theorem_or_counterexample_claim": { "type": "string", "minLength": 1 },
+        "candidate_ref": { "$ref": "#/$defs/candidateReference" },
+        "admission_decision_ref": { "$ref": "#/$defs/admissionDecisionReference" }
+      }
+    },
+    "idRecord": {
+      "type": "object",
+      "required": ["id"],
+      "properties": { "id": { "type": "string", "minLength": 1 } }
+    },
+    "canonicalObject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "symbol", "definition", "domain"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "symbol": { "type": "string", "minLength": 1 },
+        "definition": { "type": "string", "minLength": 1 },
+        "domain": { "type": "string", "minLength": 1 }
+      }
+    },
+    "obligation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "label", "statement", "proof_status", "lifecycle_status"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "label": { "type": "string", "minLength": 1 },
+        "statement": { "type": "string", "minLength": 1 },
+        "proof_status": { "type": "string", "minLength": 1 },
+        "lifecycle_status": { "type": "string", "minLength": 1 },
+        "requires": { "$ref": "#/$defs/stringArray" }
+      }
+    },
+    "dagNode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "label", "status"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "label": { "type": "string", "minLength": 1 },
+        "status": { "type": "string", "minLength": 1 }
+      }
+    },
+    "dagEdge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "from", "to", "status"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "from": { "type": "string" },
+        "to": { "type": "string" },
+        "relation": { "type": "string" },
+        "status": { "type": "string" },
+        "claim_ref": { "type": "string" },
+        "blocks_rh_chain": { "type": "boolean" }
+      }
+    },
+    "claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "statement",
+        "hypotheses",
+        "status",
+        "claim_type",
+        "audit_verdict",
+        "dag_role",
+        "rh_chain_status",
+        "depends_on",
+        "implies",
+        "citation_refs",
+        "evidence_refs",
+        "dag_node_refs",
+        "dag_edge_refs",
+        "proof_restrictions"
+      ],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "title": { "type": "string", "minLength": 1 },
+        "statement": { "type": "string", "minLength": 1 },
+        "hypotheses": { "$ref": "#/$defs/stringArray" },
+        "status": { "enum": ["active", "paused", "superseded", "archived"] },
+        "claim_type": { "enum": ["known_theorem", "exact_identity", "proved_project_lemma", "candidate_bridge", "finite_certificate", "numerical_observation", "scoped_method_counterexample", "paused_branch"] },
+        "audit_verdict": { "enum": ["verified", "verified_with_conditions", "unproved_gap", "false", "duplicate_downstream_only", "not_audited"] },
+        "dag_role": { "enum": ["certified_chain", "first_dependency_gap", "immediate_target", "supporting", "diagnostic", "excluded"] },
+        "rh_chain_status": { "enum": ["usable", "conditional_only", "diagnostic", "excluded"] },
+        "depends_on": { "$ref": "#/$defs/stringArray" },
+        "implies": { "$ref": "#/$defs/stringArray" },
+        "citation_refs": { "$ref": "#/$defs/stringArray" },
+        "evidence_refs": { "$ref": "#/$defs/stringArray" },
+        "dag_node_refs": { "$ref": "#/$defs/stringArray" },
+        "dag_edge_refs": { "$ref": "#/$defs/stringArray" },
+        "proof_restrictions": { "$ref": "#/$defs/stringArray" },
+        "revival_trigger": {
+          "oneOf": [
+            { "type": "string", "minLength": 1 },
+            { "type": "null" }
+          ]
+        },
+        "refutation": { "$ref": "#/$defs/refutation" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "status": { "const": "paused" } }, "required": ["status"] },
+          "then": { "required": ["revival_trigger"], "properties": { "revival_trigger": { "type": "string", "minLength": 1 } } }
+        },
+        {
+          "if": { "properties": { "audit_verdict": { "const": "false" } }, "required": ["audit_verdict"] },
+          "then": { "required": ["refutation"] }
+        }
+      ]
+    },
+    "refutation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "exact_statement", "exact_scope", "evidence_refs", "does_not_exclude"],
+      "properties": {
+        "kind": { "enum": ["exact_counterexample", "proof_of_negation"] },
+        "exact_statement": { "type": "string", "minLength": 1 },
+        "exact_scope": { "type": "string", "minLength": 1 },
+        "evidence_refs": { "$ref": "#/$defs/nonEmptyStringArray" },
+        "does_not_exclude": { "$ref": "#/$defs/nonEmptyStringArray" }
+      }
+    },
+    "counterexample": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "record_kind",
+        "exact_scope",
+        "basis",
+        "route_effect",
+        "does_not_exclude",
+        "revival_trigger",
+        "status",
+        "audit_verdict",
+        "proof_restrictions",
+        "evidence_refs"
+      ],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "title": { "type": "string", "minLength": 1 },
+        "record_kind": { "enum": ["exact_counterexample", "mechanism_exclusion", "historical_non_gate"] },
+        "exact_scope": { "type": "string", "minLength": 1 },
+        "basis": { "type": "string", "minLength": 1 },
+        "route_effect": { "enum": ["exclude_within_scope", "no_inference"] },
+        "does_not_exclude": { "$ref": "#/$defs/nonEmptyStringArray" },
+        "statement": { "type": "string", "minLength": 1 },
+        "disposition": { "type": "string", "minLength": 1 },
+        "status": { "enum": ["active", "paused", "superseded", "archived"] },
+        "audit_verdict": { "enum": ["verified", "verified_with_conditions", "unproved_gap", "false", "duplicate_downstream_only", "not_audited"] },
+        "route": { "type": "string", "minLength": 1 },
+        "proof_restrictions": { "$ref": "#/$defs/stringArray" },
+        "revival_trigger": {
+          "oneOf": [
+            { "type": "string", "minLength": 1 },
+            { "type": "null" }
+          ]
+        },
+        "evidence_refs": { "$ref": "#/$defs/stringArray" }
+      }
+    },
+    "routeDisposition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decision", "scope", "basis", "evidence_refs", "truth_effect", "non_inferences", "revival_trigger"],
+      "properties": {
+        "decision": { "enum": ["continue", "pause", "exclude", "supersede"] },
+        "scope": { "type": "string", "minLength": 1 },
+        "basis": { "type": "string", "minLength": 1 },
+        "evidence_refs": { "$ref": "#/$defs/nonEmptyStringArray" },
+        "truth_effect": { "enum": ["none", "scoped_exclusion"] },
+        "non_inferences": { "$ref": "#/$defs/nonEmptyStringArray" },
+        "revival_trigger": {
+          "oneOf": [
+            { "type": "string", "minLength": 1 },
+            { "type": "null" }
+          ]
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "decision": { "const": "pause" } }, "required": ["decision"] },
+          "then": { "properties": { "truth_effect": { "const": "none" }, "revival_trigger": { "type": "string", "minLength": 1 } } }
+        },
+        {
+          "if": { "properties": { "decision": { "enum": ["continue", "supersede"] } }, "required": ["decision"] },
+          "then": { "properties": { "truth_effect": { "const": "none" } } }
+        },
+        {
+          "if": { "properties": { "decision": { "const": "exclude" } }, "required": ["decision"] },
+          "then": { "properties": { "truth_effect": { "const": "scoped_exclusion" } } }
+        }
+      ]
+    },
+    "auditReceipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "receipt_kind", "date", "verdict", "source_refs", "claim_refs", "evidence_refs", "tracked_receipt_path", "conclusion"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "title": { "type": "string", "minLength": 1 },
+        "receipt_kind": { "enum": ["audit", "target_refinement", "campaign_wave", "campaign_closeout", "process_audit"] },
+        "date": { "type": "string", "format": "date" },
+        "verdict": { "type": "string", "minLength": 1 },
+        "source_refs": { "$ref": "#/$defs/stringArray" },
+        "claim_refs": { "$ref": "#/$defs/stringArray" },
+        "evidence_refs": { "$ref": "#/$defs/stringArray" },
+        "campaign_id": { "type": "string", "minLength": 1 },
+        "tracked_receipt_path": { "type": "string", "minLength": 1 },
+        "conclusion": { "type": "string", "minLength": 1 },
+        "route_dispositions": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/routeDisposition" }
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "receipt_kind": { "const": "campaign_closeout" } }, "required": ["receipt_kind"] },
+          "then": { "required": ["campaign_id", "route_dispositions"] }
+        }
+      ]
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "source_type"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "title": { "type": "string", "minLength": 1 },
+        "authors": { "$ref": "#/$defs/stringArray" },
+        "source_type": { "type": "string", "minLength": 1 },
+        "path_class": { "type": "string", "minLength": 1 },
+        "locator": { "type": "string", "minLength": 1 },
+        "original_path": { "type": "string", "minLength": 1 },
+        "url": { "type": "string", "minLength": 1 },
+        "sha256": { "type": "string", "pattern": "^[A-Fa-f0-9]{64}$" }
+      }
+    }
+  }
+}

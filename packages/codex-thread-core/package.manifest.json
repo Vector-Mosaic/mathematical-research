@@ -1,0 +1,19 @@
+{
+  "kind": "package",
+  "version": 1,
+  "id": "pkg.workstation_control.codex_thread_core",
+  "name": "codex-thread-core",
+  "description": "Shared standalone Codex CLI app-server boundary and thread helpers for workstation_control services.",
+  "language": "typescript",
+  "import_path": "@workstation-control/codex-thread-core",
+  "commands": {
+    "build": {
+      "cmd": "pnpm run build",
+      "cwd": "packages/codex-thread-core"
+    },
+    "test": {
+      "cmd": "pnpm run test",
+      "cwd": "packages/codex-thread-core"
+    }
+  }
+}

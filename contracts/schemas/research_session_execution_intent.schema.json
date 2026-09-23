@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://vectormosaic.local/schemas/mathematical_research/research_session_execution_intent.schema.json",
+  "title": "Inactive Mathematical Research Session Execution Intent",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "kind",
+    "adapter_state",
+    "dispatch_authorized",
+    "coordination_mode",
+    "intent_id",
+    "project_id",
+    "coordination_epoch",
+    "mission_id",
+    "mission_revision",
+    "authorization_revision",
+    "control_revision",
+    "strategy_id",
+    "strategy_revision",
+    "branch_id",
+    "branch_revision",
+    "context_id",
+    "context_revision",
+    "session_id",
+    "session_revision",
+    "candidate_revisions",
+    "explicit_no_candidate",
+    "source_commit",
+    "source_tree_sha256",
+    "semantic_intent_sha256",
+    "requested_action",
+    "role",
+    "question",
+    "output_contract_sha256",
+    "allowed_tools",
+    "network_policy",
+    "network_allowlist",
+    "provider_profile",
+    "resource_request",
+    "cancellation_policy",
+    "result_schema_version",
+    "created_at",
+    "mathematical_effect"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "kind": {"const": "research_session_execution_intent"},
+    "adapter_state": {"const": "inactive"},
+    "dispatch_authorized": {"const": false},
+    "coordination_mode": {"const": "campaign_v4_incumbent"},
+    "intent_id": {"$ref": "#/$defs/id"},
+    "project_id": {"$ref": "#/$defs/id"},
+    "coordination_epoch": {"$ref": "#/$defs/id"},
+    "mission_id": {"$ref": "#/$defs/id"},
+    "mission_revision": {"$ref": "#/$defs/revision"},
+    "authorization_revision": {"$ref": "#/$defs/revision"},
+    "control_revision": {"$ref": "#/$defs/revision"},
+    "strategy_id": {"$ref": "#/$defs/id"},
+    "strategy_revision": {"$ref": "#/$defs/revision"},
+    "branch_id": {"$ref": "#/$defs/id"},
+    "branch_revision": {"$ref": "#/$defs/revision"},
+    "context_id": {"$ref": "#/$defs/id"},
+    "context_revision": {"$ref": "#/$defs/revision"},
+    "session_id": {"$ref": "#/$defs/id"},
+    "session_revision": {"$ref": "#/$defs/revision"},
+    "candidate_revisions": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/candidateRevision"}
+    },
+    "explicit_no_candidate": {"type": "boolean"},
+    "source_commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "source_tree_sha256": {"$ref": "#/$defs/sha256"},
+    "semantic_intent_sha256": {"$ref": "#/$defs/sha256"},
+    "requested_action": {"$ref": "#/$defs/nonEmptyString"},
+    "role": {"$ref": "#/$defs/nonEmptyString"},
+    "question": {"$ref": "#/$defs/nonEmptyString"},
+    "output_contract_sha256": {"$ref": "#/$defs/sha256"},
+    "allowed_tools": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/nonEmptyString"}
+    },
+    "network_policy": {"enum": ["denied", "allowlisted"]},
+    "network_allowlist": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/nonEmptyString"}
+    },
+    "provider_profile": {"$ref": "#/$defs/nonEmptyString"},
+    "resource_request": {"$ref": "#/$defs/resourceRequest"},
+    "cancellation_policy": {"$ref": "#/$defs/cancellationPolicy"},
+    "result_schema_version": {"const": 1},
+    "created_at": {"type": "string", "format": "date-time"},
+    "mathematical_effect": {"const": "none"}
+  },
+  "$defs": {
+    "nonEmptyString": {"type": "string", "minLength": 1},
+    "id": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9._:-]*$"},
+    "revision": {"type": "integer", "minimum": 1},
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "candidateRevision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidate_id", "revision"],
+      "properties": {
+        "candidate_id": {"$ref": "#/$defs/id"},
+        "revision": {"$ref": "#/$defs/revision"}
+      }
+    },
+    "resourceRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["vcpu", "memory_mb", "disk_mb", "timeout_seconds"],
+      "properties": {
+        "vcpu": {"type": "integer", "minimum": 1},
+        "memory_mb": {"type": "integer", "minimum": 1},
+        "disk_mb": {"type": "integer", "minimum": 1},
+        "timeout_seconds": {"type": "integer", "minimum": 1}
+      }
+    },
+    "cancellationPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authorization_epoch_bound", "on_mission_pause", "on_authorization_revoke"],
+      "properties": {
+        "authorization_epoch_bound": {"const": true},
+        "on_mission_pause": {"const": "request_cancel"},
+        "on_authorization_revoke": {"const": "request_cancel"}
+      }
+    }
+  }
+}

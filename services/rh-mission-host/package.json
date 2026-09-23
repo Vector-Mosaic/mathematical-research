@@ -1,0 +1,19 @@
+{
+  "name": "@workstation-control/rh-mission-host",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -b --force ../../packages/codex-remote-core/tsconfig.json ../../packages/codex-thread-core/tsconfig.json tsconfig.json && node scripts/generate-agent-roles.mjs",
+    "typecheck": "pnpm run build",
+    "test": "pnpm run build && node --test --test-concurrency=1 scripts/import-model-catalog.test.mjs dist",
+    "start": "node dist/main.js"
+  },
+  "dependencies": {
+    "@workstation-control/codex-thread-core": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "typescript": "~5.8.3"
+  }
+}

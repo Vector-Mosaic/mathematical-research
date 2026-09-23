@@ -1,0 +1,175 @@
+{
+  "schema_version": "mathematical_research.direct_mission_genesis.v1",
+  "kind": "direct_mission_genesis",
+  "project_id": "project.riemann_hypothesis",
+  "authority": {
+    "project_id": "project.riemann_hypothesis",
+    "coordination_epoch": "epoch.rh.public.1",
+    "authorization_id": "authorization.rh.public.1",
+    "expires_at": null
+  },
+  "mission": {
+    "mission_id": "mission.rh.public.1",
+    "revision": 1,
+    "project_id": "project.riemann_hypothesis",
+    "coordination_epoch": "epoch.rh.public.1",
+    "authorization_id": "authorization.rh.public.1",
+    "control_revision": 2,
+    "lifecycle": "active",
+    "fence_reason": null,
+    "fenced_at": null,
+    "autonomous": true,
+    "effective": true,
+    "strategy_ids": [
+      "strategy.rh.public.1"
+    ],
+    "purpose": {
+      "objective": "Advance the Riemann Hypothesis frontier through the highest-value mathematically credible work available: select the next question, delegate adaptively when independent work helps, preserve and interpret useful results, revise Strategy from what was learned, and commit a concise truthful Continuation Checkpoint.",
+      "proof_standard": "A genuinely correct, novel, self-contained, independently checkable proof or disproof of the Riemann Hypothesis whose exact statement, dependencies, derivation, assumptions, and verification package withstand independent reconstruction; computation, model confidence, repeated agreement, or system state cannot establish it.",
+      "non_goals": [
+        "Claiming a theorem from finite moments, bounded-degree tests, floating-point evidence, model agreement, or a green verification target.",
+        "Owning unrelated application or workflow orchestration.",
+        "Treating the system as an automated theorem prover.",
+        "Requiring the operator to act as the mathematical strategist or routine proof reviewer, or treating AI agreement as a substitute for checkable mathematics.",
+        "Treating an immortal process, unattended daemon, completed Goal, worker count, artifact count, or infrastructure qualification as research success."
+      ],
+      "closeout_conditions": {
+        "strategy_mission_continuation": "closeout",
+        "semantic_effect": "Closeout is a Strategy-owned coordination decision; it does not establish proof, disproof, Admission, or research success."
+      }
+    },
+    "execution_policy": {
+      "provider": "openai",
+      "model": "gpt-6-astra",
+      "reasoning_effort": "ultra",
+      "model_fallback": false,
+      "baseline_capabilities": [
+        "rh_mission",
+        "shell",
+        "web_search",
+        "native_delegation"
+      ],
+      "selected_capabilities": {
+        "local_roots": [],
+        "mcp_servers": [],
+        "apps": [],
+        "browser": null
+      },
+      "network": {
+        "public_egress": true,
+        "secretless": true,
+        "credential_inheritance": false,
+        "denied_destinations": [
+          "loopback",
+          "private_internal",
+          "link_local",
+          "cloud_metadata"
+        ]
+      },
+      "filesystem": {
+        "release_access": "read_only",
+        "goal_workspace": "fresh_private_writable",
+        "protected_credentials_access": "denied"
+      },
+      "automatic_installation": false
+    }
+  },
+  "opening_branch": {
+    "schema_version": 1,
+    "kind": "discovery_branch",
+    "project_id": "project.riemann_hypothesis",
+    "mission_id": "mission.rh.public.1",
+    "branch_id": "branch.rh.public.1",
+    "question": "Starting with no inherited private research, what precise RH-related question is worth investigating, what public mathematical ground does it require, and what result would change the next research decision?",
+    "leverage_fingerprint": "A well-defined research question with its exact assumptions and discriminator, followed by a justified derivation, candidate, counterexample, or scoped no-result that informs the next decision.",
+    "target_hook": "The Mission targets riemann_hypothesis. The fresh canonical starting document is projects/riemann_hypothesis/research_state.json; its moment-program scaffold contains no established sequence or RH equivalence and does not exclude other RH approaches.",
+    "genealogy": [],
+    "nonclaims": [
+      "This opening direction is an initial research bet, not a mathematical result, completed investigation, or proof of RH.",
+      "No private research history, source capture, candidate, canonical admission, or mathematical audit is inherited.",
+      "The canonical moment-program scaffold supplies open obligations only; it does not establish a sequence, positivity, or an implication to RH."
+    ],
+    "owner_refs": [],
+    "scoped_failures": [],
+    "non_exclusions": [],
+    "retained_residue": [],
+    "composition_interfaces": [],
+    "recombination_interfaces": [],
+    "revival_conditions": []
+  },
+  "strategy": {
+    "schema_version": 1,
+    "kind": "mission_strategy",
+    "project_id": "project.riemann_hypothesis",
+    "mission_id": "mission.rh.public.1",
+    "strategy_id": "strategy.rh.public.1",
+    "mission_continuation": "continue",
+    "integrated_comparison": "This is a fresh public Mission, without a previously investigated frontier. Establish the mathematical ground of a useful first question, then pursue work that can change the next scientific decision. The inherited canonical moment profile is not a reason to assume its premises or exclude a different RH approach.",
+    "causal_inputs": [],
+    "serious_opportunities": [],
+    "selected_bets": [
+      {
+        "bet": "Formulate and investigate one precise RH-related research question from publicly available mathematical ground.",
+        "discriminator": "The work yields a checkable scoped result, an exact missing obligation, or a justified change of direction rather than an unsupported complete-target assertion.",
+        "owner_refs": [
+          {
+            "kind": "branch",
+            "identity": "branch.rh.public.1",
+            "revision": 1,
+            "payload_sha256": "2300a9fead9948e5b3181d0893add20475825b3fc6e108bcbc0cfbce58caaeca"
+          }
+        ]
+      }
+    ],
+    "attention_actions": [
+      {
+        "branch_ref": {
+          "kind": "branch",
+          "identity": "branch.rh.public.1",
+          "revision": 1,
+          "payload_sha256": "2300a9fead9948e5b3181d0893add20475825b3fc6e108bcbc0cfbce58caaeca"
+        },
+        "attention": "active",
+        "consequence": "Continue or revise the research direction according to its actual mathematical result and remaining obligations."
+      }
+    ],
+    "context_treatment": [],
+    "creativity_treatment": [
+      {
+        "treatment": "Consider alternative representations and approaches when they may expose a useful mathematical question; do not inherit a private route or invent prior results.",
+        "decision_consequence": "Select a direction for its mathematical value and testable consequences.",
+        "owner_refs": [
+          {
+            "kind": "branch",
+            "identity": "branch.rh.public.1",
+            "revision": 1,
+            "payload_sha256": "2300a9fead9948e5b3181d0893add20475825b3fc6e108bcbc0cfbce58caaeca"
+          }
+        ]
+      }
+    ],
+    "owner_refs": [
+      {
+        "kind": "branch",
+        "identity": "branch.rh.public.1",
+        "revision": 1,
+        "payload_sha256": "2300a9fead9948e5b3181d0893add20475825b3fc6e108bcbc0cfbce58caaeca"
+      }
+    ],
+    "reconsideration_conditions": [
+      {
+        "condition": "A precise missing premise, counterexample, stronger result, or more promising mathematical question materially changes the expected value of this direction.",
+        "owner_refs": [
+          {
+            "kind": "branch",
+            "identity": "branch.rh.public.1",
+            "revision": 1,
+            "payload_sha256": "2300a9fead9948e5b3181d0893add20475825b3fc6e108bcbc0cfbce58caaeca"
+          }
+        ]
+      }
+    ],
+    "reversal_conditions": [],
+    "revival_conditions": []
+  }
+}

@@ -1,0 +1,293 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://vector-mosaic.invalid/mathematical-research/admission-decision.v1.schema.json",
+  "title": "Mathematical Research Admission Decision v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "kind",
+    "contract_schema_sha256",
+    "decision_id",
+    "case_ref",
+    "candidate_ref",
+    "admitter",
+    "review_refs",
+    "disposition",
+    "basis",
+    "decision_output_evidence",
+    "decision_output_closure",
+    "full_rh_a1_binding",
+    "canonical_prestate",
+    "canonical_poststate",
+    "allowlisted_delta_pointers",
+    "proposed_delta",
+    "writer_contract",
+    "non_inferences",
+    "created_at",
+    "canonical_effect",
+    "authorization_scope"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "kind": {"const": "admission_decision"},
+    "contract_schema_sha256": {"$ref": "#/$defs/sha256"},
+    "decision_id": {"$ref": "#/$defs/stableId"},
+    "case_ref": {"$ref": "#/$defs/caseReference"},
+    "candidate_ref": {"$ref": "#/$defs/candidateReference"},
+    "admitter": {"$ref": "#/$defs/admitterPrincipal"},
+    "review_refs": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/reviewReference"}
+    },
+    "disposition": {"enum": ["authorize_exact_delta", "reject", "blocked"]},
+    "basis": {"$ref": "#/$defs/nonemptyString"},
+    "decision_output_evidence": {"$ref": "#/$defs/versionedReference"},
+    "decision_output_closure": {"$ref": "#/$defs/evidenceClosure"},
+    "full_rh_a1_binding": {
+      "oneOf": [
+        {"type": "null"},
+        {"$ref": "#/$defs/candidateA1Binding"}
+      ]
+    },
+    "canonical_prestate": {"$ref": "#/$defs/canonicalStateBinding"},
+    "canonical_poststate": {"$ref": "#/$defs/canonicalStateBinding"},
+    "allowlisted_delta_pointers": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "pattern": "^/"}
+    },
+    "proposed_delta": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/jsonPointerDelta"}
+    },
+    "writer_contract": {"$ref": "#/$defs/writerContract"},
+    "non_inferences": {"$ref": "#/$defs/uniqueStrings"},
+    "created_at": {"$ref": "#/$defs/nonemptyString"},
+    "canonical_effect": {"const": "none"},
+    "authorization_scope": {"const": "exact_delta_only"}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "stableId": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9._:-]{2,159}$"
+    },
+    "nonemptyString": {"type": "string", "minLength": 1},
+    "caseReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["case_id", "digest_sha256"],
+      "properties": {
+        "case_id": {"$ref": "#/$defs/stableId"},
+        "digest_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "candidateReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidate_id", "revision", "digest_sha256"],
+      "properties": {
+        "candidate_id": {"$ref": "#/$defs/stableId"},
+        "revision": {"type": "integer", "minimum": 1},
+        "digest_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "admitterPrincipal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "principal_id",
+        "role",
+        "mission_id",
+        "mission_bundle_digest",
+        "session_id",
+        "session_plan_digest",
+        "context_id",
+        "attempt_id",
+        "result_digest",
+        "context_digest",
+        "context_manifest_sha256",
+        "evidence_closure_digest"
+      ],
+      "properties": {
+        "principal_id": {"$ref": "#/$defs/stableId"},
+        "role": {"const": "admitter"},
+        "mission_id": {"$ref": "#/$defs/stableId"},
+        "mission_bundle_digest": {"$ref": "#/$defs/sha256"},
+        "session_id": {"$ref": "#/$defs/stableId"},
+        "session_plan_digest": {"$ref": "#/$defs/sha256"},
+        "context_id": {"$ref": "#/$defs/stableId"},
+        "attempt_id": {"$ref": "#/$defs/stableId"},
+        "result_digest": {"$ref": "#/$defs/sha256"},
+        "context_digest": {"$ref": "#/$defs/sha256"},
+        "context_manifest_sha256": {"$ref": "#/$defs/sha256"},
+        "evidence_closure_digest": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "uniqueStrings": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/nonemptyString"}
+    },
+    "nonemptyUniqueStrings": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/nonemptyString"}
+    },
+    "versionedReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "id", "revision", "digest_sha256"],
+      "properties": {
+        "kind": {"$ref": "#/$defs/nonemptyString"},
+        "id": {"$ref": "#/$defs/stableId"},
+        "revision": {"type": "integer", "minimum": 1},
+        "digest_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "evidenceClosure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["closure_id", "closure_digest"],
+      "properties": {
+        "closure_id": {"$ref": "#/$defs/stableId"},
+        "closure_digest": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "candidateA1Binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "project_id",
+        "root_identity",
+        "project_commit",
+        "root_digest",
+        "canonical_authority_digest",
+        "candidate_id",
+        "candidate_revision",
+        "candidate_digest",
+        "package_digest",
+        "intake_id",
+        "evidence_id",
+        "evidence_revision",
+        "evidence_payload_digest",
+        "artifact_digest",
+        "closure_id",
+        "closure_digest",
+        "alert_id",
+        "hold_id",
+        "scope",
+        "hold_lifecycle",
+        "resolution_id",
+        "resolution_authorization",
+        "resolution",
+        "resolution_digest",
+        "canonical_effect",
+        "mathematical_effect"
+      ],
+      "properties": {
+        "project_id": {"$ref": "#/$defs/stableId"},
+        "root_identity": {"$ref": "#/$defs/sha256"},
+        "project_commit": {"type": "integer", "minimum": 0},
+        "root_digest": {"$ref": "#/$defs/sha256"},
+        "canonical_authority_digest": {"$ref": "#/$defs/sha256"},
+        "candidate_id": {"$ref": "#/$defs/stableId"},
+        "candidate_revision": {"type": "integer", "minimum": 1},
+        "candidate_digest": {"$ref": "#/$defs/sha256"},
+        "package_digest": {"$ref": "#/$defs/sha256"},
+        "intake_id": {"$ref": "#/$defs/stableId"},
+        "evidence_id": {"$ref": "#/$defs/stableId"},
+        "evidence_revision": {"type": "integer", "minimum": 1},
+        "evidence_payload_digest": {"$ref": "#/$defs/sha256"},
+        "artifact_digest": {"$ref": "#/$defs/sha256"},
+        "closure_id": {"$ref": "#/$defs/stableId"},
+        "closure_digest": {"$ref": "#/$defs/sha256"},
+        "alert_id": {"$ref": "#/$defs/stableId"},
+        "hold_id": {"$ref": "#/$defs/stableId"},
+        "scope": {"$ref": "#/$defs/nonemptyUniqueStrings"},
+        "hold_lifecycle": {"const": "open"},
+        "resolution_id": {"type": "null"},
+        "resolution_authorization": {"type": "null"},
+        "resolution": {"type": "null"},
+        "resolution_digest": {"type": "null"},
+        "canonical_effect": {"const": "none"},
+        "mathematical_effect": {"const": "none"}
+      }
+    },
+    "reviewReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "review_id",
+        "digest_sha256",
+        "review_role",
+        "disposition"
+      ],
+      "properties": {
+        "review_id": {"$ref": "#/$defs/stableId"},
+        "digest_sha256": {"$ref": "#/$defs/sha256"},
+        "review_role": {"$ref": "#/$defs/nonemptyString"},
+        "disposition": {"enum": ["supports", "rejects"]}
+      }
+    },
+    "canonicalStateBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repo_path",
+        "raw_sha256",
+        "normalized_sha256",
+        "schema_version",
+        "validation_contract_sha256",
+        "authority_context_sha256"
+      ],
+      "properties": {
+        "repo_path": {
+          "const": "projects/riemann_hypothesis/research_state.json"
+        },
+        "raw_sha256": {"$ref": "#/$defs/sha256"},
+        "normalized_sha256": {"$ref": "#/$defs/sha256"},
+        "schema_version": {"type": "integer", "minimum": 1},
+        "validation_contract_sha256": {"$ref": "#/$defs/sha256"},
+        "authority_context_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "jsonPointerDelta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "pointer",
+        "change",
+        "identity",
+        "before_present",
+        "after_present",
+        "before",
+        "after"
+      ],
+      "properties": {
+        "pointer": {"type": "string", "pattern": "^/"},
+        "change": {"enum": ["added", "removed", "modified"]},
+        "identity": {"type": ["string", "null"]},
+        "before_present": {"type": "boolean"},
+        "after_present": {"type": "boolean"},
+        "before": {},
+        "after": {}
+      }
+    },
+    "writerContract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["writer_id", "writer_version", "writer_contract_sha256"],
+      "properties": {
+        "writer_id": {"const": "research_state.incumbent_whole_document_transaction"},
+        "writer_version": {"const": 2},
+        "writer_contract_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    }
+  }
+}

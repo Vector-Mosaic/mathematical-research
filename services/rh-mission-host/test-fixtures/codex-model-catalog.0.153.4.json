@@ -1,0 +1,23 @@
+{
+  "models": [
+    {
+      "slug": "gpt-6-astra",
+      "minimal_client_version": "0.153.0",
+      "default_reasoning_level": "ultra",
+      "supported_reasoning_levels": [
+        { "effort": "ultra", "description": "Maximum reasoning with automatic task delegation" }
+      ],
+      "multi_agent_version": "v1",
+      "context_window": 272000,
+      "effective_context_window_percent": 95,
+      "base_instructions": "Synthetic test fixture authored for Mathematical Research. This is not a provider prompt or a live model catalog.",
+      "model_messages": {
+        "instructions_template": "Synthetic test fixture authored for Mathematical Research. This is not a provider prompt or a live model catalog.",
+        "instructions_variables": {}
+      },
+      "tool_mode": "code_mode_only",
+      "experimental_supported_tools": [],
+      "truncation_policy": { "mode": "tokens", "limit": 9223372036854775807 }
+    }
+  ]
+}
