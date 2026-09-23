@@ -40,8 +40,36 @@ whole-system acceptance loop for a documentation change.
 
 ## Live qualification
 
-The release's real initialization, interaction, stop and restart result will be
-recorded here before publication. This is a software lifecycle check, not an RH
-result, a research benchmark or evidence of autonomous mathematical productivity.
-The reproducible worked research example and comparative evaluation are separate
-work from this initial extraction.
+On September 23, 2026, runtime commit
+[`cf989b13ab26c0861867bc79a378d1bb254fd202`](https://github.com/Vector-Mosaic/mathematical-research/commit/cf989b13ab26c0861867bc79a378d1bb254fd202)
+completed a real Linux lifecycle check with Codex 0.153.4, `gpt-6-astra` / `ultra`,
+Python 3.12.3, Node.js 22.23.2 and pnpm 10.14.0. The account, Codex home, research
+workspace and release were separate from existing research installations. The
+processes were limited to two CPU cores and 4 GiB RAM, with no GPU access.
+
+- Prepared an immutable release from the exact source archive and imported model
+  metadata from the authenticated operator's own Codex installation.
+- Initialized the fresh public research workspace and inspected it successfully.
+- Started the actual Mission Host and observed successful `rh_mission` tool
+  responses from the real research owner.
+- Requested an operator stop; the Goal paused, the Host exited successfully and
+  the runtime lock was released.
+- Restarted the same installation. The native thread resume succeeded, research
+  interaction continued, and the retained workspace advanced from revision 5
+  before restart to revision 18 after the second stop. Canonical authority stayed
+  unchanged.
+- Stopped the Host again: exit code 0, suspended Goal, released lock and no
+  remaining test workload. Both runs closed their observation streams with zero
+  dropped observations.
+
+The focused software checks above passed across the extraction and relevant
+targeted repairs. Unaffected results were reused; this was not a fresh run of
+every repository test at the final documentation commit. Additional core growth
+and storage diagnostics were not part of release acceptance.
+
+This establishes initialization, real tool interaction and lifecycle recovery in
+the tested configuration. It does not establish an RH result, mathematical
+correctness of generated work, autonomous research productivity or every possible
+provider failure path. The reproducible worked research example and comparative
+evaluation remain separate work. Credentials, provider instructions and raw
+runtime traces are not published.
