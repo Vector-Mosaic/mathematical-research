@@ -106,7 +106,7 @@
     "mission_id": "mission.rh.example.finite_free_localization.1",
     "strategy_id": "strategy.rh.example.finite_free_localization.1",
     "mission_continuation": "continue",
-    "integrated_comparison": "The operator selected a bounded reproduction of a documented missing-assumption episode. This fresh workspace starts without results. Complete the supplied finite-free question and one genuine cross-epoch continuation; do not expand to open-ended RH research. In the first executive epoch, read the public inputs, check the counterexample and repaired assumptions, persist usable scoped Evidence and a Candidate when warranted, and commit a continuation Checkpoint with exact record handles and a remaining successor check. Keep Strategy continuation set to continue at that first checkpoint. In the fresh successor epoch, retrieve the predecessor checkpoint and its retained Evidence/Candidate through rh_mission before checking the mathematics from public source. Record what was retrieved, whether B/D <= 4 is retained, and any discrepancy. After that bounded verification, record a truthful Strategy closeout and Checkpoint; completion does not establish any whole-target result.",
+    "integrated_comparison": "The operator selected a bounded reproduction of a documented missing-assumption episode. This fresh workspace starts without results. Complete the supplied finite-free question and one genuine cross-epoch continuation; do not expand to open-ended RH research. In the first executive epoch, read the public inputs, check the counterexample and repaired assumptions, persist usable scoped Evidence and a Candidate when warranted, and commit a continuation Checkpoint with exact record handles and a remaining successor check. Keep Strategy continuation set to continue at that first checkpoint. In the fresh successor epoch, retrieve the predecessor checkpoint and its retained Evidence/Candidate through rh_mission before checking the mathematics from public source. Record what was retrieved, whether B/D <= 4 is retained, and any discrepancy. After that bounded verification, record a truthful continuation Strategy stating whether the example is complete and commit a Checkpoint. The operator requests stop at that checkpoint. Completing this auxiliary example does not close the RH Mission, authorize Admission, or establish any whole-target result.",
     "causal_inputs": [],
     "serious_opportunities": [],
     "selected_bets": [
@@ -132,7 +132,7 @@
           "payload_sha256": "f99314100ba94715670eb9a52f963aef201fc0a5d4c5ea23606beb4daf0b11c4"
         },
         "attention": "active",
-        "consequence": "First epoch: preserve correction and exact successor retrieval pointers, then checkpoint with continuation. Fresh successor: retrieve retained records, verify the correction and scope, then close out this bounded example with a final checkpoint."
+        "consequence": "First epoch: preserve correction and exact successor retrieval pointers, then checkpoint with continuation. Fresh successor: retrieve retained records, verify the correction and scope, record a truthful continuation Strategy stating whether the bounded example is complete, and checkpoint for the operator-requested stop."
       }
     ],
     "context_treatment": [],

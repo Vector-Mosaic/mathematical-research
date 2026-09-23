@@ -12,6 +12,11 @@ the parameter scales repairs a localization theorem. The
 used here; the [provenance](provenance.md) distinguishes that derivation from the
 historical agent output and the cited paper. This is not a proof or disproof of RH.
 
+In a [real Host run](validation.md), a fresh successor retrieved the saved
+correction, checked its assumptions and derived a
+[sharper bound](successor-refinement.md). The original inputs, recorded outputs
+and subsequent refinement are available separately.
+
 ## Check the mathematics
 
 From the repository root, with Python 3.12 or later:
@@ -70,11 +75,24 @@ solutions are openly available in this repository: this is a reproduction,
 not a blinded discovery evaluation. The agent may fail or leave work incomplete;
 its actual records determine what happened.
 
-Use `inspect` to read the current installation and the documented `stop` command
-to finish. `stop --at-checkpoint` requests a stop at the next durable checkpoint.
+Use `inspect` to follow the current installation. Once the fresh successor has
+begun, request a stop at its next durable checkpoint from another terminal:
+
+```sh
+"$PYTHON" -B "$RELEASE/scripts/research.py" stop --state-root "$STATE" --at-checkpoint
+```
+
+The successor records whether the bounded example is complete in an ordinary
+continuation Strategy and checkpoints. The operator-requested stop ends this
+run; completion of the auxiliary example does not close the RH Mission or admit
+an RH result. Confirm Host exit and inspect the retained checkpoint afterward.
 A stopped native conversation can also resume, but that is different from a
 fresh successor epoch. Evidence for the stronger handoff must identify distinct
 threads and the successor's actual use of retained research.
+
+The recorded live validation used source `9021eb1`. These opening instructions
+were clarified after that run to describe continuation and operator-requested
+stop explicitly; they do not change which source the recorded run exercised.
 
 ## Why these engineering choices matter
 
@@ -95,5 +113,6 @@ small enough to follow from this example:
 Justin Sublette directed the system's design and iterative development with AI
 assistance. This example makes those engineering choices inspectable; it does
 not attribute all generated mathematics or every implementation line to him.
-The [validation notes](../../docs/validation.md) identify the observed software
-and live behavior separately from mathematical claims.
+The [example validation notes](validation.md) identify the observed software and
+live behavior separately from mathematical claims. The
+[system validation notes](../../docs/validation.md) cover the earlier extraction.

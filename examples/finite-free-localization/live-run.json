@@ -1,0 +1,169 @@
+{
+  "schema_version": "mathematical-research.example-live-result.v1",
+  "date_utc": "2026-09-23",
+  "source_commit": "9021eb1df3ee38055715567928cc7c5273599e9c",
+  "source_archive_sha256": "65774476c7e3acb99264fdf4d812d9107948a90c94629da3e7150199cf9b6929",
+  "observation_incarnation": "c34adb67-edc6-47a5-acd1-e2c72ffd6469",
+  "provenance": "Operator-prepared selection from the actual Host observation stream and final owner inspection; not a complete raw trace or independently authenticated historical archive.",
+  "runtime": {
+    "codex": "0.153.4",
+    "model": "gpt-6-astra",
+    "reasoning_effort": "ultra"
+  },
+  "exposure": "Fresh public research store with problem, supplied proof and checker. Reference-assisted reproduction; no blind discovery claim.",
+  "root_threads": [
+    {
+      "role": "first",
+      "thread_id": "01a0cf79-9fe0-76e1-ba9e-9484d63bc792",
+      "epoch_id": "epoch:c73034e00d60d24566efc1a84634fd720297a0f3baf465f5951fbc6d5385a066"
+    },
+    {
+      "role": "fresh_successor",
+      "thread_id": "01a0cf7d-b134-77a3-b761-c9b41ee35ee7",
+      "epoch_id": "epoch:180e710af5515264da90dd594bc55c4a421f78ddd7a0c614186e15ec721d06c1"
+    }
+  ],
+  "checker_executions": [
+    {
+      "thread_id": "01a0cf79-9fe0-76e1-ba9e-9484d63bc792",
+      "request_sequence": 586,
+      "response_sequence": 592,
+      "exit_code": 0,
+      "output_file": "checker-output.json"
+    },
+    {
+      "thread_id": "01a0cf7d-b134-77a3-b761-c9b41ee35ee7",
+      "request_sequence": 2326,
+      "response_sequence": 2332,
+      "exit_code": 0,
+      "output_file": "checker-output.json"
+    }
+  ],
+  "candidate_write": {
+    "thread_id": "01a0cf79-9fe0-76e1-ba9e-9484d63bc792",
+    "request_sequence": 1340,
+    "response_sequence": 1351,
+    "request": {
+      "operation": "record_candidate",
+      "input": {
+        "candidate_id": "candidate:finite-free-localization-repair",
+        "exact_statement": "Let d>=1 be an integer and A,B,C,D>0. For p_F(y)=sum_{j=0}^d (-1)^j binom(d,j)(A)_j(C)_j D^j y^j/[A^j C^j(B)_j(D)_j], where (x)_j is the rising factorial, assume A>=8B, B,D>=144d, 4d<=C-D<=D/4 and B/D<=4. Then p_F has d distinct positive roots. Every root and every real critical point satisfies |y-B|<10sqrt(Bd) and 9B/16<=y<=25B/16. For d=1 the only root is B and there are no critical points. Without the B/D restriction the original coarse assumptions alone imply no absolute sqrt(Bd) localization bound.",
+        "hypotheses": [
+          "d is a positive integer and A,B,C,D are positive real numbers.",
+          "A>=8B; B,D>=144d; 4d<=C-D<=D/4.",
+          "B/D<=4 is required for this repaired uniform constant."
+        ],
+        "standing": {
+          "status": "open",
+          "basis": "Scoped theorem supported by executive reconstruction of disclosed public reference and exact finite checks; ordinary noncanonical Candidate, not an Admission result.",
+          "scope": "Auxiliary finite-free polynomial only."
+        },
+        "supporting_refs": [
+          {
+            "id": "evidence:finite-free-counterfamily",
+            "revision": 1
+          },
+          {
+            "id": "evidence:finite-free-repaired-localization",
+            "revision": 1
+          }
+        ],
+        "non_inferences": [
+          "No RH proof or disproof, whole-target equivalence, novel result, historical authentication, full-paper theorem, or uniform Jensen hyperbolicity follows.",
+          "Finite computations do not prove the all-degree assertion.",
+          "The historical constant 9 is not established by this reconstruction."
+        ],
+        "limitations": [
+          "Reference-assisted reproduction; no blind or independently authored rediscovery claimed.",
+          "No predecessor records existed when current root retrieved checkpoint and Evidence/Candidate inventory."
+        ]
+      }
+    },
+    "response_status": "completed"
+  },
+  "successor_retrieval": {
+    "thread_id": "01a0cf7d-b134-77a3-b761-c9b41ee35ee7",
+    "request_sequence": 1962,
+    "response_sequence": 1970,
+    "request": {
+      "operation": "retrieve",
+      "input": {
+        "mode": "read",
+        "ids": [
+          "evidence:finite-free-counterfamily@1",
+          "evidence:finite-free-repaired-localization@1",
+          "candidate:finite-free-localization-repair@1"
+        ],
+        "purpose": "Verify exact retained mathematics and all repair assumptions in fresh executive."
+      }
+    },
+    "response_status": "completed",
+    "returned_items": [
+      {
+        "id": "evidence:finite-free-counterfamily@1",
+        "status": "readable"
+      },
+      {
+        "id": "evidence:finite-free-repaired-localization@1",
+        "status": "readable"
+      },
+      {
+        "id": "candidate:finite-free-localization-repair@1",
+        "status": "readable"
+      }
+    ]
+  },
+  "successor_assessment": {
+    "thread_id": "01a0cf7d-b134-77a3-b761-c9b41ee35ee7",
+    "request_sequence": 2427,
+    "response_sequence": 2442,
+    "request": {
+      "operation": "interpret_material",
+      "input": {
+        "evidence_id": "evidence:finite-free-successor-refinement",
+        "interpretation": "Fresh successor retrieved checkpoint:4984e37687112363ce27ed55f47a48a043974505d18c91313639ef8732c2cb9b summary and transitive_owner_refs and read evidence:finite-free-counterfamily@1, evidence:finite-free-repaired-localization@1, candidate:finite-free-localization-repair@1 before public-source reading. All three were readable complete declared semantic projections. The retained statement explicitly preserves A>=8B, B,D>=144d, 4d<=C-D<=D/4, B/D<=4, constant 10, interval [9B/16,25B/16], positive simplicity and the d=1 exception. No discrepancy in these items was found on subsequent public comparison. The previously pending cross-epoch retrieval obligation is therefore discharged. Mathematical refinement: for q_{U,V} defined in the retained proof, under U>=V+d,V>=144d, its already established Jacobi bounds |h_k-V|<13d/4 and e_k<9sqrt(Vd)/8 give every eigenvalue |y-V|<(13/4)d+(9/4)sqrt(Vd)<=c sqrt(Vd), c=121/48, since sqrt(d/V)<=1/12. For the exact p_F of candidate:finite-free-localization-repair@1 assume only positive parameters, integer d>=1, A>=B+d,C>=D+d,B,D>=144d. Put a=c sqrt(d/B),b=c sqrt(d/D), so a,b<=121/576<1/4. The retained finite-free product-interval theorem gives all roots between B(1-a)(1-b) and B(1+a)(1+b); positivity and simplicity follow from the retained Jacobi and logarithmic-mesh proof. Thus |y-B|<sqrt(Bd)[c(1+sqrt(B/D))+c^2 sqrt(d/D)]. If also B/D<=4, the bracket is at most 3c+c^2/12=223729/27648<9. Hence the repaired theorem can replace 10 by 9, indeed by 223729/27648. The older relative interval [9B/16,25B/16] remains valid. Rolle supplies all d-1 derivative roots for d>=2; d=1 is exactly 1-y/B. This is a fresh consequence of the public bounds, not authentication of any historical sharper derivation.",
+        "scope": "Auxiliary finite-free polynomial defined exactly in candidate:finite-free-localization-repair@1, for all positive real parameters and integer degrees satisfying the stated sufficient hypotheses; both roots and real critical points. Also exact fresh-successor retrieval verification.",
+        "limitations": [
+          "Retains standard Jacobi and finite-free theorem dependencies from evidence:finite-free-repaired-localization@1; reference-assisted and not a new independent proof of those theorems.",
+          "No novelty or historical-authentication claim. The particular upper bound B/D<=4 is sufficient, not asserted necessary.",
+          "No RH proof, equivalence, all-Jensen theorem, source-paper main-theorem conclusion, or canonical Admission.",
+          "The predecessor Evidence and Candidate retain their historically truthful pending statements at revision 1; this successor Evidence records their discharge and a later stronger bound."
+        ]
+      }
+    },
+    "response_status": "completed"
+  },
+  "checkpoints": [
+    {
+      "thread_id": "01a0cf79-9fe0-76e1-ba9e-9484d63bc792",
+      "request_sequence": 1682,
+      "response_sequence": 1700,
+      "checkpoint_id": "checkpoint:4984e37687112363ce27ed55f47a48a043974505d18c91313639ef8732c2cb9b",
+      "executive_epoch_id": "epoch:c73034e00d60d24566efc1a84634fd720297a0f3baf465f5951fbc6d5385a066",
+      "state": "checkpointed"
+    },
+    {
+      "thread_id": "01a0cf7d-b134-77a3-b761-c9b41ee35ee7",
+      "request_sequence": 2554,
+      "response_sequence": 2569,
+      "checkpoint_id": "checkpoint:876e5f32fdf78335e04dc73442536d5ea1dde1a5f874116e7ace9a58deda0c91",
+      "executive_epoch_id": "epoch:180e710af5515264da90dd594bc55c4a421f78ddd7a0c614186e15ec721d06c1",
+      "state": "checkpointed"
+    }
+  ],
+  "final_state": {
+    "project_commit": 17,
+    "checkpoint": {
+      "checkpoint_id": "checkpoint:876e5f32fdf78335e04dc73442536d5ea1dde1a5f874116e7ace9a58deda0c91",
+      "payload_sha256": "7fec03fc4a63eaaea1651f4fc9239cd7e9b426c51f8116e779eb3461a70c4a1a"
+    },
+    "admitted_result": null,
+    "latest_epoch_state": "checkpointed",
+    "host_exit_code": 0,
+    "runtime_lock_released": true,
+    "active_goal": null,
+    "observation_clean_shutdown": true,
+    "capture_recovery_required": []
+  },
+  "scope": "Observed mathematical correction and retrieval in two fresh executive epochs. This does not establish general reliability, discovery rate, novelty, or RH. See validation.md for initial failure and operator stop."
+}

@@ -36,7 +36,9 @@ See the [architecture](docs/architecture.md) for these boundaries and the
 Start with the [missing-assumption research example](examples/finite-free-localization/README.md):
 read the mathematical correction, run its account-free checker, and inspect how
 the real research store retains a failed claim and useful corrected result.
-The example also provides inputs for an optional real Host reproduction.
+Its [recorded live run](examples/finite-free-localization/validation.md) shows a
+fresh executive retrieving that correction and tightening the bound. The example
+also provides inputs for an optional real Host reproduction.
 
 Follow the [Linux setup guide](docs/setup.md). The source uses Python 3.12 or
 later, Node.js 22 or later, and pnpm 10.14.0. The supported deployment separates a

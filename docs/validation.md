@@ -70,6 +70,10 @@ and storage diagnostics were not part of release acceptance.
 This establishes initialization, real tool interaction and lifecycle recovery in
 the tested configuration. It does not establish an RH result, mathematical
 correctness of generated work, autonomous research productivity or every possible
-provider failure path. The reproducible worked research example and comparative
-evaluation remain separate work. Credentials, provider instructions and raw
-runtime traces are not published.
+provider failure path. The subsequent
+[finite-free worked example](../examples/finite-free-localization/validation.md)
+adds exact mathematical checks, a real-store walkthrough, and an observed fresh
+executive retrieving and extending a retained correction. Its evidence and the
+shell-launch defect it exposed are documented separately. Comparative evaluation
+remains future work. Credentials, provider instructions and raw runtime traces
+are not published.

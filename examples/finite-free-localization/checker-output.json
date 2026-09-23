@@ -1,0 +1,110 @@
+{
+  "schema_version": "mathematical-research.example-check.v1",
+  "example_id": "finite-free-localization",
+  "status": "passed",
+  "arithmetic": "Python Fraction; exact polynomial signs and Sturm counts",
+  "counterexamples": [
+    {
+      "C_loc": 1,
+      "A": 179776,
+      "B": 22472,
+      "C": 296,
+      "D": 288,
+      "d": 2,
+      "sqrt_Bd": 212,
+      "root_below": 22260,
+      "normalized_displacement_strictly_greater_than": 1
+    },
+    {
+      "C_loc": 10,
+      "A": 17977600,
+      "B": 2247200,
+      "C": 296,
+      "D": 288,
+      "d": 2,
+      "sqrt_Bd": 2120,
+      "root_below": 2226000,
+      "normalized_displacement_strictly_greater_than": 10
+    },
+    {
+      "C_loc": 100,
+      "A": 1797760000,
+      "B": 224720000,
+      "C": 296,
+      "D": 288,
+      "d": 2,
+      "sqrt_Bd": 21200,
+      "root_below": 222600000,
+      "normalized_displacement_strictly_greater_than": 100
+    },
+    {
+      "C_loc": 1000,
+      "A": 179776000000,
+      "B": 22472000000,
+      "C": 296,
+      "D": 288,
+      "d": 2,
+      "sqrt_Bd": 212000,
+      "root_below": 22260000000,
+      "normalized_displacement_strictly_greater_than": 1000
+    }
+  ],
+  "repaired_cases": [
+    {
+      "d": 1,
+      "A": 1152,
+      "B": 144,
+      "C": 148,
+      "D": 144,
+      "distinct_roots_in_bound": 1,
+      "critical_points_in_bound": 0
+    },
+    {
+      "d": 2,
+      "A": 9216,
+      "B": 1152,
+      "C": 360,
+      "D": 288,
+      "distinct_roots_in_bound": 2,
+      "critical_points_in_bound": 1
+    },
+    {
+      "d": 3,
+      "A": 3456,
+      "B": 432,
+      "C": 1740,
+      "D": 1728,
+      "distinct_roots_in_bound": 3,
+      "critical_points_in_bound": 2
+    },
+    {
+      "d": 5,
+      "A": 23040,
+      "B": 2880,
+      "C": 900,
+      "D": 720,
+      "distinct_roots_in_bound": 5,
+      "critical_points_in_bound": 4
+    },
+    {
+      "d": 8,
+      "A": 65536,
+      "B": 8192,
+      "C": 4128,
+      "D": 4096,
+      "distinct_roots_in_bound": 8,
+      "critical_points_in_bound": 7
+    },
+    {
+      "d": 12,
+      "A": 55296,
+      "B": 6912,
+      "C": 2160,
+      "D": 1728,
+      "distinct_roots_in_bound": 12,
+      "critical_points_in_bound": 11
+    }
+  ],
+  "proof_constants_checked": true,
+  "scope": "Explicit witnesses and six finite cases; the general proof and external theorem dependencies are in mathematics.md. This is not a model run or a proof of RH."
+}
