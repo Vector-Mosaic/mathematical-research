@@ -31,6 +31,11 @@ Successful execution or agent agreement does not establish a mathematical proof.
 See the [architecture](docs/architecture.md) for these boundaries and the
 [scientific instructions](docs/instructions/AGENTS.md) for participant roles.
 
+Read [the engineering decisions](docs/engineering.md) for why the system uses
+a durable Mission, separate scientific records and an isolated runtime,
+including the tradeoffs, an observed failure and repair, and Justin Sublette's
+contribution with AI assistance.
+
 ## Get started
 
 Start with the [missing-assumption research example](examples/finite-free-localization/README.md):
