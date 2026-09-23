@@ -1,0 +1,190 @@
+{
+  "description": "Authored reconstruction of a finite retained-mass Fejer and Hilbert mixing improvement inside a larger Jensen research program. The checker runs anew; the interpretations and Candidate judgments are supplied by the example authors, not by a live researcher or a historical replay.",
+  "evidence": {
+    "evidence_id": "evidence:jensen-authored-mixing",
+    "interpretation": "Partitioning the covered physical clip before pushforward lets complementary atomic mass be charged bin by bin, with sum_I(M_I*d_CI) bounded by the largest bin mass times the full complementary mass. The written finite proof retains original cells, partial clips, terminal mass, the whole affine budget and the Hilbert cross term. Under separately assumed actual-source bounds, the normalized geometry, mass and phase costs have scales eta^-7*ell^-2*log(ell), eta^-4/ell and eta^-19*ell^-4*log(ell)^2. Their exponent arithmetic supports the conditional A<2/19 budget and a logarithmic endpoint with a suitably small prefactor. The actual-source estimates and the remaining Jensen consumer are not established by this package.",
+    "scope": "The complete finite retained-mass and Hilbert argument, the explicitly stated conditional asymptotic budget and exact identities defined in mathematics.md. Finite checker examples illustrate the argument; they are not computations of an actual theta-source instance.",
+    "strength": "source",
+    "limitations": [
+      "The interpretation and Candidate judgments are authored inputs; only the checker output is newly computed in this walkthrough.",
+      "The written argument supplies the general finite proof. Exact symbolic checks and finite examples do not replace that proof, and the store is not a theorem prover or an admission authority.",
+      "The actual-source motion, geometry, mass and transfer estimates are explicit assumptions of the budget. The separate actual-source-to-Jensen analytic chain remains an open dependency of this public package.",
+      "The historical 9/16 margin bounds the correction beyond A0: Mmix<=A0+9*delta_0/16<A0+delta_0. It is not by itself a bound Mmix<delta_0 when A0<=delta_0/2.",
+      "No actual theta-source/Jensen conclusion, effective onset, novelty, optimality or RH is established. This boundary does not assert that every later historical branch left the same inputs unresolved."
+    ],
+    "significance": "The case study exposes why a local change of mass accounting improves an asymptotic budget and how to preserve the complete finite proof and remaining analytic dependencies, instead of treating a conditional budget as a completed Jensen theorem."
+  },
+  "candidate_steps": [
+    {
+      "candidate_id": "candidate:jensen-finite-mixing",
+      "proposal_kind": "lemma",
+      "exact_statement": "For the strict finite geometry, original full prefixes, clipped cells and bins that partition the covered clip before pushforward in mathematics.md, retain every complementary atom and define Q_sharp=NM/K+N*sum_I(M_I*d_CI)+C_K*T_(N,c)*sum_I(M_I*H_I). Then the triangular affine-phase energy is at most Q_sharp, and nonnegative moving weights of total at most 1/2 satisfy Mmix<=N*Wbar+(sqrt(Q_sharp)+2*pi*sqrt(Z_N*Dbin^2))^2. In particular, sum_I(M_I*d_CI)<=hbin*(1-a)/(2*(1+a))*d_C; no complementary atom, terminal cell, part of Q_sharp or Hilbert cross term is removed.",
+      "standing": {
+        "status": "open",
+        "basis": "Starting claim supplied for this authored reconstruction; no canonical admission is asserted."
+      },
+      "hypotheses": [
+        "The strict geometry t<V1<U1<...<Vs<Us, original B=V1<=2t, full prefixes, a in (0,1/2), clipped cells, positive integer N and K, and measures have exactly the definitions in mathematics.md.",
+        "The bins partition the covered clip up to Lebesgue-null sets before pushforward. Their intersections may split a complementary atom across bins; all pieces remain charged.",
+        "The sample weights are the normalized triangular weights, the initial bin weights remain frozen in the phase comparison, and each set of moving bin weights is nonnegative with total mass at most 1/2.",
+        "Q_sharp, Dbin, Wbar and the frequency/variation constants retain the full definitions in mathematics.md; nontriangular samples require a separately justified affine-energy bound."
+      ],
+      "limitations": [
+        "An authored starting Candidate, not a retained historical Candidate record."
+      ]
+    },
+    {
+      "candidate_id": "candidate:jensen-finite-mixing",
+      "proposal_kind": "lemma",
+      "exact_statement": "For the strict finite geometry, original full prefixes, clipped cells and bins that partition the covered clip before pushforward in mathematics.md, retain every complementary atom and define Q_sharp=NM/K+N*sum_I(M_I*d_CI)+C_K*T_(N,c)*sum_I(M_I*H_I). Then the triangular affine-phase energy is at most Q_sharp, and nonnegative moving weights of total at most 1/2 satisfy Mmix<=N*Wbar+(sqrt(Q_sharp)+2*pi*sqrt(Z_N*Dbin^2))^2. In particular, sum_I(M_I*d_CI)<=hbin*(1-a)/(2*(1+a))*d_C; no complementary atom, terminal cell, part of Q_sharp or Hilbert cross term is removed.",
+      "standing": {
+        "status": "open",
+        "basis": "The complete finite argument in mathematics.md and bounded checker support this precise retained-mass and Hilbert statement. Open is the Candidate's non-admitted store status, not a claim that the finite proof or calculation failed."
+      },
+      "hypotheses": [
+        "The strict geometry t<V1<U1<...<Vs<Us, original B=V1<=2t, full prefixes, a in (0,1/2), clipped cells, positive integer N and K, and measures have exactly the definitions in mathematics.md.",
+        "The bins partition the covered clip up to Lebesgue-null sets before pushforward. Their intersections may split a complementary atom across bins; all pieces remain charged.",
+        "The sample weights are the normalized triangular weights, the initial bin weights remain frozen in the phase comparison, and each set of moving bin weights is nonnegative with total mass at most 1/2.",
+        "Q_sharp, Dbin, Wbar and the frequency/variation constants retain the full definitions in mathematics.md; nontriangular samples require a separately justified affine-energy bound."
+      ],
+      "supporting_refs": [
+        {
+          "id": "evidence:jensen-authored-mixing",
+          "revision": 1
+        }
+      ],
+      "non_inferences": [
+        "A finite retained-mass inequality does not supply the actual theta-source motion estimates or the source-to-Jensen analytic consumer.",
+        "The bin-local improvement retains all complementary atoms and does not permit dropping the affine term or the Hilbert cross term.",
+        "The checker's finite examples are not actual source instances and do not establish a Jensen wedge or RH."
+      ]
+    },
+    {
+      "candidate_id": "candidate:jensen-analytic-inputs",
+      "proposal_kind": "lemma",
+      "exact_statement": "The actual-source system supplies the source geometry, complementary mass, frozen-prefix motion and transfer estimates assumed in mathematics.md, including Hcell=O(ell^-2), d_C=O(ell^-1) and (b0+T)*H=O(ell^-2*log(ell)) on a suitable fixed-order block, with the stated negligible weight/physical transfer terms. A conclusion about actual Jensen roots additionally requires the separate actual/proxy source transfer, integer selection, Gamma/comparator, support, contour/error and degree-transfer consumer identified there. This public package does not establish that chain.",
+      "standing": {
+        "status": "open",
+        "basis": "These actual-source estimates and the separate Jensen consumer are not proved by this bounded public package. They are named explicitly so that conditional budget support is not mistaken for an established source or Jensen theorem; this status does not characterize all later historical work."
+      },
+      "hypotheses": [
+        "The actual-source definitions, frozen choices and uniformity requirements are those specified in mathematics.md.",
+        "All estimates needed for a composed conclusion must hold on the same source, predecessor and admissible block; unrelated pointwise estimates cannot be combined silently."
+      ],
+      "supporting_refs": [
+        {
+          "id": "evidence:jensen-authored-mixing",
+          "revision": 1
+        }
+      ],
+      "limitations": [
+        "The Evidence reference identifies the boundary and required inputs; it does not prove them.",
+        "The conditional budget below uses the stated budget-input portion. Its conclusion does not discharge the additional Jensen consumer."
+      ]
+    },
+    {
+      "candidate_id": "candidate:jensen-conditional-budget",
+      "proposal_kind": "lemma",
+      "exact_statement": "Assume the finite mixing statement at revision 2 and the actual-source budget inputs in mathematics.md. With the stated m,N,K,eta scales, the normalized nonbaseline geometry, retained mass and squared phase costs are O(eta^-7*ell^-2*log(ell)), O(eta^-4/ell) and O(eta^-19*ell^-4*log(ell)^2). For eta=ell^-q they vanish when 0<q<4/19, permitting 2A<q<4/19 for any fixed 0<A<2/19. For eta=kappa*R^-2, the endpoint R=c_R*ell^(2/19)*(log(ell))^(-1/19) leaves a phase bound O(kappa^-19*c_R^38), so a sufficiently small c_R can meet a fixed budget after kappa is fixed. With log power p>1/19 that phase bound vanishes for every fixed positive c_R. These are conditional budget conclusions, not a theorem about actual Jensen roots.",
+      "standing": {
+        "status": "open",
+        "basis": "The exact scale and exponent identities, together with the finite mixing argument, support this conditional implication. The actual-source inputs remain open in this public package, and no canonical admission is requested."
+      },
+      "hypotheses": [
+        "The finite retained-mass and Hilbert result is exactly candidate:jensen-finite-mixing revision 2, with all affine and cross terms retained.",
+        "The budget-input portion of candidate:jensen-analytic-inputs holds uniformly, with constants fixed independently of the large source parameter and all negligible transfer terms controlled as specified in mathematics.md.",
+        "For the logarithmic endpoint, kappa is fixed before the sufficiently small positive prefactor c_R is selected."
+      ],
+      "supporting_refs": [
+        {
+          "id": "evidence:jensen-authored-mixing",
+          "revision": 1
+        },
+        {
+          "id": "candidate:jensen-finite-mixing",
+          "revision": 2
+        },
+        {
+          "id": "candidate:jensen-analytic-inputs",
+          "revision": 1
+        }
+      ],
+      "genealogy": [
+        {
+          "relation": "derived_from",
+          "candidate": {
+            "id": "candidate:jensen-finite-mixing",
+            "revision": 2
+          }
+        }
+      ],
+      "non_inferences": [
+        "The supporting analytic-input reference records an open hypothesis, not established actual-source support.",
+        "No bare critical exponent endpoint, arbitrary prefactor at log power 1/19, effective onset, optimality or novelty is proved.",
+        "The 9/16 historical correction margin is relative to A0; any total-budget conclusion must include A0 and its full Hilbert cross term.",
+        "Vanishing normalized costs do not complete actual-source-to-Jensen transfer or establish RH."
+      ]
+    }
+  ],
+  "strategy": {
+    "mission_continuation": "continue",
+    "integrated_comparison": "The reconstructed finite proof retains every complementary atom and improves its charge through a partition before pushforward. The Hilbert step retains all of Q_sharp and the cross term. The conditional exponent/logarithmic budget follows from explicit analytic inputs, but those actual-source estimates and the further Jensen consumer remain open in this public package. Keep the exact revised finite Candidate, open dependency and conditional budget distinct through checkpoint and reopening. No autonomous discovery, historical replay or canonical admission is claimed.",
+    "selected_bets": [
+      {
+        "bet": "Inspect the complete finite argument and the exact point where actual-source analytic inputs enter.",
+        "discriminator": "The reopened record recovers finite-mixing revisions 1 and 2, the open analytic-input Candidate and the conditional budget with exact revision references; it does not promote the package into a Jensen or RH theorem.",
+        "owner_refs": [
+          {
+            "id": "candidate:jensen-finite-mixing",
+            "revision": 2
+          },
+          {
+            "id": "candidate:jensen-analytic-inputs",
+            "revision": 1
+          },
+          {
+            "id": "candidate:jensen-conditional-budget",
+            "revision": 1
+          }
+        ]
+      }
+    ],
+    "owner_refs": [
+      {
+        "id": "evidence:jensen-authored-mixing",
+        "revision": 1
+      },
+      {
+        "id": "candidate:jensen-finite-mixing",
+        "revision": 2
+      },
+      {
+        "id": "candidate:jensen-analytic-inputs",
+        "revision": 1
+      },
+      {
+        "id": "candidate:jensen-conditional-budget",
+        "revision": 1
+      }
+    ],
+    "reconsideration_conditions": [
+      {
+        "condition": "A reviewer finds a missing atom, an invalid bin partition, an incorrect finite bound or exponent, an unsupported actual-source estimate, or a consumer treats the conditional budget as a completed Jensen result.",
+        "owner_refs": [
+          {
+            "id": "candidate:jensen-finite-mixing",
+            "revision": 2
+          },
+          {
+            "id": "candidate:jensen-analytic-inputs",
+            "revision": 1
+          },
+          {
+            "id": "candidate:jensen-conditional-budget",
+            "revision": 1
+          }
+        ]
+      }
+    ]
+  }
+}

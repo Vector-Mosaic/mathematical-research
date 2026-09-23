@@ -1,0 +1,27 @@
+{
+  "title": "Retained mass, phase mixing and a conditional Jensen range",
+  "kind": "bounded_reconstruction_of_actual_research",
+  "historical_episode": "September 14, 2026",
+  "question": "Can bin-local mass accounting improve a finite Fejer mixing budget while preserving complementary atoms, complete prefixes and the Hilbert cross term, and what conditional range follows from the resulting error scales?",
+  "fixture_kind": "newly_authored_finite_geometry_not_actual_theta_source",
+  "proof_owner": "mathematics.md",
+  "scope": {
+    "reconstructed": [
+      "Physical bin partition and complete complementary-mass accounting",
+      "Occupied-density periodization, original-cell CDF and Fejer quadrature",
+      "Hilbert phase perturbation with all affine terms and the cross term retained",
+      "Conditional power/logarithm budget and finite margin distinction"
+    ],
+    "analytic_hypotheses": [
+      "Global correlated-form motion on a fixed-order proxy block with bH=O(ell^-2 log ell), plus its separate actual-source transfer",
+      "Whole-cell mesh Hcell=O(ell^-2) and retained complementary mass d_C=O(ell^-1)",
+      "Compatible fixed-order intervals, frozen-weight full-prefix control and negligible weight/transfer errors"
+    ],
+    "not_established": [
+      "Those estimates for the actual theta source",
+      "The larger profile, support, Gamma and analytic-residual composition",
+      "An actual Jensen hyperbolicity range, effective onset, novelty or optimality",
+      "The Riemann Hypothesis"
+    ]
+  }
+}

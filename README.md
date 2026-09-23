@@ -48,6 +48,11 @@ The [Jacobi example](examples/jacobi-extension/README.md) follows a restricted
 construction's failure into a wider positive-rooted model, with exact symbolic
 checks and explicit dependencies for its conditional application.
 
+The deeper [Jensen case study](examples/jensen-program/README.md) reconstructs
+how a sustained program improved an error bound without discarding retained
+mass. Its finite proof, interval checker and conditional range calculation keep
+the larger analytic dependencies explicit.
+
 Follow the [Linux setup guide](docs/setup.md). The source uses Python 3.12 or
 later, Node.js 22 or later, and pnpm 10.14.0. The supported deployment separates a
 root-owned immutable release from a dedicated unprivileged runtime account and
