@@ -1,0 +1,164 @@
+{
+  "schema_version": "mathematical_research.direct_mission_genesis.v1",
+  "kind": "direct_mission_genesis",
+  "project_id": "project.riemann_hypothesis",
+  "authority": {
+    "project_id": "project.riemann_hypothesis",
+    "coordination_epoch": "epoch.rh.example.loewner_obstruction.1",
+    "authorization_id": "authorization.rh.example.loewner_obstruction.1",
+    "expires_at": null
+  },
+  "mission": {
+    "mission_id": "mission.rh.example.loewner_obstruction.1",
+    "revision": 1,
+    "project_id": "project.riemann_hypothesis",
+    "coordination_epoch": "epoch.rh.example.loewner_obstruction.1",
+    "authorization_id": "authorization.rh.example.loewner_obstruction.1",
+    "control_revision": 2,
+    "lifecycle": "active",
+    "fence_reason": null,
+    "fenced_at": null,
+    "autonomous": true,
+    "effective": true,
+    "strategy_ids": [
+      "strategy.rh.example.loewner_obstruction.1"
+    ],
+    "purpose": {
+      "objective": "Advance the Riemann Hypothesis frontier through the highest-value mathematically credible work available: select the next question, delegate adaptively when independent work helps, preserve and interpret useful results, revise Strategy from what was learned, and commit a concise truthful Continuation Checkpoint.",
+      "proof_standard": "A genuinely correct, novel, self-contained, independently checkable proof or disproof of the Riemann Hypothesis whose exact statement, dependencies, derivation, assumptions, and verification package withstand independent reconstruction; computation, model confidence, repeated agreement, or system state cannot establish it.",
+      "non_goals": [
+        "Claiming a theorem from finite moments, bounded-degree tests, floating-point evidence, model agreement, or a green verification target.",
+        "Owning unrelated application or workflow orchestration.",
+        "Treating the system as an automated theorem prover.",
+        "Requiring the operator to act as the mathematical strategist or routine proof reviewer, or treating AI agreement as a substitute for checkable mathematics.",
+        "Treating an immortal process, unattended daemon, completed Goal, worker count, artifact count, or infrastructure qualification as research success."
+      ],
+      "closeout_conditions": {
+        "strategy_mission_continuation": "closeout",
+        "semantic_effect": "Closeout is a Strategy-owned coordination decision; it does not establish proof, disproof, Admission, or research success."
+      }
+    },
+    "execution_policy": {
+      "provider": "openai",
+      "model": "gpt-6-astra",
+      "reasoning_effort": "ultra",
+      "model_fallback": false,
+      "baseline_capabilities": [
+        "rh_mission",
+        "shell",
+        "web_search",
+        "native_delegation"
+      ],
+      "selected_capabilities": {
+        "local_roots": [],
+        "mcp_servers": [],
+        "apps": [],
+        "browser": null
+      },
+      "network": {
+        "public_egress": true,
+        "secretless": true,
+        "credential_inheritance": false,
+        "denied_destinations": [
+          "loopback",
+          "private_internal",
+          "link_local",
+          "cloud_metadata"
+        ]
+      },
+      "filesystem": {
+        "release_access": "read_only",
+        "goal_workspace": "fresh_private_writable",
+        "protected_credentials_access": "denied"
+      },
+      "automatic_installation": false
+    }
+  },
+  "opening_branch": {
+    "schema_version": 1,
+    "kind": "discovery_branch",
+    "project_id": "project.riemann_hypothesis",
+    "mission_id": "mission.rh.example.loewner_obstruction.1",
+    "branch_id": "branch.rh.example.loewner_obstruction.1",
+    "question": "Does the Loewner matrix for the exact theta-Mellin ratio f(u)=(u-1/2)U(2u-2)/U(2u), u>1/2, in examples/loewner-obstruction/mathematics.md satisfy the positivity required by a Pick extension agreeing on that interval? Preserve precisely why the supplied negative quadratic-form certificate also excludes a complete Bernstein extension to (0,infinity) agreeing there, while leaving the ordinary Bernstein extension question unresolved.",
+    "leverage_fingerprint": "A bounded authored reconstruction of one negative matrix witness, retaining raw certificate inputs and output separately from the scoped interpretation and Candidate revision.",
+    "target_hook": "The function and four-node certificate come from an RH-related representation investigation. This scripted example uses public reconstructed material only. The canonical RH state stays open; one failed Pick route does not prove or disprove RH.",
+    "genealogy": [],
+    "nonclaims": [
+      "Failure of a Pick or complete Bernstein extension agreeing with this exact f on (1/2,infinity) does not decide its ordinary Bernstein extension question.",
+      "The judgments in walkthrough.json are supplied by the authors. Newly executed checker output is not a historical transcript or autonomous discovery.",
+      "The research infrastructure preserves records and dependencies; it does not establish mathematical truth.",
+      "The seed contains no established Evidence, Candidate, Admission or inherited private research records.",
+      "This seed belongs to the credential-free authored store walkthrough; it supplies no model run or live Host installation."
+    ],
+    "owner_refs": [],
+    "scoped_failures": [],
+    "non_exclusions": [],
+    "retained_residue": [],
+    "composition_interfaces": [],
+    "recombination_interfaces": [],
+    "revival_conditions": []
+  },
+  "strategy": {
+    "schema_version": 1,
+    "kind": "mission_strategy",
+    "project_id": "project.riemann_hypothesis",
+    "mission_id": "mission.rh.example.loewner_obstruction.1",
+    "strategy_id": "strategy.rh.example.loewner_obstruction.1",
+    "mission_continuation": "continue",
+    "integrated_comparison": "This public authored walkthrough starts without retained results. Run the bounded mathematical checker, capture its exact inputs and new output, record the supplied interpretation, revise the Pick/complete-Bernstein Candidate at its exact scope, and leave ordinary Bernstein membership unresolved. Persist a continuation checkpoint and reopen the store to inspect the same source dependencies and judgments. No model worker, autonomous discovery, fresh model successor or canonical admission is claimed.",
+    "causal_inputs": [],
+    "serious_opportunities": [],
+    "selected_bets": [
+      {
+        "bet": "Make the negative Loewner certificate and its restricted consequence independently inspectable.",
+        "discriminator": "The matrix witness excludes the exact Pick/complete-Bernstein route while the weaker ordinary Bernstein question remains open in the durable record.",
+        "owner_refs": [
+          {
+            "kind": "branch",
+            "identity": "branch.rh.example.loewner_obstruction.1",
+            "revision": 1,
+            "payload_sha256": "ad129df91c3329e6b46c8725af0153d35050814a8b7cef7d3e931aea7de3e0a7"
+          }
+        ]
+      }
+    ],
+    "attention_actions": [
+      {
+        "branch_ref": {
+          "kind": "branch",
+          "identity": "branch.rh.example.loewner_obstruction.1",
+          "revision": 1,
+          "payload_sha256": "ad129df91c3329e6b46c8725af0153d35050814a8b7cef7d3e931aea7de3e0a7"
+        },
+        "attention": "active",
+        "consequence": "Retain the exact computed certificate, source dependencies, scoped Candidate revision and unresolved weaker question through the scripted checkpoint and reopening."
+      }
+    ],
+    "context_treatment": [],
+    "creativity_treatment": [],
+    "owner_refs": [
+      {
+        "kind": "branch",
+        "identity": "branch.rh.example.loewner_obstruction.1",
+        "revision": 1,
+        "payload_sha256": "ad129df91c3329e6b46c8725af0153d35050814a8b7cef7d3e931aea7de3e0a7"
+      }
+    ],
+    "reconsideration_conditions": [
+      {
+        "condition": "A certificate assumption, integral bound or Pick implication is found incorrect, or a consumer overextends the obstruction to ordinary Bernstein membership or RH.",
+        "owner_refs": [
+          {
+            "kind": "branch",
+            "identity": "branch.rh.example.loewner_obstruction.1",
+            "revision": 1,
+            "payload_sha256": "ad129df91c3329e6b46c8725af0153d35050814a8b7cef7d3e931aea7de3e0a7"
+          }
+        ]
+      }
+    ],
+    "reversal_conditions": [],
+    "revival_conditions": []
+  }
+}

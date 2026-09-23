@@ -1,0 +1,2 @@
+# Standalone numerical checker only; no Mission Host or model account required.
+python-flint==0.8.0

@@ -1,0 +1,38 @@
+{
+  "schema_version": "mathematical-research.example-problem.v1",
+  "id": "loewner-obstruction",
+  "title": "Does this fixed theta Mellin interpolation pass the Pick gate?",
+  "question": "Enclose the four-point Loewner matrix for the exact function below, including quadrature and all omitted-region errors. Does the displayed integer vector certify failure of positive semidefiniteness? State exactly which research route that excludes and which claims remain undecided.",
+  "definitions": {
+    "source": "Phi(t) = sum_{n>=1} pi*n^2*exp(5*t-pi*n^2*exp(4*t))*(2*pi*n^2*exp(4*t)-3), t>=0.",
+    "moment": "U(s) = integral_0^infinity t^s*Phi(t) dt, Re(s)>-1.",
+    "moment_derivative": "U'(s) = integral_0^infinity t^s*log(t)*Phi(t) dt.",
+    "interpolation": "f(u) = (u-1/2)*U(2*u-2)/U(2*u), u>1/2. The witness excludes a Pick extension agreeing on this interval.",
+    "loewner_matrix": "L_ii=f'(u_i); L_ij=(f(u_i)-f(u_j))/(u_i-u_j) for i!=j.",
+    "necessary_condition": "A Pick extension analytic and real on this interval requires L positive semidefinite."
+  },
+  "nodes": [1, 2, 4, 6],
+  "witness": [28336, -66314, 64141, -26181],
+  "certificate_gate": "The upper endpoint of v^T*L*v must be strictly negative, with every denominator moment positive and every matrix-entry radius below 1e-8.",
+  "scope": {
+    "excluded_on_certification": ["This exact interpolation's Pick extension", "This exact interpolation's complete-Bernstein and KPS BP1 route", "Positive Stieltjes representations of f(u)/u or 1/f(u)"],
+    "undecided": ["Ordinary Bernstein status", "Different interpolations, including ones agreeing only at positive integers", "Other Mellin or van Dantzig routes", "Riemann Hypothesis"]
+  },
+  "references": [
+    {
+      "title": "Schilling, Song and Vondracek, Bernstein Functions: Theory and Applications, 2nd edition (2012)",
+      "url": "https://doi.org/10.1515/9783110269338",
+      "scope": "Pick/complete-Bernstein/Stieltjes and operator-monotone correspondences: Theorems 6.2, 6.9, 7.3 and 12.17."
+    },
+    {
+      "title": "Konstantopoulos, Patie and Sarkar, A new class of solutions to the van Dantzig problem, the Lee-Yang property, and the Riemann hypothesis (2024)",
+      "url": "https://aif.centre-mersenne.org/item/10.5802/aif.3600.pdf#page=21",
+      "scope": "Equation (4.14) defines BP1 with a mandatory Pick condition; Theorem 4.4 supplies the selected sufficient route."
+    },
+    {
+      "title": "FLINT, acb_calc: calculus with complex numbers",
+      "url": "https://flintlib.org/doc/acb_calc.html",
+      "scope": "Rigorous complex-ball integration behind python-flint's acb.integral."
+    }
+  ]
+}

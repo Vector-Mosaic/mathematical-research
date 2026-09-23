@@ -10,6 +10,10 @@ walkthrough of the research store, and any fresh model execution. A supplied
 solution replay is not autonomous rediscovery, and selected examples do not
 measure a general success rate.
 
-The planned additions are a compact matrix obstruction, a constructive Jacobi
-extension, and a bounded case study of the Jensen-polynomial program. They are
-not implemented by the first example.
+The compact companion, [C90: a four-point Loewner obstruction](loewner-obstruction/README.md),
+uses rigorous numerical enclosures to exclude one proposed representation route.
+Its authored store walkthrough retains the scoped refutation while leaving the
+weaker ordinary Bernstein question open.
+
+A constructive Jacobi extension and a bounded case study of the Jensen-polynomial
+program remain planned additions.

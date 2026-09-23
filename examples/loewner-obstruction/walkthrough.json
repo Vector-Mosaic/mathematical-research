@@ -1,0 +1,98 @@
+{
+  "description": "Authored scripted reconstruction of a scoped Loewner obstruction. The mathematical checker executes anew; the interpretation and Candidate judgments are supplied by the example authors, not by an autonomous researcher or historical replay.",
+  "evidence": {
+    "evidence_id": "evidence:loewner-authored-obstruction",
+    "interpretation": "The supplied rigorous enclosures put q^T L q strictly below zero for the exact function and four nodes in mathematics.md. Its Loewner matrix is therefore not positive semidefinite. This excludes a Pick extension agreeing with f on (1/2,infinity), and therefore a complete Bernstein extension to (0,infinity) agreeing there. It does not decide the ordinary Bernstein extension question.",
+    "scope": "Phi, U(s), f(u)=(u-1/2)U(2u-2)/U(2u) for u>1/2, the nodes (1,2,4,6), and q=(28336,-66314,64141,-26181), with the integral and truncation bounds supplied in mathematics.md and executed in check.py.",
+    "strength": "source",
+    "limitations": [
+      "The interpretation and Candidate judgments are authored inputs; only the checker output is newly computed by this walkthrough.",
+      "The conclusion relies on the stated analytic derivation, rigorous integration and tail bounds, and the documented python-flint dependency; the research store is not a proof checker.",
+      "The obstruction excludes one necessary positivity condition for one exact function. It does not refute ordinary Bernstein membership, every possible representation, or RH."
+    ],
+    "significance": "A negative matrix witness can end one proposed representation route while the durable record preserves the exact failed claim, its source dependencies, and the questions it did not answer."
+  },
+  "candidate_steps": [
+    {
+      "candidate_id": "candidate:loewner-pick-route",
+      "proposal_kind": "lemma",
+      "exact_statement": "The exact function f(u)=(u-1/2)U(2u-2)/U(2u), u>1/2, is the restriction of a complete Bernstein function on (0,infinity); in particular, it admits a Pick extension agreeing on (1/2,infinity).",
+      "standing": {
+        "status": "open",
+        "basis": "Initial representation claim supplied for the scripted example; no canonical admission is asserted."
+      },
+      "hypotheses": [
+        "Phi, U and f are exactly the functions defined in mathematics.md."
+      ],
+      "limitations": [
+        "An authored starting claim, not a retained historical Candidate or an admitted theorem."
+      ]
+    },
+    {
+      "candidate_id": "candidate:loewner-pick-route",
+      "proposal_kind": "lemma",
+      "exact_statement": "The exact function f(u)=(u-1/2)U(2u-2)/U(2u), u>1/2, is the restriction of a complete Bernstein function on (0,infinity); in particular, it admits a Pick extension agreeing on (1/2,infinity).",
+      "standing": {
+        "status": "refuted_at_scope",
+        "basis": "The certified negative q^T L q at nodes (1,2,4,6) contradicts a necessary Loewner positivity condition for the claimed Pick extension; complete Bernstein membership would imply that extension.",
+        "scope": "Any Pick extension agreeing with this exact f on (1/2,infinity), hence any complete Bernstein extension to (0,infinity) agreeing there, with the definitions and certificate assumptions retained in the source material."
+      },
+      "hypotheses": [
+        "Phi, U and f are exactly the functions defined in mathematics.md."
+      ],
+      "supporting_refs": [
+        {"id": "evidence:loewner-authored-obstruction", "revision": 1}
+      ],
+      "non_inferences": [
+        "Failure of a necessary Pick condition does not refute ordinary Bernstein membership.",
+        "This obstruction does not exclude a different function, a different representation route, or establish any claim about RH."
+      ]
+    },
+    {
+      "candidate_id": "candidate:loewner-ordinary-bernstein",
+      "proposal_kind": "lemma",
+      "exact_statement": "The exact function f(u)=(u-1/2)U(2u-2)/U(2u), u>1/2, is the restriction of an ordinary Bernstein function on (0,infinity).",
+      "standing": {
+        "status": "open",
+        "basis": "Ordinary Bernstein membership is weaker than complete Bernstein membership. The supplied Loewner obstruction does not decide this claim."
+      },
+      "hypotheses": [
+        "Phi, U and f are exactly the functions defined in mathematics.md."
+      ],
+      "supporting_refs": [
+        {"id": "evidence:loewner-authored-obstruction", "revision": 1}
+      ],
+      "limitations": [
+        "The Evidence reference supports the boundary of the unresolved claim, not Bernstein membership itself."
+      ]
+    }
+  ],
+  "strategy": {
+    "mission_continuation": "continue",
+    "integrated_comparison": "The authored walkthrough retains the certified matrix obstruction and revises only the exact Pick/complete-Bernstein route to refuted_at_scope. Ordinary Bernstein membership remains open. The supplied judgments and exact checker output are retained through a continuation checkpoint and reopened store; this scripted execution claims no fresh model successor or canonical admission.",
+    "selected_bets": [
+      {
+        "bet": "Preserve the failed representation route and the unresolved weaker question as distinct records.",
+        "discriminator": "Reopening recovers the exact negative certificate dependencies, the scoped Candidate revision, and ordinary Bernstein membership still open.",
+        "owner_refs": [
+          {"id": "candidate:loewner-pick-route", "revision": 2},
+          {"id": "candidate:loewner-ordinary-bernstein", "revision": 1}
+        ]
+      }
+    ],
+    "owner_refs": [
+      {"id": "evidence:loewner-authored-obstruction", "revision": 1},
+      {"id": "candidate:loewner-pick-route", "revision": 2},
+      {"id": "candidate:loewner-ordinary-bernstein", "revision": 1}
+    ],
+    "reconsideration_conditions": [
+      {
+        "condition": "A reviewer finds an error in the defined function, derivative, integral enclosure, tail bound or Pick implication; or later work attempts to treat this obstruction as refuting ordinary Bernstein membership.",
+        "owner_refs": [
+          {"id": "candidate:loewner-pick-route", "revision": 2},
+          {"id": "candidate:loewner-ordinary-bernstein", "revision": 1}
+        ]
+      }
+    ]
+  }
+}

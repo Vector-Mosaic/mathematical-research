@@ -74,6 +74,8 @@ provider failure path. The subsequent
 [finite-free worked example](../examples/finite-free-localization/validation.md)
 adds exact mathematical checks, a real-store walkthrough, and an observed fresh
 executive retrieving and extending a retained correction. Its evidence and the
-shell-launch defect it exposed are documented separately. Comparative evaluation
-remains future work. Credentials, provider instructions and raw runtime traces
-are not published.
+shell-launch defect it exposed are documented separately. The compact
+[C90 companion](../examples/loewner-obstruction/validation.md) adds a rigorous
+Loewner obstruction and a second authored real-store walkthrough; it does not
+claim another live model run. Comparative evaluation remains future work.
+Credentials, provider instructions and raw runtime traces are not published.

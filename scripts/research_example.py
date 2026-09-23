@@ -16,7 +16,11 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-EXAMPLE = ROOT / "examples/finite-free-localization"
+DEFAULT_EXAMPLE = "finite-free-localization"
+EXAMPLES = {
+    "finite-free-localization": {"timeout": 60, "extra_materials": ()},
+    "loewner-obstruction": {"timeout": 600, "extra_materials": ("requirements.txt",)},
+}
 MARKER = "scripted-research-example.json"
 MODE = "authored-scripted-walkthrough-no-model"
 sys.path[:0] = [str(ROOT / "packages/research-core"),
@@ -70,11 +74,14 @@ def execute(interface: MissionInterface, epoch: str, operation: str, body: dict)
     return response["result"]
 
 
-def inspect(output: Path, *, details: bool = False) -> dict:
+def inspect(output: Path, *, example: str | None = None, details: bool = False) -> dict:
     """Open only this example's persisted store and read its exact records."""
     manifest = json.loads((output / MARKER).read_text(encoding="utf-8"))
-    if manifest["mode"] != MODE or manifest["example"] != EXAMPLE.name:
+    selected = manifest["example"]
+    if manifest["mode"] != MODE or selected not in EXAMPLES:
         raise ValueError("output is not this scripted example")
+    if example is not None and example != selected:
+        raise ValueError("example selector does not match the stored walkthrough")
     interface = MissionInterface.open(output / "workspace", manifest["project_id"],
                                       manifest["mission_id"])
     store = interface._store
@@ -114,7 +121,7 @@ def inspect(output: Path, *, details: bool = False) -> dict:
     if checkpoint is None or checkpoint["project_commit_no"] != manifest["checkpoint_commit"]:
         raise RuntimeError("expected durable checkpoint was not found")
     result = {
-        "example": EXAMPLE.name, "mode": MODE,
+        "example": selected, "mode": MODE,
         "workspace": str(output / "workspace"),
         "mathematical_check": manifest["mathematical_check"],
         "retained_raw_artifacts": raw, "candidate_revisions": candidates,
@@ -130,20 +137,23 @@ def inspect(output: Path, *, details: bool = False) -> dict:
     return result
 
 
-def run(output: Path) -> dict:
+def run(output: Path, *, example: str = DEFAULT_EXAMPLE) -> dict:
+    if example not in EXAMPLES:
+        raise ValueError("unknown scripted example")
+    source = ROOT / "examples" / example
+    settings = EXAMPLES[example]
     if sys.platform != "linux":
-        raise ValueError("the durable walkthrough requires Linux (the supported core runtime); "
-                         "examples/finite-free-localization/check.py is portable")
+        raise ValueError("the durable walkthrough requires Linux (the supported core runtime)")
     if output.exists() or output.is_symlink():
         raise ValueError("output must not exist; choose a new directory (nothing is deleted)")
-    seed = json.loads((EXAMPLE / "mission.json").read_text(encoding="utf-8"))
-    authored = json.loads((EXAMPLE / "walkthrough.json").read_text(encoding="utf-8"))
+    seed = json.loads((source / "mission.json").read_text(encoding="utf-8"))
+    authored = json.loads((source / "walkthrough.json").read_text(encoding="utf-8"))
     source_commit = canonical_source_commit()
     loaded = load_canonical_snapshot(ROOT, source_commit=source_commit)
     if not loaded.ok or loaded.value is None:
         raise RuntimeError(str(loaded.failure))
-    check = subprocess.run([sys.executable, str(EXAMPLE / "check.py")], cwd=ROOT,
-                           check=True, stdout=subprocess.PIPE, timeout=60)
+    check = subprocess.run([sys.executable, str(source / "check.py")], cwd=ROOT,
+                           check=True, stdout=subprocess.PIPE, timeout=settings["timeout"])
     check_result = json.loads(check.stdout)
     if not isinstance(check_result, dict):
         raise ValueError("mathematical checker must return one JSON object")
@@ -165,8 +175,9 @@ def run(output: Path) -> dict:
     })
     store = interface._store
     cas = EvidenceCAS(store.paths)
-    materials = [(name, (EXAMPLE / name).read_bytes()) for name in
-                 ("problem.json", "mathematics.md", "check.py", "walkthrough.json")]
+    materials = [(name, (source / name).read_bytes()) for name in
+                 ("problem.json", "mathematics.md", "check.py", "walkthrough.json")
+                 + settings["extra_materials"]]
     materials.append(("checker-output.json", check.stdout))
     capture = prepare_raw_capture(
         store, mission_id=seed["mission"]["mission_id"], executive_epoch_id=epoch,
@@ -208,7 +219,7 @@ def run(output: Path) -> dict:
     if checkpoint is None:
         raise RuntimeError("checkpoint operation did not persist its result")
     dump(output / MARKER, {
-        "example": EXAMPLE.name, "mode": MODE, "canonical_source_commit": source_commit,
+        "example": example, "mode": MODE, "canonical_source_commit": source_commit,
         "project_id": seed["project_id"], "mission_id": seed["mission"]["mission_id"],
         "epoch_id": epoch, "capture_id": capture.capture_id,
         "raw_artifacts": [{"ordinal": n, "name": name, "sha256": digest(body)}
@@ -217,20 +228,22 @@ def run(output: Path) -> dict:
         "evidence_id": evidence["evidence_id"].split(":", 1)[1],
         "checkpoint_commit": checkpoint["project_commit_no"], "mathematical_check": check_result,
     })
-    return inspect(output)
+    return inspect(output, example=example)
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("command", choices=("run", "inspect"))
-    parser.add_argument("--example", choices=(EXAMPLE.name,), default=EXAMPLE.name)
+    parser.add_argument("--example", choices=tuple(EXAMPLES),
+                        help="run defaults to finite-free-localization; inspect reads the stored selector")
     parser.add_argument("--output", required=True, type=Path,
                         help="new directory for run; previously created directory for inspect")
     parser.add_argument("--details", action="store_true", help="inspect full retained candidate/evidence/checkpoint documents")
     args = parser.parse_args()
     try:
         output = args.output.expanduser().resolve()
-        result = run(output) if args.command == "run" else inspect(output, details=args.details)
+        result = (run(output, example=args.example or DEFAULT_EXAMPLE) if args.command == "run"
+                  else inspect(output, example=args.example, details=args.details))
         print(json.dumps(result, indent=2, sort_keys=True, allow_nan=False))
         return 0
     except (OSError, ValueError, RuntimeError, subprocess.SubprocessError) as exc:
