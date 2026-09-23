@@ -1,0 +1,191 @@
+{
+  "candidate_revisions": [
+    {
+      "genealogy": [],
+      "hypotheses": [
+        "The limiting target and the short-gap scaling are exactly those defined in mathematics.md.",
+        "The number of added factors is fixed and finite; c_i>0 and t_i>0 are fixed limiting coefficients."
+      ],
+      "id": "jacobi-short-gap-route",
+      "non_inferences": [],
+      "revision": 1,
+      "standing": {
+        "basis": "Starting claim supplied for this authored reconstruction; no canonical admission is asserted.",
+        "status": "open"
+      },
+      "statement": "The limiting targets (0,0,2,-12) for matching R0 through R5 can be attained by adjusting one long first-Jacobi parameter and adding a fixed finite number of n-scale factors with positive fixed n/L gap coefficients c_i and positive fixed denominator scales t_i, as defined in mathematics.md.",
+      "supporting_refs": []
+    },
+    {
+      "genealogy": [],
+      "hypotheses": [
+        "The limiting target and the short-gap scaling are exactly those defined in mathematics.md.",
+        "The number of added factors is fixed and finite; c_i>0 and t_i>0 are fixed limiting coefficients."
+      ],
+      "id": "jacobi-short-gap-route",
+      "non_inferences": [
+        "No conclusion about RH or an entire source paper follows from this restricted obstruction.",
+        "The obstruction does not rule out the wide telescoping construction, a growing number of factors, different scales, or every Jacobi construction."
+      ],
+      "revision": 2,
+      "standing": {
+        "basis": "With x_i=1/t_i and w_i=c_i x_i^3>0, the target equations imply sum_i w_i(x_i-1)^2=-1/6. Their left side is nonnegative, so the restricted limiting system has no such solution.",
+        "scope": "The fixed finite positive short-gap family at the stated limiting targets. This does not exclude wider factors, other scales or other comparison families.",
+        "status": "refuted_at_scope"
+      },
+      "statement": "The limiting targets (0,0,2,-12) for matching R0 through R5 can be attained by adjusting one long first-Jacobi parameter and adding a fixed finite number of n-scale factors with positive fixed n/L gap coefficients c_i and positive fixed denominator scales t_i, as defined in mathematics.md.",
+      "supporting_refs": [
+        {
+          "digest_sha256": "3d29b360aa7c162e4499160e0a965daa73b9cf6a867c1db4ce213efabe586cf0",
+          "id": "jacobi-authored-construction",
+          "kind": "evidence",
+          "revision": 1
+        }
+      ]
+    },
+    {
+      "genealogy": [
+        {
+          "candidate_ref": {
+            "candidate_id": "jacobi-short-gap-route",
+            "digest_sha256": "5e7f587cb898546862061b700995696636ae91163249c4eaa6e5ea2b95005646",
+            "revision": 2
+          },
+          "relation": "alternative_to"
+        }
+      ],
+      "hypotheses": [
+        "For the gap limits, L tends to infinity, A_J/(nL) tends to 1, B_J/n tends to 1, and (a,b,mu,t) tends to (3,-2/3,-16/3,2).",
+        "The two wide factors, their parameter ordering and the map F are those defined in mathematics.md."
+      ],
+      "id": "jacobi-wide-limiting-algebra",
+      "non_inferences": [
+        "An invertible limiting Jacobian does not by itself prove finite-n matching for actual RH coefficients.",
+        "The synthetic positive-root witness does not close the analytic target estimates."
+      ],
+      "revision": 1,
+      "standing": {
+        "basis": "The exact symbolic checker and written derivation support this limiting algebra and the distinction between a junction offset and a factor gap. Open is the Candidate's non-admitted store status, not a claim that the exact calculation failed.",
+        "status": "open"
+      },
+      "statement": "The wide R5 map F(a,b,mu,t)=(1-1/a-b+mu/t^2,2b-2mu/t^3,-6b+6mu/t^4,24b-24mu/t^5) equals (0,0,2,-12) at (3,-2/3,-16/3,2), with Jacobian determinant -1/6. Under the parameter scales in mathematics.md, the actual within-factor gaps have positive limiting margins despite the negative cross-junction offset mu.",
+      "supporting_refs": [
+        {
+          "digest_sha256": "3d29b360aa7c162e4499160e0a965daa73b9cf6a867c1db4ce213efabe586cf0",
+          "id": "jacobi-authored-construction",
+          "kind": "evidence",
+          "revision": 1
+        }
+      ]
+    },
+    {
+      "genealogy": [],
+      "hypotheses": [
+        "Actual target coefficients, first-Jacobi reference parameters and the normalized residual have the definitions in mathematics.md.",
+        "The asserted bounds must hold on one fixed parameter neighborhood, including parameter derivatives, rather than only pointwise at the limiting solution."
+      ],
+      "id": "jacobi-target-asymptotics",
+      "non_inferences": [],
+      "revision": 1,
+      "standing": {
+        "basis": "This public algebraic checker does not establish these analytic target estimates. They remain an explicit dependency of this package's finite-n conclusion; this status does not assert that all later historical work left the same dependency unresolved.",
+        "status": "open"
+      },
+      "statement": "For the actual target coefficients and reference parameters, the normalized finite-n matching residual converges uniformly in C1 on a fixed neighborhood of (3,-2/3,-16/3,2) to F-(0,0,2,-12), with the stated O(1/L) control and positive parameter scales needed for the conditional construction in mathematics.md.",
+      "supporting_refs": [
+        {
+          "digest_sha256": "3d29b360aa7c162e4499160e0a965daa73b9cf6a867c1db4ce213efabe586cf0",
+          "id": "jacobi-authored-construction",
+          "kind": "evidence",
+          "revision": 1
+        }
+      ]
+    },
+    {
+      "genealogy": [
+        {
+          "candidate_ref": {
+            "candidate_id": "jacobi-wide-limiting-algebra",
+            "digest_sha256": "2b76f2616779e097dfb3793cf3a571fd710aff2c8f7e3f8f591901853eca888c",
+            "revision": 1
+          },
+          "relation": "derived_from"
+        }
+      ],
+      "hypotheses": [
+        "L tends to infinity, A_J/(nL) tends to 1, B_J/n tends to 1, and the target coefficients are positive with R0=1 and R1>0.",
+        "The positive-root conclusion additionally uses d=o(n) and the Jacobi factor criterion stated in mathematics.md.",
+        "The uniform C1 target and residual estimates in candidate:jacobi-target-asymptotics hold with the rates and neighborhood specified in mathematics.md."
+      ],
+      "id": "jacobi-wide-conditional-matching",
+      "non_inferences": [
+        "Local uniqueness does not imply global uniqueness or provide a numerical onset.",
+        "Matching six coefficients with positive comparison factors does not prove a higher Jensen wedge or RH.",
+        "The supporting reference to target asymptotics records an open hypothesis, not established analytic support."
+      ],
+      "revision": 1,
+      "standing": {
+        "basis": "The exact nonsingular limiting Jacobian and quotient identities support the conditional local argument. The required actual-target analytic estimates are not supplied by this public checker, and no canonical admission is requested.",
+        "status": "open"
+      },
+      "statement": "If the normalized finite-n residual has the uniform C1 convergence and O(1/L) control stated in mathematics.md, with its positive parameter scales, then for all sufficiently large n there is a locally unique matching solution near (3,-2/3,-16/3,2), differing from it by O(1/L), whose wide factors match R0 through R5 and have positive within-factor gaps. For d=o(n), the factors eventually lie in the positive-rooted Jacobi range.",
+      "supporting_refs": [
+        {
+          "digest_sha256": "2b76f2616779e097dfb3793cf3a571fd710aff2c8f7e3f8f591901853eca888c",
+          "id": "jacobi-wide-limiting-algebra",
+          "kind": "candidate",
+          "revision": 1
+        },
+        {
+          "digest_sha256": "3d29b360aa7c162e4499160e0a965daa73b9cf6a867c1db4ce213efabe586cf0",
+          "id": "jacobi-authored-construction",
+          "kind": "evidence",
+          "revision": 1
+        },
+        {
+          "digest_sha256": "faae1faab90806b9c89b8352836272a8e6fe3a277f2f596f30d30f584d454dc6",
+          "id": "jacobi-target-asymptotics",
+          "kind": "candidate",
+          "revision": 1
+        }
+      ]
+    }
+  ],
+  "canonical_effect": "none",
+  "checker_output_sha256": "1afcdfe53dceec5ad916404e7caba164a736a8203307d4159ab799e0993d87dc",
+  "checkpoint_commit": 12,
+  "demonstrates": "Exact supplied bytes, scoped judgments and their dependencies survive reopening.",
+  "does_not_demonstrate": "Autonomous discovery, a fresh model successor, historical execution, canonical admission or RH.",
+  "example": "jacobi-extension",
+  "mode": "authored-scripted-walkthrough-no-model",
+  "preparation": "Selected fields from the fresh-process inspection of the real store; machine paths and runtime bindings omitted. Judgments are authored fixture inputs.",
+  "reopened_store_checks": "passed",
+  "retained_raw_artifacts": [
+    {
+      "name": "problem.json",
+      "sha256": "b66ab4cd26c0d315105a4f168d2916c482fb890306167f76dbab5918aa2db92e"
+    },
+    {
+      "name": "mathematics.md",
+      "sha256": "0a68b3a973032f689a5e0bca38d20716977708a591e946f164ee56bee568f70b"
+    },
+    {
+      "name": "check.py",
+      "sha256": "f05fc7ef693fc9f035ae07ef7d1057945d766d93be0725d8bf4d46255e74fe4c"
+    },
+    {
+      "name": "walkthrough.json",
+      "sha256": "6e3a80d32e43842eb1c5f4ccf9fc695e84cd1092f6fdae52f20d624cd6393d21"
+    },
+    {
+      "name": "requirements.txt",
+      "sha256": "25f9f1fb1988b230147a1d3092d34e09c069eb7a6c6d6df46b3973b9f2d36efc"
+    },
+    {
+      "name": "checker-output.json",
+      "sha256": "1afcdfe53dceec5ad916404e7caba164a736a8203307d4159ab799e0993d87dc"
+    }
+  ],
+  "schema_version": "mathematical-research.authored-store-summary.v1",
+  "source_commit": "a4606ae4c4a19e23ff7afcd2706af5007f029dea"
+}
