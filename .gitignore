@@ -9,6 +9,8 @@ __pycache__/
 .runtime/
 .research/
 .qualification/
+.mathematical-research-release.json
+.mathematical-research-model-projection.json
 *.log
 .env
 .env.*

@@ -85,9 +85,9 @@
     "target_hook": "The Mission targets riemann_hypothesis. The fresh canonical starting document is projects/riemann_hypothesis/research_state.json; its moment-program scaffold contains no established sequence or RH equivalence and does not exclude other RH approaches.",
     "genealogy": [],
     "nonclaims": [
-      "This opening direction is an initial research bet, not a mathematical result, completed investigation, or proof of RH.",
       "No private research history, source capture, candidate, canonical admission, or mathematical audit is inherited.",
-      "The canonical moment-program scaffold supplies open obligations only; it does not establish a sequence, positivity, or an implication to RH."
+      "The canonical moment-program scaffold supplies open obligations only; it does not establish a sequence, positivity, or an implication to RH.",
+      "This opening direction is an initial research bet, not a mathematical result, completed investigation, or proof of RH."
     ],
     "owner_refs": [],
     "scoped_failures": [],
@@ -116,7 +116,7 @@
             "kind": "branch",
             "identity": "branch.rh.public.1",
             "revision": 1,
-            "payload_sha256": "2300a9fead9948e5b3181d0893add20475825b3fc6e108bcbc0cfbce58caaeca"
+            "payload_sha256": "80bd7ec59f4967bd6f09b9c6f449f4b4239cbc9bfb3414013a142b5c9252e04e"
           }
         ]
       }
@@ -127,7 +127,7 @@
           "kind": "branch",
           "identity": "branch.rh.public.1",
           "revision": 1,
-          "payload_sha256": "2300a9fead9948e5b3181d0893add20475825b3fc6e108bcbc0cfbce58caaeca"
+          "payload_sha256": "80bd7ec59f4967bd6f09b9c6f449f4b4239cbc9bfb3414013a142b5c9252e04e"
         },
         "attention": "active",
         "consequence": "Continue or revise the research direction according to its actual mathematical result and remaining obligations."
@@ -143,7 +143,7 @@
             "kind": "branch",
             "identity": "branch.rh.public.1",
             "revision": 1,
-            "payload_sha256": "2300a9fead9948e5b3181d0893add20475825b3fc6e108bcbc0cfbce58caaeca"
+            "payload_sha256": "80bd7ec59f4967bd6f09b9c6f449f4b4239cbc9bfb3414013a142b5c9252e04e"
           }
         ]
       }
@@ -153,7 +153,7 @@
         "kind": "branch",
         "identity": "branch.rh.public.1",
         "revision": 1,
-        "payload_sha256": "2300a9fead9948e5b3181d0893add20475825b3fc6e108bcbc0cfbce58caaeca"
+        "payload_sha256": "80bd7ec59f4967bd6f09b9c6f449f4b4239cbc9bfb3414013a142b5c9252e04e"
       }
     ],
     "reconsideration_conditions": [
@@ -164,7 +164,7 @@
             "kind": "branch",
             "identity": "branch.rh.public.1",
             "revision": 1,
-            "payload_sha256": "2300a9fead9948e5b3181d0893add20475825b3fc6e108bcbc0cfbce58caaeca"
+            "payload_sha256": "80bd7ec59f4967bd6f09b9c6f449f4b4239cbc9bfb3414013a142b5c9252e04e"
           }
         ]
       }

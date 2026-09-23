@@ -4,7 +4,7 @@ import { EventEmitter } from 'node:events'
 import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
-import test from 'node:test'
+import test, { after } from 'node:test'
 
 import {
   CodexAppServerBoundary,
@@ -28,11 +28,17 @@ import {
   type ThreadGoalStatus,
 } from './boundary.js'
 
-const WORKSPACE = path.resolve('..', 'bounded-goal-workspace')
-const READ_ROOT = path.resolve('.')
-const APP_SERVER_CWD = path.resolve('..', 'bounded-goal-app-server')
-const PROTECTED_ROOT = path.resolve('..', 'bounded-goal-codex-home')
+const FIXTURE_ROOT = fs.realpathSync.native(fs.mkdtempSync(path.join(os.tmpdir(), 'codex-boundary-')))
+const WORKSPACE = path.join(FIXTURE_ROOT, 'workspace')
+const READ_ROOT = path.join(FIXTURE_ROOT, 'read-only')
+const APP_SERVER_CWD = path.join(FIXTURE_ROOT, 'app-server')
+const PROTECTED_ROOT = path.join(FIXTURE_ROOT, 'codex-home')
+const OUTSIDE_READ_ROOT = path.join(FIXTURE_ROOT, 'outside-read-only')
 const SELECTED_CAPABILITY_ROOT = path.join(READ_ROOT, 'src')
+for (const directory of [WORKSPACE, SELECTED_CAPABILITY_ROOT, APP_SERVER_CWD, PROTECTED_ROOT, OUTSIDE_READ_ROOT]) {
+  fs.mkdirSync(directory, { recursive: true })
+}
+after(() => fs.rmSync(FIXTURE_ROOT, { recursive: true, force: true }))
 const MODEL_CATALOG_PATH = path.join(READ_ROOT, 'codex-model-catalog.0.144.1.json')
 const ROOT_THREAD_ID = 'root-thread'
 const ROOT_TURN_ID = 'root-turn'
@@ -1907,7 +1913,7 @@ test('Goal environment stays local and selected roots stay absolute, read-only, 
               location: {
                 type: 'environment',
                 environmentId: 'local',
-                path: os.tmpdir(),
+                path: OUTSIDE_READ_ROOT,
               },
             },
           ],

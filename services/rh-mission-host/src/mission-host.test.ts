@@ -141,7 +141,7 @@ function nativeObservationIdForTest(input: Record<string, unknown>): string {
 
 function resolvePythonExecutable(): string {
   const completed = spawnSync(
-    'python',
+    process.platform === 'linux' ? '/usr/bin/python3' : 'python',
     ['-c', 'import sys; print(sys.executable)'],
     { cwd: SOURCE_REPO_ROOT, encoding: 'utf8', windowsHide: true },
   )
@@ -4681,6 +4681,22 @@ class ScriptedBoundary {
     }
     if (recovery) {
       this.recoveryCalls.push({ threadId, reason, recovery: structuredClone(recovery) })
+    }
+    if (reason === 'owner_checkpoint') {
+      // Real Core closes descendant admission at a root checkpoint. Preserve
+      // that callback in this double so Host grant cleanup is exercised too.
+      const grants = new Map(this.installedHistoricalGrants.map((grant) => [grant.childThreadId, grant]))
+      for (const grant of grants.values()) {
+        await this.callbacks.onDescendantToolGrantRevoked({
+          rootThreadId: grant.rootThreadId,
+          childThreadId: grant.childThreadId,
+          parentThreadId: grant.parentThreadId,
+          depth: grant.depth,
+          grantId: grant.grantId,
+          assignmentId: grant.assignmentId,
+          reason: 'root_checkpoint',
+        })
+      }
     }
     await this.callbacks.onGoalTermination({
       threadId,
@@ -10378,6 +10394,8 @@ test('a committed owner checkpoint keeps precedence over explicit force-stop', a
     await boundaryFactory.entered
     const binding = harness.bridge.bindings.at(-1)
     assert.ok(binding)
+    // A semantic closeout requires an already-admitted canonical result.
+    harness.bridge.admittedResult = structuredClone(ADMITTED_RESULT)
     harness.bridge.seedCheckpoint(
       'thread.signal-cancellation',
       'closeout',
@@ -10563,6 +10581,7 @@ test('owner checkpoint committing during operator suspension wins without a fail
     () => {
       const binding = harness.bridge.bindings.at(-1)
       assert.ok(binding)
+      harness.bridge.admittedResult = structuredClone(ADMITTED_RESULT)
       harness.bridge.seedCheckpoint(
         'thread.signal-cancellation',
         'closeout',
@@ -12317,7 +12336,12 @@ test('Host delivers the retained Core fatal aggregate even after its boundary op
       }
       return boundary
     }
-    await assert.rejects(createHost(harness).run(), (error) => error === retainedFatal)
+    await assert.rejects(createHost(harness).run(), (error) => {
+      assert.ok(error instanceof GoalEpochMissionConsistencyError)
+      assert.equal(error.cause, retainedFatal)
+      assert.match(error.message, /research checkpoint committed.*do not replay/)
+      return true
+    })
     assert.equal(waits, 1)
     assert.equal(harness.bridge.authorizations.length, 1)
     assert.equal(harness.boundaryFactory.requests.length, 1)

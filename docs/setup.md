@@ -47,6 +47,44 @@ These are example paths, not defaults that discover an existing installation.
 must be named for its exact source commit, with no symlink components. Source,
 workspace, Goal scratch, Host runtime and Codex home must not overlap.
 
+### Ubuntu 24.04 user namespaces
+
+Ubuntu 24.04's AppArmor policy can block capabilities inside unprivileged user
+namespaces, preventing Codex from constructing its native sandbox. If this occurs,
+an administrator can add an application-specific profile for this installation's
+exact root-owned **native Codex executable**, following the
+[Ubuntu release notes](https://documentation.ubuntu.com/release-notes/24.04/#unprivileged-user-namespace-restrictions).
+Use the native binary's absolute path, not the npm JavaScript launcher or a
+wildcard, and keep its installation root-owned and non-writable by runtime users.
+
+For example, create a new `/etc/apparmor.d/mathematical-research-codex` with the
+placeholder replaced by that exact executable path:
+
+```text
+abi <abi/4.0>,
+include <tunables/global>
+"/ABSOLUTE/ROOT-OWNED/PATH/TO/codex" flags=(unconfined) {
+  userns,
+}
+```
+
+Load only this new profile with
+`sudo apparmor_parser -a /etc/apparmor.d/mathematical-research-codex`. Do not replace
+another application's profile or disable the system-wide user-namespace
+restriction. This profile permits the selected application to construct its own
+sandbox; the Codex sandbox and network policy remain enabled.
+
+As the dedicated runtime account, check the selected binary before starting a
+Mission:
+
+```bash
+"$CODEX" sandbox -- /usr/bin/printf sandbox-ok
+```
+
+For pinned Codex 0.153.4, the command is `sandbox` directly, without a `linux`
+subcommand. Expect `sandbox-ok` and exit status 0. This checks sandbox launch;
+it does not establish provider authentication or research lifecycle success.
+
 ## Build and prepare a release
 
 Perform build work in an unprivileged staging directory. Supply paths for your
