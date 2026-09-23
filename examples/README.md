@@ -15,5 +15,9 @@ uses rigorous numerical enclosures to exclude one proposed representation route.
 Its authored store walkthrough retains the scoped refutation while leaving the
 weaker ordinary Bernstein question open.
 
-A constructive Jacobi extension and a bounded case study of the Jensen-polynomial
-program remain planned additions.
+The [Jacobi construction](jacobi-extension/README.md) follows a failed short-gap
+restriction into a wider factor arrangement. Its exact checker verifies the
+surviving algebra and a positive-rooted comparison witness; the store preserves
+the analytic premises required for the conditional application.
+
+A bounded case study of the Jensen-polynomial program remains planned.

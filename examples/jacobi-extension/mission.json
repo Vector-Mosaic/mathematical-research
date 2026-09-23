@@ -1,0 +1,166 @@
+{
+  "schema_version": "mathematical_research.direct_mission_genesis.v1",
+  "kind": "direct_mission_genesis",
+  "project_id": "project.riemann_hypothesis",
+  "authority": {
+    "project_id": "project.riemann_hypothesis",
+    "coordination_epoch": "epoch.rh.example.jacobi_extension.1",
+    "authorization_id": "authorization.rh.example.jacobi_extension.1",
+    "expires_at": null
+  },
+  "mission": {
+    "mission_id": "mission.rh.example.jacobi_extension.1",
+    "revision": 1,
+    "project_id": "project.riemann_hypothesis",
+    "coordination_epoch": "epoch.rh.example.jacobi_extension.1",
+    "authorization_id": "authorization.rh.example.jacobi_extension.1",
+    "control_revision": 2,
+    "lifecycle": "active",
+    "fence_reason": null,
+    "fenced_at": null,
+    "autonomous": true,
+    "effective": true,
+    "strategy_ids": [
+      "strategy.rh.example.jacobi_extension.1"
+    ],
+    "purpose": {
+      "objective": "Advance the Riemann Hypothesis frontier through the highest-value mathematically credible work available: select the next question, delegate adaptively when independent work helps, preserve and interpret useful results, revise Strategy from what was learned, and commit a concise truthful Continuation Checkpoint.",
+      "proof_standard": "A genuinely correct, novel, self-contained, independently checkable proof or disproof of the Riemann Hypothesis whose exact statement, dependencies, derivation, assumptions, and verification package withstand independent reconstruction; computation, model confidence, repeated agreement, or system state cannot establish it.",
+      "non_goals": [
+        "Claiming a theorem from finite moments, bounded-degree tests, floating-point evidence, model agreement, or a green verification target.",
+        "Owning unrelated application or workflow orchestration.",
+        "Treating the system as an automated theorem prover.",
+        "Requiring the operator to act as the mathematical strategist or routine proof reviewer, or treating AI agreement as a substitute for checkable mathematics.",
+        "Treating an immortal process, unattended daemon, completed Goal, worker count, artifact count, or infrastructure qualification as research success."
+      ],
+      "closeout_conditions": {
+        "strategy_mission_continuation": "closeout",
+        "semantic_effect": "Closeout is a Strategy-owned coordination decision; it does not establish proof, disproof, Admission, or research success."
+      }
+    },
+    "execution_policy": {
+      "provider": "openai",
+      "model": "gpt-6-astra",
+      "reasoning_effort": "ultra",
+      "model_fallback": false,
+      "baseline_capabilities": [
+        "rh_mission",
+        "shell",
+        "web_search",
+        "native_delegation"
+      ],
+      "selected_capabilities": {
+        "local_roots": [],
+        "mcp_servers": [],
+        "apps": [],
+        "browser": null
+      },
+      "network": {
+        "public_egress": true,
+        "secretless": true,
+        "credential_inheritance": false,
+        "denied_destinations": [
+          "loopback",
+          "private_internal",
+          "link_local",
+          "cloud_metadata"
+        ]
+      },
+      "filesystem": {
+        "release_access": "read_only",
+        "goal_workspace": "fresh_private_writable",
+        "protected_credentials_access": "denied"
+      },
+      "automatic_installation": false
+    }
+  },
+  "opening_branch": {
+    "schema_version": 1,
+    "kind": "discovery_branch",
+    "project_id": "project.riemann_hypothesis",
+    "mission_id": "mission.rh.example.jacobi_extension.1",
+    "branch_id": "branch.rh.example.jacobi_extension.1",
+    "question": "Can the proposed fixed finite positive short-gap Jacobi corrections match R0 through R5 at the stated limiting targets? Preserve the exact obstruction, then check the surviving wide two-factor construction and distinguish its exact limiting algebra from the analytic estimates required for finite-n matching of actual target coefficients.",
+    "leverage_fingerprint": "A bounded authored reconstruction of a restricted construction failure and a viable wider limiting model, retaining source bytes, exact symbolic output, the scoped refutation and an explicit unresolved analytic dependency.",
+    "target_hook": "These Jacobi comparison families arose in RH-related coefficient-matching research. This public R5 episode demonstrates exact algebra and conditional construction. Its synthetic comparison witness is not an actual RH-coefficient match; higher Jensen wedges and RH remain unproved here.",
+    "genealogy": [],
+    "nonclaims": [
+      "The judgments in walkthrough.json are supplied by the authors. New checker output is not a historical transcript or autonomous discovery.",
+      "The open analytic dependency marks what this public package does not establish; it is not a claim about the latest status of every historical research branch.",
+      "The research infrastructure preserves records and dependencies; it does not establish mathematical truth.",
+      "The restricted short-gap obstruction does not exclude wide factors, other scales, a growing number of factors or every Jacobi construction.",
+      "The seed contains no established Evidence, Candidate, Admission or inherited private research records.",
+      "The synthetic finite witness and limiting Jacobian do not establish actual-target finite-n matching, a higher Jensen wedge or RH.",
+      "This seed belongs to the credential-free authored store walkthrough; it supplies no model run or live Host installation."
+    ],
+    "owner_refs": [],
+    "scoped_failures": [],
+    "non_exclusions": [],
+    "retained_residue": [],
+    "composition_interfaces": [],
+    "recombination_interfaces": [],
+    "revival_conditions": []
+  },
+  "strategy": {
+    "schema_version": 1,
+    "kind": "mission_strategy",
+    "project_id": "project.riemann_hypothesis",
+    "mission_id": "mission.rh.example.jacobi_extension.1",
+    "strategy_id": "strategy.rh.example.jacobi_extension.1",
+    "mission_continuation": "continue",
+    "integrated_comparison": "This public authored walkthrough starts without retained results. Run the exact symbolic checker, capture its inputs and new output, revise the restricted short-gap Candidate to refuted_at_scope, retain the surviving wide limiting algebra, and make the conditional finite-n claim depend explicitly on the analytic target estimates that this package does not establish. Persist a checkpoint and reopen the store to inspect the same dependencies. No model worker, historical replay, autonomous discovery or canonical admission is claimed.",
+    "causal_inputs": [],
+    "serious_opportunities": [],
+    "selected_bets": [
+      {
+        "bet": "Make the constructive change of factor architecture and its remaining analytic bridge inspectable.",
+        "discriminator": "The restricted route is refuted while wide limiting algebra survives, and finite-n matching retains an explicit open analytic dependency in this public package.",
+        "owner_refs": [
+          {
+            "kind": "branch",
+            "identity": "branch.rh.example.jacobi_extension.1",
+            "revision": 1,
+            "payload_sha256": "d74da2d2ba5666cc57c00796befc20ea3e841a5366ddcffd3f17e7462d16a4a5"
+          }
+        ]
+      }
+    ],
+    "attention_actions": [
+      {
+        "branch_ref": {
+          "kind": "branch",
+          "identity": "branch.rh.example.jacobi_extension.1",
+          "revision": 1,
+          "payload_sha256": "d74da2d2ba5666cc57c00796befc20ea3e841a5366ddcffd3f17e7462d16a4a5"
+        },
+        "attention": "active",
+        "consequence": "Retain the exact symbolic checks, scoped refutation, wide construction, conditional statement and unresolved package dependency through checkpoint and reopening."
+      }
+    ],
+    "context_treatment": [],
+    "creativity_treatment": [],
+    "owner_refs": [
+      {
+        "kind": "branch",
+        "identity": "branch.rh.example.jacobi_extension.1",
+        "revision": 1,
+        "payload_sha256": "d74da2d2ba5666cc57c00796befc20ea3e841a5366ddcffd3f17e7462d16a4a5"
+      }
+    ],
+    "reconsideration_conditions": [
+      {
+        "condition": "A calculation, factor-gap interpretation or conditional implication is found incorrect, or a consumer extends the result to actual RH coefficients or a higher Jensen wedge without the stated estimates.",
+        "owner_refs": [
+          {
+            "kind": "branch",
+            "identity": "branch.rh.example.jacobi_extension.1",
+            "revision": 1,
+            "payload_sha256": "d74da2d2ba5666cc57c00796befc20ea3e841a5366ddcffd3f17e7462d16a4a5"
+          }
+        ]
+      }
+    ],
+    "reversal_conditions": [],
+    "revival_conditions": []
+  }
+}

@@ -20,6 +20,7 @@ DEFAULT_EXAMPLE = "finite-free-localization"
 EXAMPLES = {
     "finite-free-localization": {"timeout": 60, "extra_materials": ()},
     "loewner-obstruction": {"timeout": 600, "extra_materials": ("requirements.txt",)},
+    "jacobi-extension": {"timeout": 120, "extra_materials": ("requirements.txt",)},
 }
 MARKER = "scripted-research-example.json"
 MODE = "authored-scripted-walkthrough-no-model"

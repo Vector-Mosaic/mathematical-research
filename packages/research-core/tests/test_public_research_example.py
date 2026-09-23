@@ -1,4 +1,4 @@
-"""One small real-store round trip; no model, Host, server or fake provider."""
+"""Bounded real-store round trips; no model, Host, server or fake provider."""
 
 import importlib.util
 import json
@@ -85,6 +85,68 @@ class PublicResearchExampleTests(unittest.TestCase):
             self.assertEqual(names, {"problem.json", "mathematics.md", "check.py",
                                      "walkthrough.json", "requirements.txt", "checker-output.json"})
             mismatch = subprocess.run(command + ["inspect", "--example", "finite-free-localization",
+                                                  "--output", str(output)], cwd=ROOT,
+                                      text=True, capture_output=True, timeout=30)
+            self.assertNotEqual(mismatch.returncode, 0)
+            self.assertIn("selector does not match", mismatch.stderr)
+
+    @unittest.skipUnless(importlib.util.find_spec("sympy") is not None,
+                         "install examples/jacobi-extension/requirements.txt for the Jacobi checker")
+    def test_jacobi_construction_retains_refutation_and_open_analytic_dependency(self):
+        with tempfile.TemporaryDirectory(prefix="jacobi-example-test-") as temporary:
+            output = Path(temporary) / "walkthrough"
+            command = [sys.executable, str(SCRIPT)]
+            created = subprocess.run(command + ["run", "--example", "jacobi-extension",
+                                                "--output", str(output)], cwd=ROOT,
+                                     text=True, capture_output=True, timeout=180)
+            self.assertEqual(created.returncode, 0, created.stderr)
+            initial = json.loads(created.stdout)
+            reopened = subprocess.run(command + ["inspect", "--output", str(output), "--details"],
+                                      cwd=ROOT, text=True, capture_output=True, timeout=30)
+            self.assertEqual(reopened.returncode, 0, reopened.stderr)
+            result = json.loads(reopened.stdout)
+            self.assertEqual(result["example"], "jacobi-extension")
+            self.assertEqual(result["mode"], "authored-scripted-walkthrough-no-model")
+            self.assertEqual(result["canonical_effect"], "none")
+            self.assertEqual(result["checkpoint_commit"], initial["checkpoint_commit"])
+            check = result["mathematical_check"]
+            self.assertEqual(check["status"], "certified")
+            self.assertEqual(check["short_gap_obstruction"]["weighted_square_target"], "-1/6")
+            self.assertTrue(check["short_gap_obstruction"]["polynomial_identity_verified"])
+            self.assertEqual(check["wide_r5"]["jacobian_determinant"], "-1/6")
+            self.assertTrue(check["wide_r5"]["residual_zero"])
+            self.assertEqual(check["wide_r5"]["local_finite_n_existence"],
+                             "conditional_on_C1_target_asymptotics")
+            records = {(item["id"], item["revision"]): item["document"]
+                       for item in result["candidate_revisions"]}
+            self.assertEqual(len(records), 5)
+            self.assertEqual(records[("jacobi-short-gap-route", 1)]["standing"]["status"], "open")
+            rejected = records[("jacobi-short-gap-route", 2)]
+            self.assertEqual(rejected["standing"]["status"], "refuted_at_scope")
+            algebra = records[("jacobi-wide-limiting-algebra", 1)]
+            self.assertEqual(algebra["standing"]["status"], "open")
+            self.assertTrue(algebra["genealogy"])
+            analytic = records[("jacobi-target-asymptotics", 1)]
+            self.assertEqual(analytic["standing"]["status"], "open")
+            self.assertIn("does not establish", analytic["standing"]["basis"])
+            conditional = records[("jacobi-wide-conditional-matching", 1)]
+            self.assertEqual(conditional["standing"]["status"], "open")
+            dependencies = {(ref["kind"], ref["id"], ref["revision"]): ref
+                            for ref in conditional["supporting_refs"]}
+            self.assertEqual(set(dependencies), {
+                ("evidence", "jacobi-authored-construction", 1),
+                ("candidate", "jacobi-wide-limiting-algebra", 1),
+                ("candidate", "jacobi-target-asymptotics", 1),
+            })
+            for ref in dependencies.values():
+                self.assertRegex(ref["digest_sha256"], r"^[0-9a-f]{64}$")
+            self.assertIn("uniform C1", " ".join(conditional["hypotheses"]))
+            self.assertIn("higher Jensen wedge", " ".join(conditional["non_inferences"]))
+            self.assertEqual({item["name"] for item in result["retained_raw_artifacts"]}, {
+                "problem.json", "mathematics.md", "check.py", "walkthrough.json",
+                "requirements.txt", "checker-output.json",
+            })
+            mismatch = subprocess.run(command + ["inspect", "--example", "loewner-obstruction",
                                                   "--output", str(output)], cwd=ROOT,
                                       text=True, capture_output=True, timeout=30)
             self.assertNotEqual(mismatch.returncode, 0)

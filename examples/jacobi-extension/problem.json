@@ -1,0 +1,41 @@
+{
+  "schema_version": "mathematical-research.example-problem.v1",
+  "id": "jacobi-extension",
+  "title": "A positive-gap obstruction and a wider Jacobi construction",
+  "question": "Do positive short-gap Jacobi corrections satisfy the four limiting quotient equations through R5? If not, does repartitioning the comparison into two wide factors admit a nonsingular solution while keeping both actual factor gaps positive? Verify the exact algebra, show a rational positive-rooted comparison, and identify the analytic assumptions needed to transfer the limiting construction to RH coefficient matching.",
+  "definitions": {
+    "coefficient_domain": "R0=1 and every relevant R_j is strictly positive",
+    "rising_factorial": "(U)_j = U*(U+1)*...*(U+j-1), with (U)_0=1",
+    "quotient": "q_k = R_(k+1)^2/(R_k*R_(k+2))",
+    "jacobi_quotient": "Q_k(U,V) = (U+k)*(V+k+1)/((V+k)*(U+k+1))",
+    "wide_coefficient": "Rhat_j = S^j*(U1)_j*(U2)_j*V2^j/(U1^j*U2^j*(V1)_j*(V2)_j), S=V1*R1",
+    "wide_parameters": "U1=t*n+mu*n/L, V1=B_J+b*n/L, U2=a*A_J, V2=t*n",
+    "limiting_map": ["1-1/a-b+mu/t^2", "2*b-2*mu/t^3", "-6*b+6*mu/t^4", "24*b-24*mu/t^5"],
+    "target": ["0", "0", "2", "-12"],
+    "jacobi_positive_root_domain": "V_i>0 and U_i>V_i+d-1"
+  },
+  "candidate_limiting_solution": {"a": "3", "b": "-2/3", "mu": "-16/3", "t": "2"},
+  "short_gap_targets": ["sum w_i*(x_i-1)=1/3", "sum w_i*(x_i^2-1)=1/2", "w_i>0, x_i>0"],
+  "finite_witness": {
+    "degree": 5,
+    "parameters": {"U1": 16, "V1": 8, "U2": 60, "V2": 20, "S": 1},
+    "meaning": "An illustrative exact comparison with a negative cross-junction offset and positive actual factor gaps; these parameters were not fitted to Riemann-xi coefficients."
+  },
+  "scope": {
+    "exact_algebra": ["Short-gap weighted-square contradiction", "Wide R5 limiting solution and Jacobian", "Quotient reconstruction and coefficient factorization", "General differential-operator identity", "Exact positive-root isolation for the rational witness"],
+    "conditional": ["Finite-n local existence requires the C1 convergence hypothesis stated in mathematics.md"],
+    "not_established": ["An RH coefficient match at any specified n", "Uniform saddle and critical-point estimates", "Any higher Jensen hyperbolicity wedge", "Riemann Hypothesis"]
+  },
+  "references": [
+    {
+      "title": "Jonathan Holland, A new hyperbolicity wedge and a joint semicircle limit for Jensen polynomials of Riemann's xi-function, arXiv:2608.08682v1",
+      "url": "https://arxiv.org/html/2608.08682v1",
+      "scope": "Source quotient coordinates and two-factor comparison conventions. This example checks the selected extension's algebra; it is not a validation of the paper's full analytic theorem."
+    },
+    {
+      "title": "Andrei Martinez-Finkelshtein, Rafael Morales and Daniel Perales, Real roots of hypergeometric polynomials via finite free convolution, arXiv:2309.10970v3",
+      "url": "https://arxiv.org/html/2309.10970v3",
+      "scope": "Jacobi polynomial identity and positive-root preservation by finite-free multiplicative convolution, especially Proposition 2.7."
+    }
+  ]
+}

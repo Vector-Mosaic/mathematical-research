@@ -79,3 +79,8 @@ shell-launch defect it exposed are documented separately. The compact
 Loewner obstruction and a second authored real-store walkthrough; it does not
 claim another live model run. Comparative evaluation remains future work.
 Credentials, provider instructions and raw runtime traces are not published.
+
+The [Jacobi construction](../examples/jacobi-extension/validation.md) adds exact
+symbolic identities, a rational positive-root certificate and an authored
+real-store walkthrough that preserves conditional dependencies. Its validation
+does not certify the analytic target estimates or a larger Jensen theorem.

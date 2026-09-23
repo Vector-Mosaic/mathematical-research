@@ -1,0 +1,158 @@
+{
+  "description": "Authored reconstruction of the move from a restricted short-gap Jacobi obstruction to a wider telescoping construction. The exact checker runs anew; the interpretation and Candidate judgments are supplied by the example authors, not by a live researcher or a historical replay.",
+  "evidence": {
+    "evidence_id": "evidence:jacobi-authored-construction",
+    "interpretation": "For the stated limiting targets, any fixed finite collection of positive short-gap corrections would require a sum of nonnegative weighted squares to equal -1/6. That restricted architecture is impossible. Repartitioning the factors into wide intervals gives the exact limiting R5 solution (a,b,mu,t)=(3,-2/3,-16/3,2), with Jacobian determinant -1/6. Its negative mu is a cross-junction offset, while the two actual factor gaps have positive limiting margins. These algebraic results support a conditional finite-n construction; they do not supply the required analytic estimates for actual RH coefficients.",
+    "scope": "The coefficient and quotient conventions, fixed finite positive short-gap family, four-row wide R5 map, exact witness and conditional finite-n statement defined in mathematics.md. The finite comparison-polynomial witness is synthetic and is not an instance of matched RH coefficients.",
+    "strength": "source",
+    "limitations": [
+      "The interpretation and Candidate judgments are authored inputs; only the checker output is newly computed in this walkthrough.",
+      "Exact symbolic identities and the supplied mathematical argument establish their stated algebraic scope. The store is not a theorem prover or an admission authority.",
+      "The public example does not establish the required uniform C1 target asymptotics for actual RH coefficients. This marks the boundary of this package, not the latest status of every historical research branch.",
+      "The positive-root witness uses explicitly selected comparison parameters. It does not prove an eventual threshold, a higher Jensen wedge, or RH."
+    ],
+    "significance": "A refuted restricted construction can motivate a different parameter architecture. The record retains the refutation, the surviving exact construction and the analytic bridge that this public example leaves open as distinct claims."
+  },
+  "candidate_steps": [
+    {
+      "candidate_id": "candidate:jacobi-short-gap-route",
+      "proposal_kind": "lemma",
+      "exact_statement": "The limiting targets (0,0,2,-12) for matching R0 through R5 can be attained by adjusting one long first-Jacobi parameter and adding a fixed finite number of n-scale factors with positive fixed n/L gap coefficients c_i and positive fixed denominator scales t_i, as defined in mathematics.md.",
+      "standing": {
+        "status": "open",
+        "basis": "Starting claim supplied for this authored reconstruction; no canonical admission is asserted."
+      },
+      "hypotheses": [
+        "The limiting target and the short-gap scaling are exactly those defined in mathematics.md.",
+        "The number of added factors is fixed and finite; c_i>0 and t_i>0 are fixed limiting coefficients."
+      ],
+      "limitations": [
+        "An authored starting Candidate, not a retained historical Candidate record."
+      ]
+    },
+    {
+      "candidate_id": "candidate:jacobi-short-gap-route",
+      "proposal_kind": "lemma",
+      "exact_statement": "The limiting targets (0,0,2,-12) for matching R0 through R5 can be attained by adjusting one long first-Jacobi parameter and adding a fixed finite number of n-scale factors with positive fixed n/L gap coefficients c_i and positive fixed denominator scales t_i, as defined in mathematics.md.",
+      "standing": {
+        "status": "refuted_at_scope",
+        "basis": "With x_i=1/t_i and w_i=c_i x_i^3>0, the target equations imply sum_i w_i(x_i-1)^2=-1/6. Their left side is nonnegative, so the restricted limiting system has no such solution.",
+        "scope": "The fixed finite positive short-gap family at the stated limiting targets. This does not exclude wider factors, other scales or other comparison families."
+      },
+      "hypotheses": [
+        "The limiting target and the short-gap scaling are exactly those defined in mathematics.md.",
+        "The number of added factors is fixed and finite; c_i>0 and t_i>0 are fixed limiting coefficients."
+      ],
+      "supporting_refs": [
+        {"id": "evidence:jacobi-authored-construction", "revision": 1}
+      ],
+      "non_inferences": [
+        "The obstruction does not rule out the wide telescoping construction, a growing number of factors, different scales, or every Jacobi construction.",
+        "No conclusion about RH or an entire source paper follows from this restricted obstruction."
+      ]
+    },
+    {
+      "candidate_id": "candidate:jacobi-wide-limiting-algebra",
+      "proposal_kind": "lemma",
+      "exact_statement": "The wide R5 map F(a,b,mu,t)=(1-1/a-b+mu/t^2,2b-2mu/t^3,-6b+6mu/t^4,24b-24mu/t^5) equals (0,0,2,-12) at (3,-2/3,-16/3,2), with Jacobian determinant -1/6. Under the parameter scales in mathematics.md, the actual within-factor gaps have positive limiting margins despite the negative cross-junction offset mu.",
+      "standing": {
+        "status": "open",
+        "basis": "The exact symbolic checker and written derivation support this limiting algebra and the distinction between a junction offset and a factor gap. Open is the Candidate's non-admitted store status, not a claim that the exact calculation failed."
+      },
+      "hypotheses": [
+        "The two wide factors, their parameter ordering and the map F are those defined in mathematics.md.",
+        "For the gap limits, L tends to infinity, A_J/(nL) tends to 1, B_J/n tends to 1, and (a,b,mu,t) tends to (3,-2/3,-16/3,2)."
+      ],
+      "supporting_refs": [
+        {"id": "evidence:jacobi-authored-construction", "revision": 1}
+      ],
+      "genealogy": [
+        {"relation": "alternative_to", "candidate": {"id": "candidate:jacobi-short-gap-route", "revision": 2}}
+      ],
+      "non_inferences": [
+        "An invertible limiting Jacobian does not by itself prove finite-n matching for actual RH coefficients.",
+        "The synthetic positive-root witness does not close the analytic target estimates."
+      ]
+    },
+    {
+      "candidate_id": "candidate:jacobi-target-asymptotics",
+      "proposal_kind": "lemma",
+      "exact_statement": "For the actual target coefficients and reference parameters, the normalized finite-n matching residual converges uniformly in C1 on a fixed neighborhood of (3,-2/3,-16/3,2) to F-(0,0,2,-12), with the stated O(1/L) control and positive parameter scales needed for the conditional construction in mathematics.md.",
+      "standing": {
+        "status": "open",
+        "basis": "This public algebraic checker does not establish these analytic target estimates. They remain an explicit dependency of this package's finite-n conclusion; this status does not assert that all later historical work left the same dependency unresolved."
+      },
+      "hypotheses": [
+        "Actual target coefficients, first-Jacobi reference parameters and the normalized residual have the definitions in mathematics.md.",
+        "The asserted bounds must hold on one fixed parameter neighborhood, including parameter derivatives, rather than only pointwise at the limiting solution."
+      ],
+      "supporting_refs": [
+        {"id": "evidence:jacobi-authored-construction", "revision": 1}
+      ],
+      "limitations": [
+        "The Evidence reference identifies why this analytic bridge is required; it does not prove the bridge.",
+        "A numerical fit to selected coefficients or a synthetic factor witness is not this uniform analytic estimate."
+      ]
+    },
+    {
+      "candidate_id": "candidate:jacobi-wide-conditional-matching",
+      "proposal_kind": "lemma",
+      "exact_statement": "If the normalized finite-n residual has the uniform C1 convergence and O(1/L) control stated in mathematics.md, with its positive parameter scales, then for all sufficiently large n there is a locally unique matching solution near (3,-2/3,-16/3,2), differing from it by O(1/L), whose wide factors match R0 through R5 and have positive within-factor gaps. For d=o(n), the factors eventually lie in the positive-rooted Jacobi range.",
+      "standing": {
+        "status": "open",
+        "basis": "The exact nonsingular limiting Jacobian and quotient identities support the conditional local argument. The required actual-target analytic estimates are not supplied by this public checker, and no canonical admission is requested."
+      },
+      "hypotheses": [
+        "The uniform C1 target and residual estimates in candidate:jacobi-target-asymptotics hold with the rates and neighborhood specified in mathematics.md.",
+        "L tends to infinity, A_J/(nL) tends to 1, B_J/n tends to 1, and the target coefficients are positive with R0=1 and R1>0.",
+        "The positive-root conclusion additionally uses d=o(n) and the Jacobi factor criterion stated in mathematics.md."
+      ],
+      "supporting_refs": [
+        {"id": "evidence:jacobi-authored-construction", "revision": 1},
+        {"id": "candidate:jacobi-wide-limiting-algebra", "revision": 1},
+        {"id": "candidate:jacobi-target-asymptotics", "revision": 1}
+      ],
+      "genealogy": [
+        {"relation": "derived_from", "candidate": {"id": "candidate:jacobi-wide-limiting-algebra", "revision": 1}}
+      ],
+      "non_inferences": [
+        "The supporting reference to target asymptotics records an open hypothesis, not established analytic support.",
+        "Local uniqueness does not imply global uniqueness or provide a numerical onset.",
+        "Matching six coefficients with positive comparison factors does not prove a higher Jensen wedge or RH."
+      ]
+    }
+  ],
+  "strategy": {
+    "mission_continuation": "continue",
+    "integrated_comparison": "The restricted positive short-gap route is refuted at its exact limiting scope. The wide construction survives its exact algebraic checks; negative mu is a junction offset and does not contradict positive factor gaps. Keep that result distinct from the conditional finite-n matching claim and its analytic target-asymptotics dependency, which this public package leaves open. Retain all supplied judgments and exact source bytes through a checkpoint and reopened store. No autonomous discovery, historical replay or canonical admission is claimed.",
+    "selected_bets": [
+      {
+        "bet": "Inspect the surviving wide construction while preserving the unsupported analytic bridge.",
+        "discriminator": "The reopened record recovers the restricted refutation, exact limiting algebra and conditional matching claim, with the target-asymptotics dependency still explicitly open in this public package.",
+        "owner_refs": [
+          {"id": "candidate:jacobi-wide-limiting-algebra", "revision": 1},
+          {"id": "candidate:jacobi-target-asymptotics", "revision": 1},
+          {"id": "candidate:jacobi-wide-conditional-matching", "revision": 1}
+        ]
+      }
+    ],
+    "owner_refs": [
+      {"id": "evidence:jacobi-authored-construction", "revision": 1},
+      {"id": "candidate:jacobi-short-gap-route", "revision": 2},
+      {"id": "candidate:jacobi-wide-limiting-algebra", "revision": 1},
+      {"id": "candidate:jacobi-target-asymptotics", "revision": 1},
+      {"id": "candidate:jacobi-wide-conditional-matching", "revision": 1}
+    ],
+    "reconsideration_conditions": [
+      {
+        "condition": "A reviewer finds an error in the limiting equations, exact calculation, factor ordering or conditional argument; actual target estimates establish or refute the named bridge; or a consumer promotes the synthetic witness into an actual RH-coefficient or higher-wedge result.",
+        "owner_refs": [
+          {"id": "candidate:jacobi-short-gap-route", "revision": 2},
+          {"id": "candidate:jacobi-wide-limiting-algebra", "revision": 1},
+          {"id": "candidate:jacobi-target-asymptotics", "revision": 1},
+          {"id": "candidate:jacobi-wide-conditional-matching", "revision": 1}
+        ]
+      }
+    ]
+  }
+}

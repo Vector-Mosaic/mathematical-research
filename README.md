@@ -44,6 +44,10 @@ The shorter [C90 matrix obstruction](examples/loewner-obstruction/README.md)
 adds a rigorous numerical checker and a store walkthrough showing how one failed
 research route is recorded without discarding unresolved alternatives.
 
+The [Jacobi example](examples/jacobi-extension/README.md) follows a restricted
+construction's failure into a wider positive-rooted model, with exact symbolic
+checks and explicit dependencies for its conditional application.
+
 Follow the [Linux setup guide](docs/setup.md). The source uses Python 3.12 or
 later, Node.js 22 or later, and pnpm 10.14.0. The supported deployment separates a
 root-owned immutable release from a dedicated unprivileged runtime account and
