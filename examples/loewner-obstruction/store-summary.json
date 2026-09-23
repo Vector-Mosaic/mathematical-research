@@ -1,0 +1,86 @@
+{
+  "candidate_revisions": [
+    {
+      "id": "loewner-pick-route",
+      "revision": 1,
+      "standing": {
+        "basis": "Initial representation claim supplied for the scripted example; no canonical admission is asserted.",
+        "status": "open"
+      },
+      "statement": "The exact function f(u)=(u-1/2)U(2u-2)/U(2u), u>1/2, is the restriction of a complete Bernstein function on (0,infinity); in particular, it admits a Pick extension agreeing on (1/2,infinity).",
+      "supporting_refs": []
+    },
+    {
+      "id": "loewner-pick-route",
+      "revision": 2,
+      "standing": {
+        "basis": "The certified negative q^T L q at nodes (1,2,4,6) contradicts a necessary Loewner positivity condition for the claimed Pick extension; complete Bernstein membership would imply that extension.",
+        "scope": "Any Pick extension agreeing with this exact f on (1/2,infinity), hence any complete Bernstein extension to (0,infinity) agreeing there, with the definitions and certificate assumptions retained in the source material.",
+        "status": "refuted_at_scope"
+      },
+      "statement": "The exact function f(u)=(u-1/2)U(2u-2)/U(2u), u>1/2, is the restriction of a complete Bernstein function on (0,infinity); in particular, it admits a Pick extension agreeing on (1/2,infinity).",
+      "supporting_refs": [
+        {
+          "digest_sha256": "2c45bfa7247c781f8dd17db4edc3d3c1add567db26fd19a82c34ddf7b35c2636",
+          "id": "loewner-authored-obstruction",
+          "kind": "evidence",
+          "revision": 1
+        }
+      ]
+    },
+    {
+      "id": "loewner-ordinary-bernstein",
+      "revision": 1,
+      "standing": {
+        "basis": "Ordinary Bernstein membership is weaker than complete Bernstein membership. The supplied Loewner obstruction does not decide this claim.",
+        "status": "open"
+      },
+      "statement": "The exact function f(u)=(u-1/2)U(2u-2)/U(2u), u>1/2, is the restriction of an ordinary Bernstein function on (0,infinity).",
+      "supporting_refs": [
+        {
+          "digest_sha256": "2c45bfa7247c781f8dd17db4edc3d3c1add567db26fd19a82c34ddf7b35c2636",
+          "id": "loewner-authored-obstruction",
+          "kind": "evidence",
+          "revision": 1
+        }
+      ]
+    }
+  ],
+  "canonical_effect": "none",
+  "checker_output_sha256": "a5cad149ddbc91f145b7c9a6c538bdfa8ce58d434d3690fcfc918626eb99cbe4",
+  "checkpoint_commit": 10,
+  "demonstrates": "Exact supplied bytes, scoped judgments and their dependencies survive reopening.",
+  "does_not_demonstrate": "Autonomous discovery, a fresh model successor, historical execution, canonical admission or RH.",
+  "example": "loewner-obstruction",
+  "mode": "authored-scripted-walkthrough-no-model",
+  "preparation": "Selected fields from the fresh-process inspection of the real store; machine paths and runtime bindings omitted. Judgments are authored fixture inputs.",
+  "reopened_store_checks": "passed",
+  "retained_raw_artifacts": [
+    {
+      "name": "problem.json",
+      "sha256": "df5b349de050c6a305f356ac676402f5996c319a7e926bfd8987d2b0c58e6b2f"
+    },
+    {
+      "name": "mathematics.md",
+      "sha256": "37d7d312a285eeb48eae650a02382b80cd151ec77d15c16df5410f2b8dac0262"
+    },
+    {
+      "name": "check.py",
+      "sha256": "f31c8becac8773d6315106fb4229c33dfb0b2512205e5a3bf1f4db02e50236f9"
+    },
+    {
+      "name": "walkthrough.json",
+      "sha256": "face551e4e808baac5ae2fddad8cb73c59a7408aa63656406045ab275344c5a2"
+    },
+    {
+      "name": "requirements.txt",
+      "sha256": "c55590d48cafeeca9cfbc90afa3f716ef68499c98ca85b7b0ed8ba591c6870c3"
+    },
+    {
+      "name": "checker-output.json",
+      "sha256": "a5cad149ddbc91f145b7c9a6c538bdfa8ce58d434d3690fcfc918626eb99cbe4"
+    }
+  ],
+  "schema_version": "mathematical-research.authored-store-summary.v1",
+  "source_commit": "e6565177126c76323831d3cf6a985ba2febbc535"
+}

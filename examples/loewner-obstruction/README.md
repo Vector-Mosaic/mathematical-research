@@ -16,6 +16,9 @@ accounts for every omitted integration region.
 | Integer vector | `28336, -66314, 64141, -26181` |
 | Decision | Certify that the upper endpoint of `qᵀLq` is below zero. |
 
+The fresh run certified `qᵀLq` in
+`[-374.57073357307433, -374.57073357307320]`, with outward-rounded endpoints.
+
 ## Run the rigorous checker
 
 Using Python 3.12 in your own virtual environment:
@@ -51,6 +54,8 @@ This executes the checker and retains its raw output separately from supplied
 scientific judgments. The exact proposed route moves from an open candidate to
 a scoped refutation. Ordinary Bernstein status remains unresolved. Source
 dependencies and a checkpoint survive reopening the actual SQLite/CAS store.
+The [recorded store summary](store-summary.json) shows the resulting revisions
+and evidence references without requiring an installation.
 
 These are authored explanatory records, not a new autonomous discovery or a
 replay of the historical run. The [first example](../finite-free-localization/README.md)

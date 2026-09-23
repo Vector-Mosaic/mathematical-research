@@ -72,8 +72,11 @@ class PublicResearchExampleTests(unittest.TestCase):
             self.assertEqual(records[("loewner-pick-route", 1)]["standing"]["status"], "open")
             rejected = records[("loewner-pick-route", 2)]["document"]
             self.assertEqual(rejected["standing"]["status"], "refuted_at_scope")
-            self.assertEqual(rejected["supporting_refs"],
-                             [{"id": "evidence:loewner-authored-obstruction", "revision": 1}])
+            self.assertEqual(len(rejected["supporting_refs"]), 1)
+            support = rejected["supporting_refs"][0]
+            self.assertEqual((support["kind"], support["id"], support["revision"]),
+                             ("evidence", "loewner-authored-obstruction", 1))
+            self.assertRegex(support["digest_sha256"], r"^[0-9a-f]{64}$")
             self.assertIn("ordinary Bernstein", " ".join(rejected["non_inferences"]))
             weaker = records[("loewner-ordinary-bernstein", 1)]["document"]
             self.assertEqual(weaker["standing"]["status"], "open")
