@@ -9,9 +9,10 @@ data and account bindings are not part of this distribution.
 Use the [Linux setup](setup.md) and [Mission Host configuration](../services/rh-mission-host/README.md).
 The initial supported deployment is a dedicated unprivileged Linux runtime
 account with a root-owned immutable release. The Host checks ownership and safe
-file/path properties of its trusted launch inputs. Mutable canonical research,
-workspace, Goal scratch, runtime state and the protected Codex home use separate
-explicit paths. Do not share these directories, a runtime lock or an authenticated
+file/path properties of its trusted launch inputs. Canonical research is bound to
+the immutable source release. Mutable workspace, Goal scratch, runtime state and
+the protected Codex home use separate explicit paths. Do not share these
+directories, a runtime lock or an authenticated
 Codex home with another installation. The setup does not provision a cloud
 machine or authorize changes to other users' services and packages.
 

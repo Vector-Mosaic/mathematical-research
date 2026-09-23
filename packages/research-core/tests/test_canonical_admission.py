@@ -120,6 +120,12 @@ class CanonicalAdmissionTests(unittest.TestCase):
 
     def test_decision_alone_changes_only_project_terminal_truth(self) -> None:
         state = json.loads(STATE_PATH.read_text(encoding="utf-8"))
+        # Optional metadata is synthetic so this preservation test does not
+        # depend on fields or ownership data in the public initialization.
+        state["project"].update({
+            "owners": ["Synthetic research owner"],
+            "source_artifact_ref": "fixture:canonical-admission-metadata",
+        })
         original = copy.deepcopy(state)
         prepared, result, replayed = prepare_admitted_research_state(
             state, self.decision("proof")

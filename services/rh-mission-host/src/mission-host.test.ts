@@ -217,9 +217,10 @@ function writeDeterministicFormalMissionBridge(scriptPath: string): void {
     "assert 'HOME' not in os.environ",
     'import research_core.mission_attempt_runtime as runtime_module',
     'from research_attempt_adapter import (',
-    '    AttemptJournal, FakeAttemptProvider, FakeProviderBackend, FakeSourceVerifier,',
+    '    AttemptJournal,',
     '    OutputArtifact, ProviderObservation, ProviderState, ResearchAttemptAdapter, sha256_file,',
     ')',
+    'from research_attempt_adapter.testing import FakeAttemptProvider, FakeProviderBackend, FakeSourceVerifier',
     '',
     'def build_deterministic_adapter(*, cas, runtime):',
     '    runtime.state_root.mkdir(parents=True, exist_ok=True, mode=0o700)',
@@ -7873,7 +7874,7 @@ test('failed formal execution does not block an explicit continue decision or it
 test('real TypeScript Host completes Python formal reconciliation before checkpoint continuation', async () => {
   const harness = await createHarness([
     { kind: 'real_formal_lifecycle' },
-    { kind: 'semantic_stop' },
+    { kind: 'usage_limited' },
   ])
   try {
     const pythonPath = resolvePythonExecutable()
@@ -7928,8 +7929,9 @@ test('real TypeScript Host completes Python formal reconciliation before checkpo
 
     const result = await host.run()
 
-    assert.equal(result.status, 'stopped_semantically')
-    assert.equal(harness.store.state.activeGoal, null)
+    // Pause the successor without inventing a canonical proof for the real owner.
+    assert.equal(result.status, 'usage_limited')
+    assert.equal(harness.store.state.activeGoal?.phase, 'suspended')
     assert.equal(harness.boundaryFactory.requests.length, 2)
     const formalBoundary = harness.boundaryFactory.boundaries[0]
     assert.ok(
@@ -7941,20 +7943,19 @@ test('real TypeScript Host completes Python formal reconciliation before checkpo
     assert.deepEqual(formalBoundary.stopCalls, [
       { threadId: 'thread.0', reason: 'owner_checkpoint' },
     ])
-    assert.deepEqual(harness.boundaryFactory.boundaries[1]?.checkpointTerminalHandoffs, [
-      'owner_checkpoint',
-    ])
+    assert.deepEqual(harness.boundaryFactory.boundaries[1]?.checkpointTerminalHandoffs, [])
+    assert.equal(harness.boundaryFactory.boundaries[1]?.actFailure, null)
     assert.equal(
       fs.existsSync(path.join(config.runtimeDir, 'formal-attempt', 'attempt-journal.sqlite3')),
       true,
     )
     const reconstruction = await bridge.reconstruct()
-    assert.equal((reconstruction.latest_executive_epoch as JsonObject).state, 'checkpointed')
+    assert.equal((reconstruction.latest_executive_epoch as JsonObject).state, 'bound')
     const ownerDeltas = (reconstruction.recovery_opening as JsonObject).owner_deltas as JsonObject[]
     const strategyDelta = ownerDeltas.find(
       (item) => (item.current_reference as JsonObject).kind === 'strategy',
     )
-    assert.equal((strategyDelta?.summary as JsonObject).mission_continuation, 'closeout')
+    assert.equal((strategyDelta?.summary as JsonObject).mission_continuation, 'continue')
     const sessionDeltas = ownerDeltas.filter(
       (item) => (item.current_reference as JsonObject).kind === 'session',
     )
@@ -7986,7 +7987,7 @@ test('real TypeScript Host completes Python formal reconciliation before checkpo
 })
 
 test('real TypeScript Host rejects Python cut A before allocation and launches only refreshed cut B', async () => {
-  const harness = await createHarness([{ kind: 'semantic_stop' }])
+  const harness = await createHarness([{ kind: 'usage_limited' }])
   const pythonPath = resolvePythonExecutable()
   const concurrentWorkspaceRoot = path.join(harness.root, 'concurrent-goal')
   const strategyBMarker = 'Concurrent owner Strategy B is the only fresh launch ground.'
@@ -8108,7 +8109,7 @@ test('real TypeScript Host rejects Python cut A before allocation and launches o
 
     const result = await host.run()
 
-    assert.equal(result.status, 'stopped_semantically')
+    assert.equal(result.status, 'usage_limited')
     assert.equal(hostAuthorizationAttempts, 2)
     assert.equal(harness.allocatedWorkspaces.length, 1)
     assert.equal(harness.boundaryFactory.boundaries.length, 1)
@@ -8121,7 +8122,10 @@ test('real TypeScript Host rejects Python cut A before allocation and launches o
       (orientation.current_strategy as JsonObject).integrated_comparison,
       strategyBMarker,
     )
-    assert.equal(harness.store.state.activeGoal, null)
+    assert.equal(harness.store.state.activeGoal?.phase, 'suspended')
+    assert.equal(harness.boundaryFactory.boundaries[0]?.actFailure, null)
+    const launched = await bridge.hostSnapshot()
+    assert.equal(((launched.current_state as JsonObject).latest_executive_epoch as JsonObject).state, 'bound')
   } finally {
     if (process.platform === 'win32') {
       await makeFixtureTreeWritable(harness.root)
@@ -12059,6 +12063,8 @@ test('real Python owner and Host preserve fatal history through explicit reautho
     assert.deepEqual(changedTables.sort(), [
       'mission_revision', 'mission_head', 'project_commit', 'transition_journal',
       'command_result', 'current_dependency_projection', 'workspace_metadata',
+      // Schema 12 authenticated index pages track the two exact Mission revisions.
+      'owner_content_index_node',
     ].sort())
     assert.deepEqual(migrated.incident, beforeGrant.incident)
     assert.deepEqual(migrated.checkpoint, predecessor)
