@@ -1088,8 +1088,8 @@ export interface PinnedLaunchContextPolicy {
   contextWindowTokens: number
   effectiveContextWindowPercent: number
   effectiveContextAllowanceTokens: number
-  baseInstructions: string
-  baseInstructionsSource: 'model_messages.instructions_template_equals_base_instructions'
+  catalogInstructionTemplate: string
+  catalogInstructionTemplateSource: 'model_messages.instructions_template'
   configuredCompactionThresholdTokens: number | null
 }
 
@@ -1139,10 +1139,11 @@ export function loadPinnedCodexModelCatalog(catalogPath: string): PinnedLaunchCo
     !Number.isSafeInteger(model.effective_context_window_percent) ||
     (model.effective_context_window_percent as number) <= 0 ||
     (model.effective_context_window_percent as number) > 100 ||
-    typeof model.base_instructions !== 'string' || model.base_instructions.length === 0 ||
-    !isRecord(messages) || messages.instructions_template !== model.base_instructions ||
-    !isRecord(messages.instructions_variables) ||
-    Object.values(messages.instructions_variables).some((value) => value !== '') ||
+    !isRecord(messages) || typeof messages.instructions_template !== 'string' ||
+    messages.instructions_template.trim().length === 0 ||
+    (messages.instructions_variables !== undefined && messages.instructions_variables !== null &&
+      (!isRecord(messages.instructions_variables) ||
+        Object.values(messages.instructions_variables).some((value) => value !== null && typeof value !== 'string'))) ||
     (model.auto_compact_token_limit !== undefined && model.auto_compact_token_limit !== null &&
       (!Number.isSafeInteger(model.auto_compact_token_limit) || (model.auto_compact_token_limit as number) <= 0))
   ) {
@@ -1156,8 +1157,10 @@ export function loadPinnedCodexModelCatalog(catalogPath: string): PinnedLaunchCo
     effectiveContextAllowanceTokens: Math.floor(
       (model.context_window as number) * (model.effective_context_window_percent as number) / 100,
     ),
-    baseInstructions: model.base_instructions,
-    baseInstructionsSource: 'model_messages.instructions_template_equals_base_instructions',
+    // Native Codex 0.153.4 renders model_messages; legacy base_instructions may
+    // be absent/null. This is template accounting, not a native prompt renderer.
+    catalogInstructionTemplate: messages.instructions_template,
+    catalogInstructionTemplateSource: 'model_messages.instructions_template',
     configuredCompactionThresholdTokens: model.auto_compact_token_limit as number | null | undefined ?? null,
   }
 }

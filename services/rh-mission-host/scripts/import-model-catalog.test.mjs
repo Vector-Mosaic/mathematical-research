@@ -16,7 +16,7 @@ test('catalog import preserves caller metadata while selecting the explicit nati
   const selected = JSON.parse(encoded).models
   assert.equal(selected.length, 1)
   assert.equal(selected[0].base_instructions, cache.models[0].base_instructions)
-  assert.equal(selected[0].model_messages.instructions_template, cache.models[0].base_instructions)
+  assert.deepEqual(selected[0].model_messages, cache.models[0].model_messages)
   assert.equal(selected[0].default_reasoning_level, 'ultra')
   assert.equal(selected[0].multi_agent_version, 'v1')
   assert.deepEqual(selected[0].supported_reasoning_levels.map(({ effort }) => effort), ['ultra'])
@@ -33,11 +33,36 @@ test('catalog import refuses unsupported model access or runtime metadata rather
     (cache) => { cache.models[0].minimal_client_version = '0.153' },
     (cache) => { cache.models[0].minimal_client_version = false },
     (cache) => { cache.models[0].auto_compact_token_limit = 0 },
-    (cache) => { cache.models[0].base_instructions = '' },
+    (cache) => { cache.models[0].model_messages.instructions_template = '' },
+    (cache) => { cache.models[0].model_messages.instructions_variables = false },
   ]) {
     const cache = structuredClone(fixture)
     mutate(cache)
     assert.throws(() => importModelCatalog(cache))
+  }
+})
+
+test('modern caller messages survive import with null legacy base and literal template variables', () => {
+  for (const optional of [null, undefined]) {
+    const cache = structuredClone(fixture)
+    cache.models[0].base_instructions = optional
+    cache.models[0].model_messages = {
+      instructions_template: 'Authored template keeps {{ personality }} literal when variables are absent.',
+      instructions_variables: optional,
+      persistent_instructions: 'Authored persistent-mode fixture.',
+      approvals: { never: 'Authored approval-policy fixture.' },
+      collaboration_modes: { default: 'Authored collaboration fixture.' },
+      permissions: { workspace_write: 'Authored permissions fixture.' },
+      multi_agent: { role: { root: 'Authored root-role fixture.' } },
+      additional_provider_metadata: { preserve: ['even fields unknown to this importer'] },
+    }
+    const before = structuredClone(cache)
+    const selected = JSON.parse(importModelCatalog(cache)).models[0]
+    assert.deepEqual(selected.model_messages, JSON.parse(JSON.stringify(cache.models[0].model_messages)))
+    assert.equal(selected.base_instructions, optional)
+    assert.equal(selected.multi_agent_version, 'v1')
+    assert.equal(selected.default_reasoning_level, 'ultra')
+    assert.deepEqual(cache, before)
   }
 })
 

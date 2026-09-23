@@ -47,6 +47,8 @@ not distributed here.
 No server, account access or private research data is supplied. Use independent
 runtime directories and an isolated Codex home. Read the [security and deployment
 boundaries](docs/security.md) before running the system or sharing runtime output.
+The [validation notes](docs/validation.md) describe the software checks and their
+limits.
 
 ## License
 

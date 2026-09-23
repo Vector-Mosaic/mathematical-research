@@ -6448,7 +6448,7 @@ test('a fresh historical unsolved closeout discovered after stale authorization 
   }
 })
 
-test('local compatibility uses exact catalog allowance and one resolved base template, not a tokenizer estimate', async (t) => {
+test('local compatibility uses exact catalog allowance and one catalog template, not a tokenizer estimate', async (t) => {
   const harness = await createHarness([])
   try {
     const snapshot = await harness.bridge.hostSnapshot()
@@ -6462,7 +6462,8 @@ test('local compatibility uses exact catalog allowance and one resolved base tem
     assert.equal(report.compaction_threshold.configured_tokens, null)
     assert.equal(report.compaction_threshold.effective_tokens, null)
     assert.equal(report.compaction_threshold.runtime_default_established, false)
-    assert.equal(report.measurement.base_instructions_count, 1)
+    assert.equal(report.measurement.catalog_instruction_template_count, 1)
+    assert.equal(report.measurement.catalog_instruction_template_source, 'model_messages.instructions_template')
     assert.equal(report.measurement.tokenizer_estimate, null)
     assert.equal(report.measurement.tokenizer_estimate_is_certification, false)
     assert.equal(report.measurement.method, 'utf8_byte_level_bpe_conservative_upper_bound')
@@ -6472,11 +6473,13 @@ test('local compatibility uses exact catalog allowance and one resolved base tem
     })
     assert.ok(Buffer.byteLength(resolvedRequestJson, 'utf8') > Buffer.byteLength(result.construction.request_json, 'utf8'))
     assert.equal(report.measurement.accounted_token_upper_bound, Buffer.byteLength(resolvedRequestJson, 'utf8') +
-      report.measurement.components.resolved_base_instructions.utf8_bytes)
+      report.measurement.components.catalog_instruction_template.utf8_bytes)
     assert.equal(report.measurement.components.resolved_request_json.sha256, createHash('sha256').update(resolvedRequestJson).digest('hex'))
     assert.equal(report.measurement.components.request_json.sha256, createHash('sha256').update(result.construction.request_json).digest('hex'))
     assert.ok(report.unmeasured.includes('provider_message_framing'))
     assert.ok(report.unmeasured.includes('runtime_builtin_tools'))
+    assert.ok(report.unmeasured.includes('runtime_selected_provider_instruction_blocks'))
+    assert.ok(report.unmeasured.includes('runtime_instruction_template_variable_rendering'))
     assert.equal(report.provider_wire_equivalence_claimed, false)
     assert.doesNotMatch(JSON.stringify(report), /Act as the sole|Current Executive orientation|cursor_mac_key/)
     const catalogBytes = await fs.promises.readFile(harness.config.modelCatalogPath)

@@ -29,7 +29,12 @@ export function importModelCatalog(cache) {
       throw new Error(`The supplied model metadata is incompatible with Codex ${CLI_VERSION}`)
     }
   }
-  if (typeof model.base_instructions !== 'string' || !model.base_instructions.trim() ||
+  const messages = model.model_messages
+  if (!messages || typeof messages !== 'object' || Array.isArray(messages) ||
+      typeof messages.instructions_template !== 'string' || !messages.instructions_template.trim() ||
+      (messages.instructions_variables !== undefined && messages.instructions_variables !== null &&
+        (typeof messages.instructions_variables !== 'object' || Array.isArray(messages.instructions_variables) ||
+          Object.values(messages.instructions_variables).some((value) => value !== null && typeof value !== 'string'))) ||
       !Number.isSafeInteger(model.context_window) || model.context_window <= 0 ||
       !Number.isSafeInteger(model.effective_context_window_percent) ||
       model.effective_context_window_percent <= 0 || model.effective_context_window_percent > 100 ||
@@ -43,7 +48,9 @@ export function importModelCatalog(cache) {
   model.multi_agent_version = 'v1'
   model.tool_mode = 'code_mode_only'
   model.experimental_supported_tools = []
-  model.model_messages = { instructions_template: model.base_instructions, instructions_variables: {} }
+  // The pinned native runtime consumes model_messages, including provider policy
+  // blocks beyond the template. Preserve the complete caller record; the legacy
+  // base_instructions field is neither required nor used to replace those blocks.
   model.truncation_policy = { mode: 'tokens', limit: NATIVE_RESULT_CAPACITY }
   // JSON.parse/JSON.stringify round this signed-64-bit compatibility value in JS.
   // Emit the exact numeric literal consumed by the pinned native runtime.

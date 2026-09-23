@@ -818,6 +818,31 @@ test('config rejects a model catalog that switches static V1 to Multi-Agent V2',
   )
 })
 
+test('config accounts for the modern literal template without replacing provider instruction blocks', () => {
+  for (const optional of [null, undefined]) {
+    const built = fixture()
+    const catalog = JSON.parse(fs.readFileSync(built.modelCatalogPath, 'utf8'))
+    catalog.models[0].base_instructions = optional
+    catalog.models[0].model_messages = {
+      instructions_template: 'Authored modern template: {{ personality }} remains literal with no variables.',
+      instructions_variables: optional,
+      persistent_instructions: 'Authored persistent-mode fixture; not part of the base template.',
+      approvals: { never: 'Authored provider approval-policy fixture.' },
+      collaboration_modes: { default: 'Authored provider collaboration fixture.' },
+      multi_agent: { role: { root: 'Authored provider root-role fixture.' } },
+    }
+    const bytes = JSON.stringify(catalog)
+    fs.writeFileSync(built.modelCatalogPath, bytes)
+    const config = readMissionHostConfig('mission.rh', built.overrides)
+    const policy = loadPinnedCodexModelCatalog(built.modelCatalogPath)
+    assert.equal(config.expectedCliVersion, PINNED_CODEX_CLI_VERSION)
+    assert.equal(config.reasoningEffort, 'ultra')
+    assert.equal(policy.catalogInstructionTemplate, catalog.models[0].model_messages.instructions_template)
+    assert.equal(policy.catalogInstructionTemplateSource, 'model_messages.instructions_template')
+    assert.equal(fs.readFileSync(built.modelCatalogPath, 'utf8'), bytes)
+  }
+})
+
 test('config validates model-facing owner structure directly', () => {
   const built = fixture()
   const projection = modelProjection()

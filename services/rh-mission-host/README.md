@@ -32,11 +32,20 @@ node services/rh-mission-host/scripts/import-model-catalog.mjs \
 
 The importer selects the exact model, validates CLI compatibility and context
 metadata, and applies this system's explicit V1/ultra/native result-capacity
-policy. It creates a new file and will not overwrite an existing catalog. Install
+policy. It preserves the complete provider `model_messages` record, including
+policy blocks, and accepts null or absent optional minimum-version, compaction,
+and template-variable metadata. It creates a new file and will not overwrite an existing catalog. Install
 that generated file root-owned with the release. Its actual digest is part of
 local launch accounting. The generated `assets` contents are ignored by Git;
 the authored `test-fixtures` catalog is only for deterministic tests and must not
 be used to execute a live model.
+
+The informational launch report counts the exact `model_messages.instructions_template`
+once. It does not reconstruct the native prompt: runtime-selected provider blocks,
+template-variable rendering, tool framing and output reservations remain explicitly
+unmeasured. The [pinned Codex implementation](https://github.com/openai/codex/blob/rust-v0.153.4/codex-rs/protocol/src/openai_models.rs)
+treats a template with null or absent variables as literal text; persistent-mode
+instructions are a separate field, not automatically part of that template.
 
 After initializing a fresh workspace with the Python owner, supply all these
 environment bindings explicitly:

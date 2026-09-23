@@ -31,12 +31,13 @@ export function measureMissionLaunchCompatibility(
     request_json: measure(requestJson),
     resolved_developer_instructions: measure(instructions.developerInstructions),
     resolved_request_json: measure(resolvedRequestJson),
-    resolved_base_instructions: measure(policy.baseInstructions),
+    catalog_instruction_template: measure(policy.catalogInstructionTemplate),
   }
   // Byte-level BPE represents each accounted UTF-8 byte with at most one token.
   // Count the whole request JSON (including its quoting/keys) conservatively,
-  // plus the resolved catalog template once. Component metrics are not summed.
-  const upperBound = components.resolved_request_json.utf8_bytes + components.resolved_base_instructions.utf8_bytes
+  // plus the catalog template once. Native-selected instruction blocks and
+  // variable rendering remain unmeasured; component metrics are not summed.
+  const upperBound = components.resolved_request_json.utf8_bytes + components.catalog_instruction_template.utf8_bytes
   const established = upperBound <= policy.effectiveContextAllowanceTokens
   return {
     schema_version: 'workstation_control.rh_mission_launch_compatibility.v2',
@@ -62,12 +63,13 @@ export function measureMissionLaunchCompatibility(
       accounted_token_upper_bound: upperBound,
       tokenizer_estimate: null,
       tokenizer_estimate_is_certification: false,
-      base_instructions_source: policy.baseInstructionsSource,
-      base_instructions_count: 1,
+      catalog_instruction_template_source: policy.catalogInstructionTemplateSource,
+      catalog_instruction_template_count: 1,
       components,
     },
     unmeasured: [
       'provider_message_framing', 'runtime_builtin_tools', 'output_and_reasoning_reservation',
+      'runtime_selected_provider_instruction_blocks', 'runtime_instruction_template_variable_rendering',
       ...(launchMode === 'resume_suspended_goal' ? ['retained_native_thread_history'] : []),
     ],
     provider_wire_equivalence_claimed: false,
