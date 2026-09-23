@@ -28,7 +28,9 @@ or instruction copied into research material does not confer a grant.
 The provider process uses the operator's dedicated `CODEX_HOME` for
 authentication. The model's filesystem profile denies that protected root,
 keeps release source read-only and confines writes to the supplied research
-scratch/output surfaces. The formal Attempt provider filters its inherited
+scratch/output surfaces. The Host also grants read access to the exact resolved
+native Codex executable for sandboxed shell launch, without granting its parent
+directory or neighboring files. The formal Attempt provider filters its inherited
 environment; shell tools receive a secretless environment. Do not place secrets
 in project input, prompts, selected capability roots or scratch files, or reuse a
 personal Codex home containing unrelated instructions, plugins and history.

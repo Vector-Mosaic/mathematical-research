@@ -867,6 +867,35 @@ test('goalConfigArgs selects launch preferences and enforces process containment
   assert.doesNotMatch(joined, /attestation|sessionId|nickname/)
 })
 
+test('goalConfigArgs grants only the exact runtime executable and preserves confinement', () => {
+  const runtimeDirectory = path.join(FIXTURE_ROOT, 'runtime-binary')
+  fs.mkdirSync(runtimeDirectory)
+  const executable = path.join(runtimeDirectory, 'codex')
+  fs.writeFileSync(executable, 'runtime fixture')
+  const joined = goalConfigArgs({ ...GOAL_POLICY, readOnlyFiles: [executable] }, WORKSPACE).join('\n')
+  const entry = (value: string, access: string) => JSON.stringify(value.replaceAll('\\', '/')) + ' = "' + access + '"'
+  assert.ok(joined.includes(entry(executable, 'read')))
+  assert.ok(!joined.includes(entry(runtimeDirectory, 'read')))
+  assert.ok(joined.includes(entry(READ_ROOT, 'read')))
+  assert.ok(joined.includes(entry(PROTECTED_ROOT, 'deny')))
+  assert.match(joined, /":root" = "deny"/)
+  assert.match(joined, /":workspace_roots" = \{ "\." = "write" \}/)
+  assert.match(joined, /features\.network_proxy\.enabled=true/)
+  assert.match(joined, /network = \{ enabled = true, mode = "limited"/)
+  for (const [directory, expected] of [[PROTECTED_ROOT, /protectedRoot/],
+                                     [WORKSPACE, /separate writable Goal root/],
+                                     [APP_SERVER_CWD, /appServerCwd/]] as const) {
+    const forbidden = path.join(directory, 'runtime-file-fixture')
+    fs.writeFileSync(forbidden, 'must not be exposed')
+    try {
+      assert.throws(() => goalConfigArgs({ ...GOAL_POLICY, readOnlyFiles: [forbidden] }, WORKSPACE), expected)
+    } finally {
+      fs.unlinkSync(forbidden)
+    }
+  }
+  assert.throws(() => goalConfigArgs({ ...GOAL_POLICY, readOnlyFiles: [runtimeDirectory] }, WORKSPACE), /ordinary files/)
+})
+
 test('offline goalConfigArgs disables network and provider-hosted or ambient capabilities', () => {
   const joined = goalConfigArgs({ ...GOAL_POLICY, networkAccess: false }, WORKSPACE).join('\n')
   assert.match(joined, /network = \{ enabled = false \}/)

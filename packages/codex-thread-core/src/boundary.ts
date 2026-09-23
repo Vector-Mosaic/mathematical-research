@@ -159,6 +159,8 @@ export type GoalProcessConfig = {
   appServerCwd: string
   protectedRoot: string
   readOnlyRoots?: readonly string[]
+  /** Exact runtime files needed inside the sandbox; never grants their parents. */
+  readOnlyFiles?: readonly string[]
   /** Defaults to true. False confines model tools to local material and output. */
   networkAccess?: boolean
 }
@@ -1412,6 +1414,7 @@ function normalizeGoalProcessConfig(config: GoalProcessConfig, workspaceRoot: st
   modelCatalogPath: string
   protectedRoot: string
   readOnlyRoots: readonly string[]
+  readOnlyFiles: readonly string[]
   networkAccess: boolean
 } {
   if (config.networkAccess !== undefined && typeof config.networkAccess !== 'boolean') {
@@ -1453,10 +1456,22 @@ function normalizeGoalProcessConfig(config: GoalProcessConfig, workspaceRoot: st
   }
   const protectedRoot = path.resolve(protectedRootInput)
   const readOnlyRoots = normalizeRoots(config.readOnlyRoots, 'goalPolicy.readOnlyRoots')
+  const readOnlyFiles = normalizeRoots(config.readOnlyFiles, 'goalPolicy.readOnlyFiles').map((file) => {
+    const stat = fs.lstatSync(file)
+    const canonical = fs.realpathSync.native(file)
+    const samePath = process.platform === 'win32'
+      ? canonical.toLowerCase() === file.toLowerCase()
+      : canonical === file
+    if (!stat.isFile() || stat.isSymbolicLink() || !samePath) {
+      throw new Error('goalPolicy.readOnlyFiles must contain ordinary files at their canonical paths')
+    }
+    return canonical
+  })
+  const readablePaths = [...readOnlyRoots, ...readOnlyFiles]
   const writableRoot = path.resolve(workspaceRoot)
   if (
     !path.isAbsolute(workspaceRoot) ||
-    readOnlyRoots.some(
+    readablePaths.some(
       (root) => pathIsWithin(writableRoot, root) || pathIsWithin(root, writableRoot),
     )
   ) {
@@ -1465,7 +1480,7 @@ function normalizeGoalProcessConfig(config: GoalProcessConfig, workspaceRoot: st
   if (
     pathIsWithin(protectedRoot, writableRoot) ||
     pathIsWithin(writableRoot, protectedRoot) ||
-    readOnlyRoots.some(
+    readablePaths.some(
       (root) => pathIsWithin(protectedRoot, root) || pathIsWithin(root, protectedRoot),
     )
   ) {
@@ -1476,7 +1491,7 @@ function normalizeGoalProcessConfig(config: GoalProcessConfig, workspaceRoot: st
     pathIsWithin(writableRoot, appServerCwd) ||
     pathIsWithin(appServerCwd, protectedRoot) ||
     pathIsWithin(protectedRoot, appServerCwd) ||
-    readOnlyRoots.some(
+    readablePaths.some(
       (root) => pathIsWithin(appServerCwd, root) || pathIsWithin(root, appServerCwd),
     )
   ) {
@@ -1495,6 +1510,7 @@ function normalizeGoalProcessConfig(config: GoalProcessConfig, workspaceRoot: st
     appServerCwd,
     protectedRoot,
     readOnlyRoots,
+    readOnlyFiles,
     networkAccess,
   }
 }
@@ -1507,12 +1523,14 @@ export function goalConfigArgs(config: GoalProcessConfig | undefined, workspaceR
   const writableRoot = path.resolve(workspaceRoot).replaceAll('\\', '/')
   const protectedRoot = policy.protectedRoot.replaceAll('\\', '/')
   const readOnlyRoots = policy.readOnlyRoots.map((root) => root.replaceAll('\\', '/'))
+  const readOnlyFiles = policy.readOnlyFiles.map((file) => file.replaceAll('\\', '/'))
   const workspaceRoots = JSON.stringify(writableRoot) + ' = true'
   const filesystem = [
     '":root" = "deny"',
     '":minimal" = "read"',
     '":workspace_roots" = { "." = "write" }',
     ...readOnlyRoots.map((root) => JSON.stringify(root) + ' = "read"'),
+    ...readOnlyFiles.map((file) => JSON.stringify(file) + ' = "read"'),
     JSON.stringify(protectedRoot) + ' = "deny"',
   ].join(', ')
   const profile = [

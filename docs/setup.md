@@ -20,6 +20,10 @@ the examples do not change machine-wide resource settings.
 - Python 3.12 or newer, Node.js 22 or newer, Git, and pnpm 10.14.0.
 - The official `@openai/codex@0.153.4` executable. Use an installation-specific
   package prefix, not a replacement for a shared global Codex installation.
+  Select its **native executable** for `CODEX`, not the npm JavaScript launcher.
+  The Host gives the sandbox read access to that exact resolved executable so
+  Codex can launch shell commands, including when installed outside standard
+  system paths. Its parent directory and sibling files receive no extra access.
 - Your own account with access to `gpt-6-astra` and `ultra` reasoning. This version
   has no model/provider fallback.
 - A dedicated authenticated `CODEX_HOME`, mode `0700`, owned by the runtime

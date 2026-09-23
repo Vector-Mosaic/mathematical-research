@@ -333,6 +333,9 @@ export async function runMissionHostProcess(env: NodeJS.ProcessEnv = process.env
           appServerCwd: config.runtimeDir,
           protectedRoot: config.codexHome,
           readOnlyRoots: [config.repoRoot],
+          // Native Codex re-execs this binary inside its shell sandbox. An
+          // installation-specific executable may be outside :minimal paths.
+          readOnlyFiles: [fs.realpathSync.native(config.codexCliPath)],
         },
         trustedMcpServerIds: config.trustedMcpServerIds,
         trustedAppIds: config.trustedAppIds,
