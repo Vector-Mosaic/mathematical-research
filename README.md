@@ -1,5 +1,7 @@
 # Mathematical Research
 
+**Solve Riemann - make no mistakes**
+
 An autonomous AI research system built to investigate the **Riemann Hypothesis
 (RH)**. The research objective is a checkable proof or disproof of this
 [open problem in number theory](https://www.claymath.org/millennium/riemann-hypothesis/).

@@ -2,7 +2,7 @@
   "name": "mathematical-research",
   "version": "0.1.0",
   "private": true,
-  "description": "Durable AI-assisted mathematical research with explicit evidence, candidate and execution boundaries.",
+  "description": "Solve Riemann - make no mistakes. An autonomous AI research system for investigating the Riemann Hypothesis.",
   "license": "MIT",
   "type": "module",
   "packageManager": "pnpm@10.14.0",
