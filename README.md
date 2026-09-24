@@ -1,14 +1,54 @@
 # Mathematical Research
 
-A durable AI-assisted mathematical research system. A Codex executive chooses
-research questions, interprets results and directs further work. The software
-preserves research state, checks authority and dependencies, and manages execution
-and recovery. Its first implemented theorem project is the Riemann Hypothesis.
+An autonomous AI research system built to investigate the **Riemann Hypothesis
+(RH)**. The research objective is a checkable proof or disproof of this
+[open problem in number theory](https://www.claymath.org/millennium/riemann-hypothesis/).
+This repository publishes the real research software and four inspectable
+research episodes from that effort. RH remains unresolved.
 
-This repository contains the research core, Mission Host and execution adapters.
-It is not an automated theorem prover. The fresh public starting state contains
-no admitted mathematical results and no claimed proof or disproof of RH. The
-synthetic test fixtures are software inputs, not observed research outcomes.
+A Codex research executive chooses questions, delegates investigations,
+interprets results and changes strategy. The system gives that work a durable
+home: source material, mathematical claims, assumptions, failed approaches and
+corrections survive individual agent conversations. A successor can retrieve
+the supporting records and continue the research.
+
+The engineering problem grew directly out of that research. An argument can
+fail while a useful lemma survives. A promising result may depend on an
+unproved assumption. Continuing after an interruption requires knowing what
+was established, what was rejected and what remains open. The research core,
+Mission Host and execution adapters implement the storage, authority and
+execution boundaries needed to support that process.
+
+Created and directed by **Justin Sublette**, with extensive Codex assistance in
+implementation, mathematical exploration and testing. The
+[engineering account](docs/engineering.md) explains the design decisions,
+tradeoffs, observed failures and contribution.
+
+## Start with the research
+
+Start with the [missing-assumption research example](examples/finite-free-localization/README.md):
+an actual investigation exposed a false polynomial-root bound, preserved a
+corrected result and carried its added assumption into later work. You can run
+its checker without an account and inspect the saved research records.
+The [recorded live run](examples/finite-free-localization/validation.md) follows
+two executives: a fresh successor retrieved the correction and tightened the
+bound from 10 to less than 9, with the supplied proof and checker available as
+references.
+
+The [four-example collection](examples/README.md) connects other parts of the
+RH research effort to inspectable evidence:
+
+| Research episode | What to inspect |
+| --- | --- |
+| [Missing assumption](examples/finite-free-localization/README.md) | A counterexample, repaired theorem, exact checker and live successor refinement. |
+| [C90 matrix obstruction](examples/loewner-obstruction/README.md) | A rigorous numerical counterexample that rules out one proposed route while leaving a weaker question open. |
+| [Jacobi construction](examples/jacobi-extension/README.md) | A failed restricted construction followed by a wider positive-rooted model, with its analytic dependencies retained. |
+| [Jensen program](examples/jensen-program/README.md) | A sustained program of estimates, a checked finite improvement and the unresolved conditions needed for a larger root claim. |
+
+These are bounded investigations within the larger RH effort. Their provenance
+and validation notes distinguish historical research, newly authored checkers,
+scripted store walkthroughs and fresh model execution. They do not establish a
+complete RH argument or a general research success rate.
 
 ## What is included
 
@@ -31,32 +71,18 @@ Successful execution or agent agreement does not establish a mathematical proof.
 See the [architecture](docs/architecture.md) for these boundaries and the
 [scientific instructions](docs/instructions/AGENTS.md) for participant roles.
 
-Read [the engineering decisions](docs/engineering.md) for why the system uses
-a durable Mission, separate scientific records and an isolated runtime,
-including the tradeoffs, an observed failure and repair, and Justin Sublette's
-contribution with AI assistance.
+## Run it
 
-## Get started
+The first example's exact checker needs only Python 3.12 or later:
 
-Start with the [missing-assumption research example](examples/finite-free-localization/README.md):
-read the mathematical correction, run its account-free checker, and inspect how
-the real research store retains a failed claim and useful corrected result.
-Its [recorded live run](examples/finite-free-localization/validation.md) shows a
-fresh executive retrieving that correction and tightening the bound. The example
-also provides inputs for an optional real Host reproduction.
+```sh
+python examples/finite-free-localization/check.py
+```
 
-The shorter [C90 matrix obstruction](examples/loewner-obstruction/README.md)
-adds a rigorous numerical checker and a store walkthrough showing how one failed
-research route is recorded without discarding unresolved alternatives.
-
-The [Jacobi example](examples/jacobi-extension/README.md) follows a restricted
-construction's failure into a wider positive-rooted model, with exact symbolic
-checks and explicit dependencies for its conditional application.
-
-The deeper [Jensen case study](examples/jensen-program/README.md) reconstructs
-how a sustained program improved an error bound without discarding retained
-mass. Its finite proof, interval checker and conditional range calculation keep
-the larger analytic dependencies explicit.
+Its walkthrough also provides inputs for an optional real Host reproduction.
+The public starting state contains no admitted mathematical results. The system
+is not an automated theorem prover; synthetic test fixtures are software inputs,
+not observed research outcomes.
 
 Follow the [Linux setup guide](docs/setup.md). The source uses Python 3.12 or
 later, Node.js 22 or later, and pnpm 10.14.0. The supported deployment separates a

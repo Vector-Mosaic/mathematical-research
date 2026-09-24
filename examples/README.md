@@ -1,5 +1,11 @@
 # Research examples
 
+These four examples come from the system's research toward a proof or disproof
+of the **Riemann Hypothesis (RH)**. They expose parts of that work: polynomial
+root arguments, a matrix obstruction, constructive alternatives and a program
+of analytic estimates. Each is a bounded investigation with its own assumptions
+and evidence; together they do not constitute a completed RH argument.
+
 Start with [a missing assumption in polynomial root localization](finite-free-localization/README.md).
 It follows an actual research episode: an explicit counterexample exposed an
 insufficient hypothesis, useful mathematics survived, and a corrected condition
